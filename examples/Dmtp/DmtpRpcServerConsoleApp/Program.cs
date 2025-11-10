@@ -25,6 +25,30 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
+
+        try
+        {
+            var clientIdA = Guid.NewGuid().ToString();
+            var nodeIdA = Guid.NewGuid().ToString();
+            var ser = FastBinaryFormatter.SerializeToBytes((nodeIdA, clientIdA));
+            var (nodeIdB, clientIdB) = FastBinaryFormatter.Deserialize<(string, string)>(ser);
+            ConsoleLogger.Default.Info($"序列化测试 nodeIdA {nodeIdA} Eq {nodeIdA == nodeIdB}");
+            ConsoleLogger.Default.Info($"序列化测试 clientIdA {clientIdA} Eq {clientIdA == clientIdB}");
+            var clientIdC1 = FastBinaryFormatter.Deserialize<string>([]);
+            ConsoleLogger.Default.Info($"序列化测试 clientIdC1 {clientIdC1} 这里已经死循环不输出了");
+            var (nodeIdC, clientIdC) = FastBinaryFormatter.Deserialize<(string, string)>([]);
+            ConsoleLogger.Default.Info($"序列化测试 nodeIdC {nodeIdA} clientIdC {clientIdC}");
+
+        }
+        catch(Exception ex)
+        {
+            ConsoleLogger.Default.Error($"序列化测试 抛出异常");
+        }
+
+
+
+
+
         var service = new TcpDmtpService();
         var config = new TouchSocketConfig()//配置
                .SetListenIPHosts(7789)
