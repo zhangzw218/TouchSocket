@@ -49,7 +49,7 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// </summary>
     /// <param name="reader"></param>
     public async Task ReceivedInputAsync<TReader>(TReader reader)
-        where TReader : class, IBytesReader
+        where TReader : class, IBytesReaderV4
     {
         this.CacheVerify(ref reader);
         await this.PreviewReceivedAsync(reader).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
@@ -60,10 +60,10 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// <summary>
     /// 校验并处理缓存数据的有效性。
     /// </summary>
-    /// <typeparam name="TReader">实现了 <see cref="IBytesReader"/> 接口的类型。</typeparam>
+    /// <typeparam name="TReader">实现了 <see cref="IBytesReaderV4"/> 接口的类型。</typeparam>
     /// <param name="reader">字节读取器的引用。</param>
     protected void CacheVerify<TReader>(ref TReader reader)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
     {
         if (this.m_cacheSize > 0)
         {
@@ -85,11 +85,11 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// <summary>
     /// 发送输入数据到指定的写入器。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IBytesWriter"/> 接口的写入器类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IBytesWriterV4"/> 接口的写入器类型。</typeparam>
     /// <param name="writer">写入器的引用。</param>
     /// <param name="memory">要写入的数据内存块。</param>
     public virtual void SendInput<TWriter>(ref TWriter writer, in ReadOnlyMemory<byte> memory)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
         writer.Write(memory.Span);
     }
@@ -99,11 +99,11 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// 如果 <paramref name="requestInfo"/> 实现了 <see cref="IRequestInfoBuilder"/>，则调用其 Build 方法写入数据。
     /// 否则抛出异常。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IBytesWriter"/> 接口的写入器类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IBytesWriterV4"/> 接口的写入器类型。</typeparam>
     /// <param name="writer">写入器的引用。</param>
     /// <param name="requestInfo">要写入的请求信息。</param>
     public virtual void SendInput<TWriter>(ref TWriter writer, IRequestInfo requestInfo)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
         if (requestInfo is not IRequestInfoBuilder requestInfoBuilder)
         {
@@ -129,7 +129,7 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// </summary>
     /// <param name="reader"></param>
     protected abstract Task PreviewReceivedAsync<TReader>(TReader reader)
-        where TReader : class, IBytesReader;
+        where TReader : class, IBytesReaderV4;
 
 
     /// <inheritdoc/>

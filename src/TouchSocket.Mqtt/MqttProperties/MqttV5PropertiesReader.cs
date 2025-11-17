@@ -18,7 +18,7 @@ namespace TouchSocket.Mqtt;
 /// 读取Mqtt v5属性的类。
 /// </summary>
 /// <typeparam name="TReader">实现IByteBlock接口的类型。</typeparam>
-public readonly ref struct MqttV5PropertiesReader<TReader> where TReader : IBytesReader
+public readonly ref struct MqttV5PropertiesReader<TReader> where TReader : IBytesReaderV4
 {
     private readonly int m_endPosition;
 

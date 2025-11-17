@@ -20,7 +20,7 @@ namespace TouchSocket.Core;
 /// IByteBlock接口结合了字节读取、写入和资源管理的功能，是字节块操作的核心接口。
 /// 实现此接口的类型应该提供完整的字节缓冲区管理能力。
 /// </remarks>
-public interface IByteBlock : IByteBlockReader, IByteBlockWriter, IDisposable
+public interface IByteBlockV4 : IByteBlockReader, IByteBlockWriter, IDisposable
 {
     /// <summary>
     /// 获取一个值，该值指示字节块当前是否正在使用中。

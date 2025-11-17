@@ -15,22 +15,22 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace TouchSocket.Core;
 
-internal sealed class DefaultFastSerializerContext : FastSerializerContext
+internal sealed class DefaultFastSerializerContextV4 : FastSerializerContextV4
 {
-    private readonly ConcurrentDictionary<Type, SerializObject> m_instanceCache = new ConcurrentDictionary<Type, SerializObject>();
+    private readonly ConcurrentDictionary<Type, SerializObjectV4> m_instanceCache = new ConcurrentDictionary<Type, SerializObjectV4>();
 
     /// <summary>
     /// 添加转换器。
     /// </summary>
     /// <param name="type"></param>
     /// <param name="converter"></param>
-    public void AddFastBinaryConverter([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type, IFastBinaryConverter converter)
+    public void AddFastBinaryConverter([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type, IFastBinaryConverterV4 converter)
     {
         base.AddConverter(type, converter);
     }
 
     [RequiresUnreferencedCode("此方法可能会使用反射构建访问器，与剪裁不兼容。")]
-    public override SerializObject GetSerializeObject([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type)
+    public override SerializObjectV4 GetSerializeObject([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type)
     {
         var serializObject = base.GetSerializeObject(type);
         if (serializObject != null)
@@ -50,7 +50,7 @@ internal sealed class DefaultFastSerializerContext : FastSerializerContext
 
         if (type.IsArray || type.IsClass || type.IsStruct())
         {
-            var instanceObject = new SerializObject(type);
+            var instanceObject = new SerializObjectV4(type);
             this.m_instanceCache.TryAdd(type, instanceObject);
             return instanceObject;
         }

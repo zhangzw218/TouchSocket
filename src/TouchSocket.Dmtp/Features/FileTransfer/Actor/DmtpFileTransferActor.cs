@@ -727,7 +727,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(waitFinishedPackage);
 
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             var block = byteBlock;
@@ -796,7 +796,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(waitFileResource);
 
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             var block = byteBlock;
@@ -862,7 +862,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(waitFileSection);
 
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             var block = byteBlock;
@@ -939,7 +939,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(waitFileResource);
 
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             var block = byteBlock;
@@ -1013,7 +1013,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(waitFileSection);
 
-        var byteBlock = new ByteBlock(fileSectionResult.Value.Length + 1024);
+        var byteBlock = new ByteBlockV4(fileSectionResult.Value.Length + 1024);
         try
         {
             var block = byteBlock;
@@ -1167,7 +1167,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
             //触发事件的时机调到SendAsync前面，目的是保证调用方在收到回复时，响应方已经完成事件处理。
             await this.OnFileTransferred.Invoke(this.DmtpActor, args).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
 
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 waitFinishedPackage.SwitchId();
                 var block = byteBlock;
@@ -1232,7 +1232,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                 waitFileResource.Message = ex.Message;
                 waitFileResource.Status = TouchSocketDmtpStatus.Exception.ToValue();
             }
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 waitFileResource.SwitchId();
                 var block = byteBlock;
@@ -1259,7 +1259,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
             var length = waitFileSection.FileSection.Length;
             try
             {
-                var bufferByteBlock = new ByteBlock(length);
+                var bufferByteBlock = new ByteBlockV4(length);
                 if (this.FileController.TryGetFileResourceLocator(waitFileSection.FileSection.ResourceHandle,
                out var locator))
                 {
@@ -1280,7 +1280,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                     waitFileSection.Status = TouchSocketDmtpStatus.ResourceHandleNotFind.ToValue();
                 }
 
-                using (var byteBlock = new ByteBlock(length + 1024))
+                using (var byteBlock = new ByteBlockV4(length + 1024))
                 {
                     waitFileSection.SwitchId();
                     var block = byteBlock;
@@ -1356,7 +1356,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                 waitFileResource.Status = TouchSocketDmtpStatus.Exception.ToValue();
                 waitFileResource.Message = ex.Message;
             }
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 waitFileResource.SwitchId();
                 var block = byteBlock;
@@ -1415,7 +1415,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
             waitFileSection.Value.SafeDispose();
             waitFileSection.Value = default;
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 waitFileSection.SwitchId();
                 var block = byteBlock;
@@ -1484,7 +1484,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         try
         {
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 var block = byteBlock;
                 waitSmallFilePackage.Package(ref block);
@@ -1560,7 +1560,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(waitSmallFilePackage);
 
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         var buffer = ArrayPool<byte>.Shared.Rent((int)fileInfo.Length);
         try
         {
@@ -1693,7 +1693,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                 waitSmallFilePackage.Message = ex.Message;
             }
 
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 waitSmallFilePackage.SwitchId();
                 var block = byteBlock;
@@ -1759,7 +1759,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
             waitSmallFilePackage.FileInfo = default;
             waitSmallFilePackage.Data = default;
             waitSmallFilePackage.SwitchId();
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 var block = byteBlock;
                 waitSmallFilePackage.Package(ref block);

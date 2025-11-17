@@ -306,7 +306,7 @@ public abstract class HttpResponse : HttpBase
         return true;
     }
 
-    private void BuildHeader<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    private void BuildHeader<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         TouchSocketHttpUtility.AppendHTTP(ref writer);
         TouchSocketHttpUtility.AppendSlash(ref writer);

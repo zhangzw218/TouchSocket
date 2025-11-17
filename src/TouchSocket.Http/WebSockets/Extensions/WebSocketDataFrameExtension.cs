@@ -30,7 +30,7 @@ public static class WebSocketDataFrameExtension
     /// 然后调用dataFrame的Build方法来构建请求数据，并将结果存储在byteBlock中。
     /// 如果MaskingKey未设置，则使用"RRQM"作为默认值。
     /// </remarks>
-    public static void BuildRequest<TByteBlock>(this WSDataFrame dataFrame, ref TByteBlock byteBlock) where TByteBlock : IByteBlock
+    public static void BuildRequest<TByteBlock>(this WSDataFrame dataFrame, ref TByteBlock byteBlock) where TByteBlock : IByteBlockV4
     {
         // 设置数据帧的Mask属性为<see langword="true"/>，表示数据在传输前会被掩码处理
         dataFrame.Mask = true;
@@ -58,7 +58,7 @@ public static class WebSocketDataFrameExtension
             dataFrame.SetMask(DefaultMaskingKey);
         }
         // 创建一个ValueByteBlock对象，用于存储构建过程中的字节数据
-        var byteBlock = new ValueByteBlock(dataFrame.MaxLength);
+        var byteBlock = new ValueByteBlockV4(dataFrame.MaxLength);
         try
         {
             // 调用数据帧的Build方法，将数据帧构建到byteBlock中
@@ -85,7 +85,7 @@ public static class WebSocketDataFrameExtension
     /// 并将构建结果存储在字节块中，而不是创建一个新的对象。
     /// 这样可以提高性能，减少内存分配。
     /// </remarks>
-    public static void BuildResponse<TByteBlock>(this WSDataFrame dataFrame, ref TByteBlock byteBlock) where TByteBlock : IBytesWriter
+    public static void BuildResponse<TByteBlock>(this WSDataFrame dataFrame, ref TByteBlock byteBlock) where TByteBlock : IBytesWriterV4
     {
         dataFrame.Build(ref byteBlock);
     }
@@ -98,7 +98,7 @@ public static class WebSocketDataFrameExtension
     public static byte[] BuildResponseToBytes(this WSDataFrame dataFrame)
     {
         // 创建一个值字块，大小为数据帧的最大长度，用于存储即将构建的字节数据
-        var byteBlock = new ValueByteBlock(dataFrame.MaxLength);
+        var byteBlock = new ValueByteBlockV4(dataFrame.MaxLength);
         try
         {
             // 调用数据帧的Build方法，将数据帧的内容构建到byteBlock中

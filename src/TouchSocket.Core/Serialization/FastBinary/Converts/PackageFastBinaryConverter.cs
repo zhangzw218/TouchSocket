@@ -16,7 +16,7 @@ namespace TouchSocket.Core;
 /// 提供用于处理TPackage类型的快速二进制转换器。
 /// </summary>
 /// <typeparam name="TPackage">实现了IPackage接口的类型。</typeparam>
-public sealed class PackageFastBinaryConverter<TPackage> : IFastBinaryConverter where TPackage : IPackage, new()
+public sealed class PackageFastBinaryConverter<TPackage> : IFastBinaryConverterV4 where TPackage : IPackage, new()
 {
     /// <summary>
     /// 从字节块中读取数据并转换为TPackage类型的对象。
@@ -25,7 +25,7 @@ public sealed class PackageFastBinaryConverter<TPackage> : IFastBinaryConverter 
     /// <param name="byteBlock">字节块的引用。</param>
     /// <param name="type">要转换的类型。</param>
     /// <returns>转换后的TPackage类型的对象。</returns>
-    object IFastBinaryConverter.Read<TByteBlock>(ref TByteBlock byteBlock, Type type)
+    object IFastBinaryConverterV4.Read<TByteBlock>(ref TByteBlock byteBlock, Type type)
     {
         var ipackage = new TPackage();
         ipackage.Unpackage(ref byteBlock);
@@ -38,7 +38,7 @@ public sealed class PackageFastBinaryConverter<TPackage> : IFastBinaryConverter 
     /// <typeparam name="TByteBlock">实现了IByteBlock接口的字节块类型。</typeparam>
     /// <param name="byteBlock">字节块的引用。</param>
     /// <param name="obj">要写入的对象。</param>
-    void IFastBinaryConverter.Write<TByteBlock>(ref TByteBlock byteBlock, in object obj)
+    void IFastBinaryConverterV4.Write<TByteBlock>(ref TByteBlock byteBlock, in object obj)
     {
         var ipackage = (TPackage)obj;
         ipackage.Package(ref byteBlock);

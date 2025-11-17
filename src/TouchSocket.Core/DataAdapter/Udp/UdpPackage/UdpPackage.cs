@@ -107,7 +107,7 @@ public class UdpPackage
     /// </summary>
     /// <param name="byteBlock"></param>
     /// <returns></returns>
-    public bool TryGetData(ByteBlock byteBlock)
+    public bool TryGetData(ByteBlockV4 byteBlock)
     {
         while (this.m_frames.TryDequeue(out var frame))
         {

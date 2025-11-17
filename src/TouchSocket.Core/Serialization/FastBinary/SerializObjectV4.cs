@@ -18,7 +18,7 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 可序列化对象
 /// </summary>
-public sealed class SerializObject
+public sealed class SerializObjectV4
 {
     internal Method AddMethod;
     internal Type[] ArgTypes;
@@ -36,7 +36,7 @@ public sealed class SerializObject
     /// </summary>
     /// <param name="type"></param>
     /// <param name="converter"></param>
-    public SerializObject(Type type, IFastBinaryConverter converter)
+    public SerializObjectV4(Type type, IFastBinaryConverterV4 converter)
     {
         this.Type = type;
         this.Converter = converter;
@@ -48,7 +48,7 @@ public sealed class SerializObject
     /// <param name="type"></param>
     /// <exception cref="Exception"></exception>
     [RequiresUnreferencedCode("此方法可能会使用反射构建访问器，与剪裁不兼容。")]
-    public SerializObject([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type)
+    public SerializObjectV4([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type)
     {
         this.Type = type;
         if (type.IsArray)//数组
@@ -109,7 +109,7 @@ public sealed class SerializObject
 
             if (type.GetCustomAttribute<FastConverterAttribute>(false) is FastConverterAttribute attribute)
             {
-                this.Converter = (IFastBinaryConverter)Activator.CreateInstance(attribute.Type);
+                this.Converter = (IFastBinaryConverterV4)Activator.CreateInstance(attribute.Type);
             }
 
             if (type.GetCustomAttribute<FastSerializedAttribute>(false) is FastSerializedAttribute fastSerializedAttribute)
@@ -161,7 +161,7 @@ public sealed class SerializObject
     /// <summary>
     /// 转化器
     /// </summary>
-    public IFastBinaryConverter Converter { get; private set; }
+    public IFastBinaryConverterV4 Converter { get; private set; }
 
     /// <summary>
     /// 类型

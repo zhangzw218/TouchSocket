@@ -231,7 +231,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
     private async Task CanceledInvokeAsync(CanceledPackage canceled, CancellationToken cancellationToken)
     {
-        using (var byteBlock = new ByteBlock(1024 * 64))
+        using (var byteBlock = new ByteBlockV4(1024 * 64))
         {
             var block = byteBlock;
             canceled.Package(ref block);
@@ -261,7 +261,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
             {
                 //立即返回
 
-                var returnByteBlock = new ValueByteBlock(1024);
+                var returnByteBlock = new ValueByteBlockV4(1024);
                 try
                 {
                     rpcResponsePackage = new DmtpRpcResponsePackage(rpcRequestPackage, this.m_serializationSelector, null);
@@ -333,7 +333,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
             }
 
 
-            var byteBlock = new ValueByteBlock(1024 * 64);
+            var byteBlock = new ValueByteBlockV4(1024 * 64);
             try
             {
                 rpcResponsePackage.Package(ref byteBlock);
@@ -403,7 +403,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
         try
         {
-            var byteBlock = new ByteBlock(1024 * 64);
+            var byteBlock = new ByteBlockV4(1024 * 64);
             try
             {
                 rpcPackage.Package(ref byteBlock);
@@ -487,7 +487,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
         try
         {
-            var byteBlock = new ByteBlock(1024 * 64);
+            var byteBlock = new ByteBlockV4(1024 * 64);
             try
             {
                 rpcPackage.Package(ref byteBlock);

@@ -19,7 +19,7 @@ public sealed class WSDataFrame : IRequestInfo, IRequestInfoBuilder, IBigUnfixed
 {
     private readonly ReadOnlyMemory<byte> m_payloadData;
     private int m_headerLength;
-    private ByteBlock m_payloadDataBlock;
+    private ByteBlockV4 m_payloadDataBlock;
     private int m_payloadLength;
 
     public WSDataFrame(ReadOnlyMemory<byte> payloadData)
@@ -100,7 +100,7 @@ public sealed class WSDataFrame : IRequestInfo, IRequestInfoBuilder, IBigUnfixed
     public bool RSV3 { get; set; }
 
     /// <inheritdoc/>
-    public void Build<TWriter>(ref TWriter writer1) where TWriter : IBytesWriter
+    public void Build<TWriter>(ref TWriter writer1) where TWriter : IBytesWriterV4
     {
         var memory = this.PayloadData;
 
@@ -293,7 +293,7 @@ public sealed class WSDataFrame : IRequestInfo, IRequestInfoBuilder, IBigUnfixed
 
         if (payloadLength > 0)
         {
-            this.m_payloadDataBlock = new ByteBlock(payloadLength);
+            this.m_payloadDataBlock = new ByteBlockV4(payloadLength);
         }
 
         return true;

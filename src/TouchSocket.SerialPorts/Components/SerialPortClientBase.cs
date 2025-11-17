@@ -97,7 +97,7 @@ public abstract partial class SerialPortClientBase : SetupConfigObject, ISerialP
     /// 如果返回<see langword="true"/>则表示数据已被处理，且不会再向下传递。
     /// 返回<see langword="false"/>则表示数据未被处理，可能会继续向下传递。
     /// </returns>
-    protected virtual ValueTask<bool> OnSerialReceiving(IBytesReader byteBlock)
+    protected virtual ValueTask<bool> OnSerialReceiving(IBytesReaderV4 byteBlock)
     {
         return this.PluginManager.RaiseAsync(typeof(ISerialReceivingPlugin), this.Resolver, this, new BytesReaderEventArgs(byteBlock));
     }

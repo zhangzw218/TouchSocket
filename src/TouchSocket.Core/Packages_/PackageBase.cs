@@ -21,7 +21,7 @@ public abstract class PackageBase : IPackage
 
     /// <inheritdoc/>
     public abstract void Package<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 #if AllowsRefStruct
 , allows ref struct
 #endif
@@ -29,7 +29,7 @@ public abstract class PackageBase : IPackage
 
     /// <inheritdoc/>
     public abstract void Unpackage<TReader>(ref TReader reader)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
 #if AllowsRefStruct
 , allows ref struct
 #endif

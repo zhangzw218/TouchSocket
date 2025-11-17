@@ -45,7 +45,7 @@ public class ModbusRtuMaster : SerialPortClientBase, IModbusRtuMaster
         {
             this.m_modbusRequest = request;
             var modbusRequest = new ModbusRtuRequest(request);
-            var byteBlock = new ValueByteBlock(modbusRequest.MaxLength);
+            var byteBlock = new ValueByteBlockV4(modbusRequest.MaxLength);
             try
             {
                 modbusRequest.Build(ref byteBlock);

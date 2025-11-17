@@ -54,103 +54,103 @@ public static class TouchSocketHttpUtility
     public static ReadOnlySpan<byte> CRLFCRLF => "\r\n\r\n"u8;
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加 "&amp;" 符号。
+    /// 在 <see cref="IByteBlockV4"/> 中追加 "&amp;" 符号。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendAnd<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendAnd<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("&"u8);
     }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加 ":" 符号。
+    /// 在 <see cref="IByteBlockV4"/> 中追加 ":" 符号。
     /// </summary>
-  /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+  /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-  public static void AppendColon<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+  public static void AppendColon<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write(":"u8);
     }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加 "=" 符号。
+    /// 在 <see cref="IByteBlockV4"/> 中追加 "=" 符号。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendEqual<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendEqual<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("="u8);
     }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加 "HTTP" 字符串。
+    /// 在 <see cref="IByteBlockV4"/> 中追加 "HTTP" 字符串。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
  /// <param name="writer">字节块实例。</param>
-    public static void AppendHTTP<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendHTTP<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("HTTP"u8);
     }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加 "?" 符号。
+    /// 在 <see cref="IByteBlockV4"/> 中追加 "?" 符号。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
   /// <param name="writer">字节块实例。</param>
-    public static void AppendQuestionMark<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendQuestionMark<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("?"u8);
     }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加回车换行符 "\r\n"。
+    /// 在 <see cref="IByteBlockV4"/> 中追加回车换行符 "\r\n"。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendRn<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendRn<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write(CRLF);
     }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加 "/" 符号。
+    /// 在 <see cref="IByteBlockV4"/> 中追加 "/" 符号。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendSlash<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendSlash<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("/"u8);
     }
 
  /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加空格符。
+    /// 在 <see cref="IByteBlockV4"/> 中追加空格符。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendSpace<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendSpace<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write(StringExtension.DefaultSpaceUtf8Span);
     }
 
 /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加指定的 UTF-8 编码字符串。
+    /// 在 <see cref="IByteBlockV4"/> 中追加指定的 UTF-8 编码字符串。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
     /// <param name="value">要追加的字符串。</param>
-    public static void AppendUtf8String<TWriter>(ref TWriter writer, string value) where TWriter : IBytesWriter
+    public static void AppendUtf8String<TWriter>(ref TWriter writer, string value) where TWriter : IBytesWriterV4
     {
         WriterExtension.WriteNormalString(ref writer, value, Encoding.UTF8);
  }
 
     /// <summary>
-    /// 在 <see cref="IByteBlock"/> 中追加指定整数的十六进制表示。
+    /// 在 <see cref="IByteBlockV4"/> 中追加指定整数的十六进制表示。
     /// </summary>
-    /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
+    /// <typeparam name="TWriter">实现了 <see cref="IByteBlockV4"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
     /// <param name="value">要追加的整数值。</param>
-    public static void AppendHex<TWriter>(ref TWriter writer, int value) where TWriter : IBytesWriter
+    public static void AppendHex<TWriter>(ref TWriter writer, int value) where TWriter : IBytesWriterV4
     {
    AppendUtf8String(ref writer, $"{value:X}");
     }

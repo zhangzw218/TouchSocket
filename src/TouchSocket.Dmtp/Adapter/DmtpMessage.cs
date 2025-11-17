@@ -121,7 +121,7 @@ public sealed class DmtpMessage : IBytesBuilder, IRequestInfo
     /// <summary>
     /// 将DMTP消息构建到指定的字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">实现<see cref="IBytesWriter"/>接口的字节写入器类型。</typeparam>
+    /// <typeparam name="TWriter">实现<see cref="IBytesWriterV4"/>接口的字节写入器类型。</typeparam>
     /// <param name="writer">要写入数据的字节写入器。</param>
     /// <remarks>
     /// 此方法按照DMTP协议格式将消息数据写入到字节写入器中，写入顺序为：
@@ -133,7 +133,7 @@ public sealed class DmtpMessage : IBytesBuilder, IRequestInfo
     /// </list>
     /// </remarks>
     public void Build<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
     {
         writer.Write(Head);

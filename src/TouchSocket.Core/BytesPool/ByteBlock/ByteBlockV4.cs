@@ -19,14 +19,14 @@ namespace TouchSocket.Core;
 
 /// <summary>
 /// 表示一个字节块，提供高效的字节缓冲区操作，支持自动扩容和内存池管理。
-/// 实现了<see cref="IByteBlock"/>接口，线程安全。
+/// 实现了<see cref="IByteBlockV4"/>接口，线程安全。
 /// </summary>
 /// <remarks>
 /// ByteBlock作为引用类型实现，适用于需要在多个方法间传递或长期持有的场景。
 /// 支持内存池管理、线程安全的释放操作、自动扩容、读写操作等功能。
 /// </remarks>
 [DebuggerDisplay("Length={Length},Position={Position},Capacity={Capacity}")]
-public sealed class ByteBlock : IByteBlock
+public sealed class ByteBlockV4 : IByteBlockV4
 {
     #region Common
 
@@ -39,21 +39,21 @@ public sealed class ByteBlock : IByteBlock
     private short m_version;
 
     /// <summary>
-    /// 使用指定内存块初始化<see cref="ByteBlock"/>的新实例。
+    /// 使用指定内存块初始化<see cref="ByteBlockV4"/>的新实例。
     /// </summary>
     /// <param name="memory">要使用的内存块。</param>
-    public ByteBlock(Memory<byte> memory)
+    public ByteBlockV4(Memory<byte> memory)
     {
         this.m_memory = memory;
     }
 
     /// <summary>
-    /// 使用指定容量和内存管理委托初始化<see cref="ByteBlock"/>的新实例。
+    /// 使用指定容量和内存管理委托初始化<see cref="ByteBlockV4"/>的新实例。
     /// </summary>
     /// <param name="capacity">初始容量，最小为1024字节。</param>
     /// <param name="onRent">内存租赁委托。</param>
     /// <param name="onReturn">内存归还委托。</param>
-    public ByteBlock(int capacity, Func<int, Memory<byte>> onRent, Action<Memory<byte>> onReturn)
+    public ByteBlockV4(int capacity, Func<int, Memory<byte>> onRent, Action<Memory<byte>> onReturn)
     {
         capacity = Math.Max(capacity, 1024);
         this.m_memory = onRent(capacity);
@@ -63,10 +63,10 @@ public sealed class ByteBlock : IByteBlock
     }
 
     /// <summary>
-    /// 使用指定容量初始化<see cref="ByteBlock"/>的新实例，使用默认的<see cref="ArrayPool{T}"/>进行内存管理。
+    /// 使用指定容量初始化<see cref="ByteBlockV4"/>的新实例，使用默认的<see cref="ArrayPool{T}"/>进行内存管理。
     /// </summary>
     /// <param name="capacity">初始容量，最小为1024字节。</param>
-    public ByteBlock(int capacity)
+    public ByteBlockV4(int capacity)
     {
         capacity = Math.Max(capacity, 1024);
         this.m_onRent = (c) =>
@@ -121,7 +121,7 @@ public sealed class ByteBlock : IByteBlock
     public short Version => this.m_version;
 
     /// <inheritdoc/>
-    long IBytesWriter.WrittenCount => this.Position;
+    long IBytesWriterV4.WrittenCount => this.Position;
 
     /// <inheritdoc/>
     public ReadOnlySequence<byte> TotalSequence => new ReadOnlySequence<byte>(this.Memory);
@@ -287,7 +287,7 @@ public sealed class ByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    ReadOnlyMemory<byte> IBytesReader.GetMemory(int count)
+    ReadOnlyMemory<byte> IBytesReaderV4.GetMemory(int count)
     {
         return this.GetMemory(count).Slice(0, count);
     }
@@ -299,7 +299,7 @@ public sealed class ByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    ReadOnlySpan<byte> IBytesReader.GetSpan(int count)
+    ReadOnlySpan<byte> IBytesReaderV4.GetSpan(int count)
     {
         return this.GetSpan(count).Slice(0, count);
     }

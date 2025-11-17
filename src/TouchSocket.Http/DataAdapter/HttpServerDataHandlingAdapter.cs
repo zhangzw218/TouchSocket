@@ -186,7 +186,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <typeparam name="TReader">字节读取器类型</typeparam>
     /// <param name="reader">字节读取器</param>
     /// <returns>处理结果</returns>
-    private async ValueTask<ChunkedProcessResult> ProcessChunkedDataAsync<TReader>(TReader reader) where TReader : class, IBytesReader
+    private async ValueTask<ChunkedProcessResult> ProcessChunkedDataAsync<TReader>(TReader reader) where TReader : class, IBytesReaderV4
     {
         switch (this.m_chunkedState)
         {
@@ -215,7 +215,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <summary>
     /// 处理块大小
     /// </summary>
-    private async ValueTask<ChunkedProcessResult> ProcessChunkSizeAsync<TReader>(TReader reader) where TReader : class, IBytesReader
+    private async ValueTask<ChunkedProcessResult> ProcessChunkSizeAsync<TReader>(TReader reader) where TReader : class, IBytesReaderV4
     {
         // 查找 CRLF
         var crlfIndex = this.FindCRLF(reader);
@@ -253,7 +253,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <summary>
     /// 处理块数据
     /// </summary>
-    private async ValueTask<ChunkedProcessResult> ProcessChunkDataAsync<TReader>(TReader reader) where TReader : class, IBytesReader
+    private async ValueTask<ChunkedProcessResult> ProcessChunkDataAsync<TReader>(TReader reader) where TReader : class, IBytesReaderV4
     {
         if (reader.BytesRemaining < this.m_expectedChunkSize)
         {
@@ -272,7 +272,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <summary>
     /// 处理块结束标记
     /// </summary>
-    private ChunkedProcessResult ProcessChunkEnd<TReader>(TReader reader) where TReader : IBytesReader
+    private ChunkedProcessResult ProcessChunkEnd<TReader>(TReader reader) where TReader : IBytesReaderV4
     {
         if (!this.TrySkipCRLF(reader))
         {
@@ -287,7 +287,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <summary>
     /// 处理尾部标记
     /// </summary>
-    private ChunkedProcessResult ProcessTrailer<TReader>(TReader reader) where TReader : IBytesReader
+    private ChunkedProcessResult ProcessTrailer<TReader>(TReader reader) where TReader : IBytesReaderV4
     {
         // 检查是否有足够的数据处理 trailer
         if (reader.BytesRemaining < 2)
@@ -334,7 +334,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <typeparam name="TReader">字节读取器类型</typeparam>
     /// <param name="reader">字节读取器</param>
     /// <returns>CRLF 的位置，如果未找到则返回 -1</returns>
-    private int FindCRLF<TReader>(TReader reader) where TReader : IBytesReader
+    private int FindCRLF<TReader>(TReader reader) where TReader : IBytesReaderV4
     {
         const int maxSearchLength = 256; // 限制搜索长度，防止恶意数据
         var searchLength = (int)Math.Min(reader.BytesRemaining, maxSearchLength);
@@ -412,7 +412,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     /// <typeparam name="TReader">字节读取器类型</typeparam>
     /// <param name="reader">字节读取器</param>
     /// <returns>true 如果成功跳过</returns>
-    private bool TrySkipCRLF<TReader>(TReader reader) where TReader : IBytesReader
+    private bool TrySkipCRLF<TReader>(TReader reader) where TReader : IBytesReaderV4
     {
         if (reader.BytesRemaining >= 2)
         {

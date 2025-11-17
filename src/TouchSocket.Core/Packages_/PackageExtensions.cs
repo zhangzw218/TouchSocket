@@ -26,7 +26,7 @@ public static class PackageExtensions
     public static byte[] PackageAsBytes<TPackage>(this TPackage package) where TPackage : IPackage
     {
         // 创建一个字节块对象，用于存储序列化的字节数据
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             // 调用IPackage接口的Package方法，将实例序列化到字节块中
@@ -47,7 +47,7 @@ public static class PackageExtensions
     /// <param name="package">要打包的对象，必须实现IPackage接口。</param>
     /// <param name="byteBlock">用于存储打包后数据的字节块。</param>
     /// <typeparam name="TPackage">要打包的对象的类型，必须实现IPackage接口。</typeparam>
-    public static void Package<TPackage>(this TPackage package, ByteBlock byteBlock) where TPackage : IPackage
+    public static void Package<TPackage>(this TPackage package, ByteBlockV4 byteBlock) where TPackage : IPackage
     {
         package.Package(ref byteBlock);
     }
@@ -58,7 +58,7 @@ public static class PackageExtensions
     /// <param name="package">要解包的对象，必须实现IPackage接口。</param>
     /// <param name="byteBlock">包含要解包数据的字节块。</param>
     /// <typeparam name="TPackage">要解包对象的类型，必须实现IPackage接口。</typeparam>
-    public static void Unpackage<TPackage>(this TPackage package, ByteBlock byteBlock) where TPackage : IPackage
+    public static void Unpackage<TPackage>(this TPackage package, ByteBlockV4 byteBlock) where TPackage : IPackage
     {
         package.Unpackage(ref byteBlock);
     }

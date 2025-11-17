@@ -29,7 +29,7 @@ public class DefaultSerializationSelector : ISerializationSelector
     /// <summary>
     /// 快速序列化上下文属性
     /// </summary>
-    public FastSerializerContext FastSerializerContext { get; set; } = FastBinaryFormatter.DefaultFastSerializerContext;
+    public FastSerializerContextV4 FastSerializerContext { get; set; } = FastBinaryFormatterV4.DefaultFastSerializerContext;
 
     /// <summary>
     /// Json序列化配置
@@ -49,13 +49,13 @@ public class DefaultSerializationSelector : ISerializationSelector
     /// <param name="parameterType">预期反序列化出的对象类型。</param>
     /// <returns>反序列化后的对象。</returns>
     /// <exception cref="RpcException">抛出当未识别序列化类型时。</exception>
-    public virtual object DeserializeParameter<TReader>(ref TReader reader, SerializationType serializationType, Type parameterType) where TReader : IBytesReader
+    public virtual object DeserializeParameter<TReader>(ref TReader reader, SerializationType serializationType, Type parameterType) where TReader : IBytesReaderV4
 
     {
         switch (serializationType)
         {
             case SerializationType.FastBinary:
-                return FastBinaryFormatter.Deserialize(ref reader, parameterType, this.FastSerializerContext);
+                return FastBinaryFormatterV4.Deserialize(ref reader, parameterType, this.FastSerializerContext);
 
             case SerializationType.SystemBinary:
                 if (ReaderExtension.ReadIsNull(ref reader))
@@ -100,14 +100,14 @@ public class DefaultSerializationSelector : ISerializationSelector
     /// <param name="serializationType">序列化类型，决定了使用哪种方式序列化</param>
     /// <param name="parameter">待序列化的参数对象</param>
     /// <typeparam name="TWriter">字节块类型，必须实现IByteBlock接口</typeparam>
-    public virtual void SerializeParameter<TWriter>(ref TWriter writer, SerializationType serializationType, in object parameter) where TWriter : IBytesWriter
+    public virtual void SerializeParameter<TWriter>(ref TWriter writer, SerializationType serializationType, in object parameter) where TWriter : IBytesWriterV4
 
     {
         switch (serializationType)
         {
             case SerializationType.FastBinary:
                 {
-                    FastBinaryFormatter.Serialize(ref writer, parameter, this.FastSerializerContext);
+                    FastBinaryFormatterV4.Serialize(ref writer, parameter, this.FastSerializerContext);
                     break;
                 }
             case SerializationType.SystemBinary:
@@ -119,7 +119,7 @@ public class DefaultSerializationSelector : ISerializationSelector
                     else
                     {
                         WriterExtension.WriteNotNull(ref writer);
-                        using (var block = new ByteBlock(1024 * 64))
+                        using (var block = new ByteBlockV4(1024 * 64))
                         {
                             SerializeConvert.BinarySerialize(block.AsStream(), parameter);
                             WriterExtension.WriteByteBlock(ref writer, block);

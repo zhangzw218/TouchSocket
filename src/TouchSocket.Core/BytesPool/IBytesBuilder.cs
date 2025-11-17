@@ -26,10 +26,10 @@ public interface IBytesBuilder
     int MaxLength { get; }
 
     /// <summary>
-    /// 构建对象到<see cref="ByteBlock"/>
+    /// 构建对象到<see cref="ByteBlockV4"/>
     /// </summary>
     /// <param name="writer">要构建的字节块对象引用。</param>
-    void Build<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    void Build<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
 
         ;
 }

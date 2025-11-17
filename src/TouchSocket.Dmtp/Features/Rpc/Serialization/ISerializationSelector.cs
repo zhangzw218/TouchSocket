@@ -25,7 +25,7 @@ public interface ISerializationSelector
     /// <param name="serializationType">指定的序列化类型。</param>
     /// <param name="parameterType">预期反序列化参数的类型。</param>
     /// <returns>反序列化后的参数对象。</returns>
-    object DeserializeParameter<TReader>(ref TReader reader, SerializationType serializationType, Type parameterType) where TReader : IBytesReader
+    object DeserializeParameter<TReader>(ref TReader reader, SerializationType serializationType, Type parameterType) where TReader : IBytesReaderV4
 
         ;
 
@@ -36,7 +36,7 @@ public interface ISerializationSelector
     /// <param name="wirter">将要包含序列化参数的字节块。</param>
     /// <param name="serializationType">要使用的序列化类型。</param>
     /// <param name="parameter">要序列化的参数对象。</param>
-    void SerializeParameter<TWriter>(ref TWriter wirter, SerializationType serializationType, in object parameter) where TWriter : IBytesWriter
+    void SerializeParameter<TWriter>(ref TWriter wirter, SerializationType serializationType, in object parameter) where TWriter : IBytesWriterV4
 
         ;
 }

@@ -45,7 +45,7 @@ internal sealed class ModbusTcpRequest : ModbusTcpBase, IRequestInfoBuilder, IRe
 
     /// <inheritdoc/>
     public void Build<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
     {
         WriterExtension.WriteValue<TWriter, ushort>(ref writer, this.TransactionId, EndianType.Big);

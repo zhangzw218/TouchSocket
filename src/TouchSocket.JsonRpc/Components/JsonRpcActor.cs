@@ -164,7 +164,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
 
         try
         {
-            var byteBlock = new ByteBlock(1024 * 64);
+            var byteBlock = new ByteBlockV4(1024 * 64);
             try
             {
                 var str = this.BuildJsonRpcRequest(jsonRpcRequest);
@@ -413,7 +413,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
             };
 
             var str = JsonConvert.SerializeObject(response, this.m_jsonRpcWaitResultConverter);
-            var byteBlock = new ByteBlock(1024 * 64);
+            var byteBlock = new ByteBlockV4(1024 * 64);
             try
             {
                 WriterExtension.WriteNormalString(ref byteBlock, str, this.Encoding);

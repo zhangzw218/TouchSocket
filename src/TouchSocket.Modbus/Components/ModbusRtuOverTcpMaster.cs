@@ -37,7 +37,7 @@ public class ModbusRtuOverTcpMaster : TcpClientBase, IModbusRtuOverTcpMaster
         {
             var modbusRequest = new ModbusRtuRequest(request);
 
-            var byteBlock = new ValueByteBlock(modbusRequest.MaxLength);
+            var byteBlock = new ValueByteBlockV4(modbusRequest.MaxLength);
             try
             {
                 modbusRequest.Build(ref byteBlock);

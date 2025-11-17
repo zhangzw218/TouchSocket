@@ -347,7 +347,7 @@ public abstract class TcpDmtpSessionClient : TcpSessionClientBase, ITcpDmtpSessi
     //}
 
     /// <inheritdoc/>
-    protected override async ValueTask<bool> OnTcpReceiving(IBytesReader reader)
+    protected override async ValueTask<bool> OnTcpReceiving(IBytesReaderV4 reader)
     {
         while (reader.BytesRemaining > 0)
         {

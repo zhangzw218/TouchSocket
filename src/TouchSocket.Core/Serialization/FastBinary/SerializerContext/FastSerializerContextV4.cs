@@ -17,17 +17,17 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 快速序列化上下文
 /// </summary>
-public abstract class FastSerializerContext
+public abstract class FastSerializerContextV4
 {
-    private readonly Dictionary<Type, SerializObject> m_instanceCache = new Dictionary<Type, SerializObject>();
+    private readonly Dictionary<Type, SerializObjectV4> m_instanceCache = new Dictionary<Type, SerializObjectV4>();
 
     /// <summary>
     /// 快速序列化上下文
     /// </summary>
-    public FastSerializerContext()
+    public FastSerializerContextV4()
     {
         this.AddConverter(typeof(Version), new VersionFastBinaryConverter());
-        this.AddConverter(typeof(ByteBlock), new ByteBlockFastBinaryConverter());
+        this.AddConverter(typeof(ByteBlockV4), new ByteBlockFastBinaryConverter());
         this.AddConverter(typeof(MemoryStream), new MemoryStreamFastBinaryConverter());
         this.AddConverter(typeof(Guid), new GuidFastBinaryConverter());
         this.AddConverter(typeof(Metadata), new MetadataFastBinaryConverter());
@@ -48,7 +48,7 @@ public abstract class FastSerializerContext
     /// <param name="type"></param>
     /// <returns></returns>
     [RequiresUnreferencedCode("此方法可能会使用反射构建访问器，与剪裁不兼容。")]
-    public virtual SerializObject GetSerializeObject([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type)
+    public virtual SerializObjectV4 GetSerializeObject([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type)
     {
         return this.m_instanceCache.TryGetValue(type, out var serializObject) ? serializObject : null;
     }
@@ -58,9 +58,9 @@ public abstract class FastSerializerContext
     /// </summary>
     /// <param name="type"></param>
     /// <param name="converter"></param>
-    protected void AddConverter([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type, IFastBinaryConverter converter)
+    protected void AddConverter([DynamicallyAccessedMembers(AOT.FastBinaryFormatter)] Type type, IFastBinaryConverterV4 converter)
     {
-        var serializObject = new SerializObject(type, converter);
+        var serializObject = new SerializObjectV4(type, converter);
         this.m_instanceCache.AddOrUpdate(type, serializObject);
     }
 }

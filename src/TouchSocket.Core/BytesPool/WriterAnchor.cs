@@ -15,14 +15,14 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 表示字节写入器的锚点，用于记录特定位置和获取对应的字节跨度。
 /// </summary>
-/// <typeparam name="TWriter">实现<see cref="IBytesWriter"/>接口的字节写入器类型。</typeparam>
+/// <typeparam name="TWriter">实现<see cref="IBytesWriterV4"/>接口的字节写入器类型。</typeparam>
 /// <remarks>
 /// WriterAnchor是一个只读的ref结构体，用于在字节写入操作中标记特定位置，
 /// 并在后续操作中能够回退到该位置或获取从该位置开始的字节跨度。
 /// 支持版本检查以确保数据一致性，并提供回退功能用于高级字节写入场景。
 /// </remarks>
 public readonly ref struct WriterAnchor<TWriter>
-    where TWriter : IBytesWriter
+    where TWriter : IBytesWriterV4
 {
     private readonly long m_position;
     private readonly Span<byte> m_span;

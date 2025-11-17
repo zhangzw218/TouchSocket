@@ -25,7 +25,7 @@ namespace TouchSocket.Core;
 /// SegmentedBytesWriter使用列表结构的缓冲段来管理内存，当单个段不足时会自动创建新段。
 /// 每个段的最小大小为4096字节，支持动态扩展。所有缓冲区都使用<see cref="ArrayPool{T}.Shared"/>进行内存池管理。
 /// </remarks>
-public sealed class SegmentedBytesWriter : DisposableObject, IBytesWriter
+public sealed class SegmentedBytesWriter : DisposableObject, IBytesWriterV4
 {
     private const int MinBufferSize = 4096; // 增加最小缓冲区大小
 

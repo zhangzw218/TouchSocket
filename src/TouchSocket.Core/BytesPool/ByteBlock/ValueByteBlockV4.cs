@@ -19,7 +19,7 @@ namespace TouchSocket.Core;
 
 /// <summary>
 /// 表示一个值类型的字节块，提供高性能的字节缓冲区操作，避免堆分配开销。
-/// 实现了<see cref="IByteBlock"/>接口。
+/// 实现了<see cref="IByteBlockV4"/>接口。
 /// </summary>
 /// <remarks>
 /// ValueByteBlock作为值类型实现，适用于高频使用且对性能要求较高的场景。
@@ -27,7 +27,7 @@ namespace TouchSocket.Core;
 /// 注意：由于是值类型，在多线程环境下使用时需要特别小心。
 /// </remarks>
 [DebuggerDisplay("Length={Length},Position={Position},Capacity={Capacity}")]
-public struct ValueByteBlock : IByteBlock
+public struct ValueByteBlockV4 : IByteBlockV4
 {
     #region Common
     private readonly Func<int, Memory<byte>> m_onRent;
@@ -38,21 +38,21 @@ public struct ValueByteBlock : IByteBlock
     private short m_version;
 
     /// <summary>
-    /// 使用指定内存块初始化<see cref="ValueByteBlock"/>的新实例。
+    /// 使用指定内存块初始化<see cref="ValueByteBlockV4"/>的新实例。
     /// </summary>
     /// <param name="memory">要使用的内存块。</param>
-    public ValueByteBlock(Memory<byte> memory)
+    public ValueByteBlockV4(Memory<byte> memory)
     {
         this.m_memory = memory;
     }
 
     /// <summary>
-    /// 使用指定容量和内存管理委托初始化<see cref="ValueByteBlock"/>的新实例。
+    /// 使用指定容量和内存管理委托初始化<see cref="ValueByteBlockV4"/>的新实例。
     /// </summary>
     /// <param name="capacity">初始容量，最小为1024字节。</param>
     /// <param name="onRent">内存租赁委托。</param>
     /// <param name="onReturn">内存归还委托。</param>
-    public ValueByteBlock(int capacity, Func<int, Memory<byte>> onRent, Action<Memory<byte>> onReturn)
+    public ValueByteBlockV4(int capacity, Func<int, Memory<byte>> onRent, Action<Memory<byte>> onReturn)
     {
         capacity = Math.Max(capacity, 1024);
         this.m_memory = onRent(capacity);
@@ -62,10 +62,10 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <summary>
-    /// 使用指定容量初始化<see cref="ValueByteBlock"/>的新实例，使用默认的<see cref="ArrayPool{T}"/>进行内存管理。
+    /// 使用指定容量初始化<see cref="ValueByteBlockV4"/>的新实例，使用默认的<see cref="ArrayPool{T}"/>进行内存管理。
     /// </summary>
     /// <param name="capacity">初始容量，最小为1024字节。</param>
-    public ValueByteBlock(int capacity)
+    public ValueByteBlockV4(int capacity)
     {
         capacity = Math.Max(capacity, 1024);
         this.m_onRent = (c) =>
@@ -273,7 +273,7 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    ReadOnlyMemory<byte> IBytesReader.GetMemory(int count)
+    ReadOnlyMemory<byte> IBytesReaderV4.GetMemory(int count)
     {
         return this.GetMemory(count).Slice(0, count);
     }
@@ -285,7 +285,7 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    ReadOnlySpan<byte> IBytesReader.GetSpan(int count)
+    ReadOnlySpan<byte> IBytesReaderV4.GetSpan(int count)
     {
         return this.GetSpan(count).Slice(0, count);
     }

@@ -25,7 +25,7 @@ public abstract class HttpContent
     /// <typeparam name="TWriter">实现IByteBlock接口的类型</typeparam>
     /// <param name="writer">字节块的引用</param>
     /// <returns>返回一个布尔值，表示构建内容是否成功</returns>
-    internal bool InternalBuildingContent<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    internal bool InternalBuildingContent<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         return this.OnBuildingContent(ref writer);
     }
@@ -59,7 +59,7 @@ public abstract class HttpContent
     /// <typeparam name="TWriter">实现IByteBlock接口的类型</typeparam>
     /// <param name="writer">字节块的引用</param>
     /// <returns>返回一个布尔值，表示构建内容是否成功</returns>
-    protected abstract bool OnBuildingContent<TWriter>(ref TWriter writer) where TWriter : IBytesWriter;
+    protected abstract bool OnBuildingContent<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4;
 
     /// <summary>
     /// 抽象方法，由子类实现，用于构建HTTP头

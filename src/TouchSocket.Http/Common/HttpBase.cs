@@ -131,7 +131,7 @@ public abstract class HttpBase : IRequestInfo
     public string ProtocolVersion { get; set; } = "1.1";
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal bool ParsingHeader<TReader>(ref TReader reader) where TReader : IBytesReader
+    internal bool ParsingHeader<TReader>(ref TReader reader) where TReader : IBytesReaderV4
     {
         var index = ReaderExtension.IndexOf(ref reader, TouchSocketHttpUtility.CRLFCRLF);
 

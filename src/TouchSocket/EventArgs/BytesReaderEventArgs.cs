@@ -21,7 +21,7 @@ public class BytesReaderEventArgs : PluginEventArgs
     /// 初始化字节事件参数对象
     /// </summary>
     /// <param name="reader">需要传递的字节块数据</param>
-    public BytesReaderEventArgs(IBytesReader reader)
+    public BytesReaderEventArgs(IBytesReaderV4 reader)
     {
         this.Reader = reader;
     }
@@ -29,5 +29,5 @@ public class BytesReaderEventArgs : PluginEventArgs
     /// <summary>
     /// 获取字节块数据
     /// </summary>
-    public IBytesReader Reader { get; }
+    public IBytesReaderV4 Reader { get; }
 }

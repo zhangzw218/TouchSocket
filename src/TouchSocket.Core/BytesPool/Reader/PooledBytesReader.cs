@@ -19,7 +19,7 @@ namespace TouchSocket.Core;
 /// 表示一个使用内存池的字节读取器。
 /// <inheritdoc />
 /// </summary>
-public sealed class PooledBytesReader : IDisposable, IBytesReader
+public sealed class PooledBytesReader : IDisposable, IBytesReaderV4
 {
     private IMemoryOwner<byte> m_memoryOwner;
     private long m_position = 0;

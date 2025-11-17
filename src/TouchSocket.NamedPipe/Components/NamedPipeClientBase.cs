@@ -277,7 +277,7 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     /// </summary>
     /// <param name="reader"></param>
     /// <returns>如果返回<see langword="true"/>则表示数据已被处理，且不会再向下传递。</returns>
-    protected virtual ValueTask<bool> OnNamedPipeReceiving(IBytesReader reader)
+    protected virtual ValueTask<bool> OnNamedPipeReceiving(IBytesReaderV4 reader)
     {
         return this.PluginManager.RaiseAsync(typeof(INamedPipeReceivingPlugin), this.Resolver, this, new BytesReaderEventArgs(reader));
     }

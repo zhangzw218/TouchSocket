@@ -15,7 +15,7 @@ namespace TouchSocket.Dmtp.FileTransfer;
 internal class WaitFileSection : WaitRouterPackage, IDisposable
 {
     public FileSection FileSection { get; set; }
-    public ByteBlock Value { get; set; }
+    public ByteBlockV4 Value { get; set; }
 
     public void Dispose()
     {

@@ -69,7 +69,7 @@ public abstract class CustomCountSpliterDataHandlingAdapter<TCountSpliterRequest
     /// <summary>
     /// 筛选解析数据，通过计数分隔符来确定数据边界。
     /// </summary>
-    /// <typeparam name="TByteBlock">字节块类型，必须实现<see cref="IBytesReader"/>接口。</typeparam>
+    /// <typeparam name="TByteBlock">字节块类型，必须实现<see cref="IBytesReaderV4"/>接口。</typeparam>
     /// <param name="byteBlock">要解析的字节块。</param>
     /// <param name="beCached">指示当前请求对象是否为缓存的上次实例。</param>
     /// <param name="request">输出的请求信息对象。</param>

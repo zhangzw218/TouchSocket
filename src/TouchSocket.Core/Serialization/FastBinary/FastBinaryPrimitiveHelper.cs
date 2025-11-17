@@ -20,7 +20,7 @@ internal static class FastBinaryPrimitiveHelper
     /// 写入已知原生类型。成功返回 true。
     /// </summary>
     public static bool TryWritePrimitive<TWriter, T>(ref TWriter writer, T value)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
         switch (value)
         {
@@ -48,7 +48,7 @@ internal static class FastBinaryPrimitiveHelper
     /// 读取基础类型。若处理则返回 true。
     /// </summary>
     public static bool TryReadPrimitive<TReader>(ref TReader reader, Type type, out object value)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
     {
         switch (Type.GetTypeCode(type))
         {

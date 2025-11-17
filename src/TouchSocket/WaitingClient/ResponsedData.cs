@@ -17,7 +17,7 @@ namespace TouchSocket.Sockets;
 /// </summary>
 public readonly struct ResponsedData : IDisposable
 {
-    private readonly ByteBlock m_byteBlock;
+    private readonly ByteBlockV4 m_byteBlock;
 
     /// <summary>
     /// 初始化 <see cref="ResponsedData"/> 结构体的新实例。
@@ -29,7 +29,7 @@ public readonly struct ResponsedData : IDisposable
         if (!memory.IsEmpty)
         {
             var data = memory.Span;
-            this.m_byteBlock = new ByteBlock(data.Length);
+            this.m_byteBlock = new ByteBlockV4(data.Length);
             this.m_byteBlock.Write(data);
             this.m_byteBlock.SeekToStart();
         }

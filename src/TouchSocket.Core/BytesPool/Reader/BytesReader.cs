@@ -16,14 +16,14 @@ namespace TouchSocket.Core;
 
 /// <summary>
 /// 表示一个基于字节序列的高性能字节读取器，提供对<see cref="ReadOnlySequence{T}"/>的读取操作。
-/// 实现了<see cref="IBytesReader"/>和<see cref="IDisposable"/>接口。
+/// 实现了<see cref="IBytesReaderV4"/>和<see cref="IDisposable"/>接口。
 /// </summary>
 /// <remarks>
 /// BytesReader作为值类型实现，适用于高频使用且对性能要求较高的场景。
 /// 支持单段和多段字节序列的读取，当序列为多段时会自动进行内存合并。
 /// 内部使用内存池来优化多段序列的处理性能。
 /// </remarks>
-public struct BytesReader : IDisposable, IBytesReader
+public struct BytesReader : IDisposable, IBytesReaderV4
 {
     private readonly ReadOnlySequence<byte> m_sequence;
     private IMemoryOwner<byte> m_memoryOwner;

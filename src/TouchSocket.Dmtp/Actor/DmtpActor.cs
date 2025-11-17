@@ -976,7 +976,7 @@ public abstract class DmtpActor : DisposableObject, IDmtpActor
     public async Task SendAsync<TPackage>(ushort protocol, TPackage package, CancellationToken cancellationToken = default)
         where TPackage : IPackage
     {
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             package.Package(ref byteBlock);
@@ -1007,7 +1007,7 @@ public abstract class DmtpActor : DisposableObject, IDmtpActor
     /// <inheritdoc/>
     public async Task SendAsync(ushort protocol, string value, CancellationToken cancellationToken = default)
     {
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             WriterExtension.WriteNormalString(ref byteBlock, value, Encoding.UTF8);
@@ -1133,7 +1133,7 @@ public abstract class DmtpActor : DisposableObject, IDmtpActor
 
     internal async Task SendChannelPackageAsync(ChannelPackage channelPackage, CancellationToken cancellationToken)
     {
-        using (var byteBlock = new ByteBlock(channelPackage.GetLen()))
+        using (var byteBlock = new ByteBlockV4(channelPackage.GetLen()))
         {
             var block = byteBlock;
             channelPackage.Package(ref block);
@@ -1164,7 +1164,7 @@ public abstract class DmtpActor : DisposableObject, IDmtpActor
                 throw new Exception(TouchSocketDmtpStatus.ChannelExisted.GetDescription(id));
             }
         }
-        var byteBlock = new ByteBlock(1024 * 64);
+        var byteBlock = new ByteBlockV4(1024 * 64);
         try
         {
             var waitCreateChannel = new WaitCreateChannelPackage()

@@ -117,7 +117,7 @@ public static class WaitingClientExtension
         where TClient : IReceiverClient<TResult>, ISender, IRequestInfoSender
         where TResult : IReceiverResult
     {
-        var byteBlock = new ByteBlock(1024);
+        var byteBlock = new ByteBlockV4(1024);
 
         try
         {
@@ -145,7 +145,7 @@ public static class WaitingClientExtension
         where TResult : IReceiverResult
     {
 
-        var byteBlock = new ByteBlock(1024);
+        var byteBlock = new ByteBlockV4(1024);
 
         try
         {

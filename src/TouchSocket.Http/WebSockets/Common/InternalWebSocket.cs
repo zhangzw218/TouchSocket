@@ -71,10 +71,10 @@ internal sealed partial class InternalWebSocket : IWebSocket
 
         try
         {
-            var byteBlock = new ByteBlock(1024);
+            var byteBlock = new ByteBlockV4(1024);
             try
             {
-                WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, (ushort)closeStatus, EndianType.Big);
+                WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, (ushort)closeStatus, EndianType.Big);
                 if (statusDescription.HasValue())
                 {
                     WriterExtension.WriteNormalString(ref byteBlock, statusDescription, Encoding.UTF8);
@@ -133,7 +133,7 @@ internal sealed partial class InternalWebSocket : IWebSocket
 
     public async Task SendAsync(string text, bool endOfMessage = true, CancellationToken cancellationToken = default)
     {
-        var byteBlock = new ByteBlock(1024);
+        var byteBlock = new ByteBlockV4(1024);
         try
         {
             WriterExtension.WriteNormalString(ref byteBlock, text, Encoding.UTF8);
