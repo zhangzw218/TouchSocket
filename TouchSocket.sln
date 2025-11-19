@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.11205.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Core", "Src\TouchSocket.Core\TouchSocket.Core.csproj", "{12471445-B5C5-49E2-A7AC-15782299C5A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Core", "Src\TouchSocket.Core\TouchSocketV4.Core.csproj", "{12471445-B5C5-49E2-A7AC-15782299C5A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "开源版", "开源版", "{065EA3E8-D90E-4074-9979-D651EE4E6B3E}"
 EndProject
@@ -17,8 +17,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "源生成器", "源生成器", "{33F8723D-9853-4E00-97DB-521E34EC895C}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocket.SourceGenerator.SharedProject", "Src\TouchSocket.SourceGenerator.SharedProject\TouchSocket.SourceGenerator.SharedProject.shproj", "{5D348476-DB26-4BBA-AB83-272412C3BE71}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocket.Shared", "src\TouchSocket.Shared\TouchSocket.Shared.shproj", "{BA463F9B-D28C-4C8A-AEB7-ECDC7FC1C3A1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchSocketV4.Core.SourceGenerator", "src\TouchSocketV4.Core.SourceGenerator\TouchSocketV4.Core.SourceGenerator.csproj", "{82E2AB17-2BEB-37F8-794D-6B26D9F55A96}"
 EndProject
@@ -43,7 +41,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{12471445-B5C5-49E2-A7AC-15782299C5A9} = {065EA3E8-D90E-4074-9979-D651EE4E6B3E}
 		{5D348476-DB26-4BBA-AB83-272412C3BE71} = {33F8723D-9853-4E00-97DB-521E34EC895C}
-		{BA463F9B-D28C-4C8A-AEB7-ECDC7FC1C3A1} = {065EA3E8-D90E-4074-9979-D651EE4E6B3E}
 		{82E2AB17-2BEB-37F8-794D-6B26D9F55A96} = {33F8723D-9853-4E00-97DB-521E34EC895C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
@@ -53,6 +50,5 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Src\TouchSocket.SourceGenerator.SharedProject\TouchSocket.SourceGenerator.SharedProject.projitems*{5d348476-db26-4bba-ab83-272412c3be71}*SharedItemsImports = 13
 		Src\TouchSocket.SourceGenerator.SharedProject\TouchSocket.SourceGenerator.SharedProject.projitems*{82e2ab17-2beb-37f8-794d-6b26d9f55a96}*SharedItemsImports = 5
-		Src\TouchSocket.Shared\TouchSocket.Shared.projitems*{ba463f9b-d28c-4c8a-aeb7-ecdc7fc1c3a1}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

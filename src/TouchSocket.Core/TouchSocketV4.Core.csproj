@@ -6,11 +6,12 @@
 
 说明文档：https://touchsocket.net/</Description>
 		<Title>TouchSocket.Core</Title>
+		<SignAssembly>false</SignAssembly>
+		<DelaySign>false</DelaySign>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\TouchSocket.SourceGenerator.SharedProject\tools\*.ps1" PackagePath="tools" Pack="true" Visible="false" />
-		<Compile Include="..\TouchSocket.Shared\Core\ThrowHelperCore.cs" Link="Exceptions\ThrowHelperCore.cs" />
 		<None Include="..\TouchSocketV4.Core.SourceGenerator\bin\$(Configuration)\netstandard2.0\TouchSocketV4.Core.SourceGenerator.dll" PackagePath="analyzers\dotnet\cs" Pack="true" Visible="false" />
 	</ItemGroup>
 
