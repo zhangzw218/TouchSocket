@@ -15,14 +15,14 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 具有设置配置的对象
 /// </summary>
-public abstract class SetupConfigObject : ResolverConfigObject, ISetupConfigObject
+public abstract class SetupConfigObject : ResolverConfigObject, ISetupConfigObjectV4
 {
-    private TouchSocketConfig m_config;
+    private TouchSocketConfigV4 m_config;
     private IPluginManager m_pluginManager;
     private IScopedResolver m_scopedResolver;
 
     /// <inheritdoc/>
-    public override TouchSocketConfig Config => this.m_config;
+    public override TouchSocketConfigV4 Config => this.m_config;
 
     /// <inheritdoc/>
     public override IPluginManager PluginManager => this.m_pluginManager;
@@ -31,7 +31,7 @@ public abstract class SetupConfigObject : ResolverConfigObject, ISetupConfigObje
     public override IResolver Resolver => this.m_scopedResolver.Resolver;
 
     /// <inheritdoc/>
-    public async Task SetupAsync(TouchSocketConfig config)
+    public async Task SetupAsync(TouchSocketConfigV4 config)
     {
         this.ThrowIfDisposed();
 
@@ -59,11 +59,11 @@ public abstract class SetupConfigObject : ResolverConfigObject, ISetupConfigObje
     /// 加载配置
     /// </summary>
     /// <param name="config">要加载的配置对象</param>
-    protected virtual void LoadConfig(TouchSocketConfig config)
+    protected virtual void LoadConfig(TouchSocketConfigV4 config)
     {
     }
 
-    private void BuildConfig(TouchSocketConfig config)
+    private void BuildConfig(TouchSocketConfigV4 config)
     {
         this.m_config = config ?? throw new ArgumentNullException(nameof(config));
 

@@ -26,7 +26,7 @@ public static class AspNetCoreConfigExtension
     /// <param name="config"></param>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static TouchSocketConfig UseAspNetCoreContainer(this TouchSocketConfig config, IServiceCollection services)
+    public static TouchSocketConfigV4 UseAspNetCoreContainer(this TouchSocketConfigV4 config, IServiceCollection services)
     {
         config.SetRegistrator(new AspNetCoreContainer(services));
         return config;

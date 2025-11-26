@@ -25,7 +25,7 @@ public abstract partial class NamedPipeSessionClientBase : ResolverConfigObject,
 {
     #region 字段
 
-    private TouchSocketConfig m_config;
+    private TouchSocketConfigV4 m_config;
     private SingleStreamDataHandlingAdapter m_dataHandlingAdapter;
     private string m_id;
     private NamedPipeListenOption m_listenOption;
@@ -54,7 +54,7 @@ public abstract partial class NamedPipeSessionClientBase : ResolverConfigObject,
     public CancellationToken ClosedToken => this.m_transport == null ? new CancellationToken(true) : this.m_transport.ClosedToken;
 
     /// <inheritdoc/>
-    public override TouchSocketConfig Config => this.m_config;
+    public override TouchSocketConfigV4 Config => this.m_config;
 
     /// <inheritdoc/>
     public SingleStreamDataHandlingAdapter DataHandlingAdapter => this.m_dataHandlingAdapter;
@@ -91,7 +91,7 @@ public abstract partial class NamedPipeSessionClientBase : ResolverConfigObject,
 
     #region Internal
 
-    internal async Task InternalInitialized(TouchSocketConfig config, NamedPipeListenOption option, IResolver resolver, IPluginManager pluginManager, INamedPipeServiceBase serviceBase, Func<NamedPipeSessionClientBase, bool> tryAddAction, TryOutEventHandler<NamedPipeSessionClientBase> tryRemoveAction, TryOutEventHandler<NamedPipeSessionClientBase> tryGet)
+    internal async Task InternalInitialized(TouchSocketConfigV4 config, NamedPipeListenOption option, IResolver resolver, IPluginManager pluginManager, INamedPipeServiceBase serviceBase, Func<NamedPipeSessionClientBase, bool> tryAddAction, TryOutEventHandler<NamedPipeSessionClientBase> tryRemoveAction, TryOutEventHandler<NamedPipeSessionClientBase> tryGet)
     {
         this.m_config = config;
         this.m_pluginManager = pluginManager;

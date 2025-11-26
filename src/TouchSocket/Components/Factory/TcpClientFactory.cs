@@ -26,7 +26,7 @@ public abstract class TcpClientFactory<TClient> : ConnectableClientFactory<TClie
 public sealed class TcpClientFactory : TcpClientFactory<TcpClient>
 {
     /// <inheritdoc/>
-    protected override async Task<TcpClient> CreateClient(TouchSocketConfig config, CancellationToken cancellationToken)
+    protected override async Task<TcpClient> CreateClient(TouchSocketConfigV4 config, CancellationToken cancellationToken)
     {
         var client = new TcpClient();
         await client.SetupAsync(config).ConfigureAwait(EasyTask.ContinueOnCapturedContext);

@@ -59,7 +59,7 @@ internal sealed class HttpServerDataHandlingAdapter : SingleStreamDataHandlingAd
     {
         if (owner is not HttpSessionClient httpSessionClient)
         {
-            throw new Exception($"此适配器必须适用于{nameof(IHttpService)}");
+            throw new Exception($"此适配器必须适用于{nameof(IHttpServiceV4)}");
         }
 
         this.m_requestRoot = new ServerHttpRequest(httpSessionClient);

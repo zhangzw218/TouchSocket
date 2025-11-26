@@ -23,7 +23,7 @@ public class ConfigEventArgs : PluginEventArgs
     /// 初始化ConfigEventArgs类的实例
     /// </summary>
     /// <param name="config">TouchSocket配置对象</param>
-    public ConfigEventArgs(TouchSocketConfig config)
+    public ConfigEventArgs(TouchSocketConfigV4 config)
     {
         this.Config = config;
     }
@@ -31,5 +31,5 @@ public class ConfigEventArgs : PluginEventArgs
     /// <summary>
     /// 具体配置
     /// </summary>
-    public TouchSocketConfig Config { get; }
+    public TouchSocketConfigV4 Config { get; }
 }

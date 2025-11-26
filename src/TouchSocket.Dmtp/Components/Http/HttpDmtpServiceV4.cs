@@ -15,10 +15,10 @@ using TouchSocket.Http;
 namespace TouchSocket.Dmtp;
 
 /// <summary>
-/// HttpDmtpService 类，继承自<see cref="HttpDmtpService{TClient}"/>，实现<see cref="IHttpDmtpService"/>接口。
+/// HttpDmtpService 类，继承自<see cref="HttpDmtpServiceV4{TClient}"/>，实现<see cref="IHttpDmtpServiceV4"/>接口。
 /// 该类提供基于HTTP协议的Dmtp服务，用于处理特定类型的会话客户端。
 /// </summary>
-public class HttpDmtpService : HttpDmtpService<HttpDmtpSessionClient>, IHttpDmtpService
+public class HttpDmtpServiceV4 : HttpDmtpServiceV4<HttpDmtpSessionClient>, IHttpDmtpServiceV4
 {
     /// <inheritdoc/>
     protected sealed override HttpDmtpSessionClient NewClient()
@@ -35,7 +35,7 @@ public class HttpDmtpService : HttpDmtpService<HttpDmtpSessionClient>, IHttpDmtp
 /// HttpDmtpService泛型类型
 /// </summary>
 /// <typeparam name="TClient">泛型参数，限定为<see cref="HttpDmtpSessionClient"/>的派生类型</typeparam>
-public abstract partial class HttpDmtpService<TClient> : HttpService<TClient>, IHttpDmtpService<TClient> where TClient : HttpDmtpSessionClient
+public abstract partial class HttpDmtpServiceV4<TClient> : HttpService<TClient>, IHttpDmtpServiceV4<TClient> where TClient : HttpDmtpSessionClient
 {
     /// <summary>
     /// 连接令箭

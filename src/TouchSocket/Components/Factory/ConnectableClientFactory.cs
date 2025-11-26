@@ -21,7 +21,7 @@ public abstract class ConnectableClientFactory<TClient> : ClientFactory<TClient>
     /// <summary>
     /// 获取传输的客户端配置
     /// </summary>
-    public Func<TouchSocketConfig> GetConfig { get; set; }
+    public Func<TouchSocketConfigV4> GetConfig { get; set; }
 
     /// <inheritdoc/>
     public override bool IsAlive(TClient client)
@@ -41,13 +41,13 @@ public abstract class ConnectableClientFactory<TClient> : ClientFactory<TClient>
     /// <param name="config">传输客户端配置。</param>
     /// <param name="cancellationToken"></param>
     /// <returns>返回创建的客户端任务。</returns>
-    protected abstract Task<TClient> CreateClient(TouchSocketConfig config, CancellationToken cancellationToken);
+    protected abstract Task<TClient> CreateClient(TouchSocketConfigV4 config, CancellationToken cancellationToken);
 
     /// <summary>
     /// 获取配置。
     /// </summary>
     /// <returns>返回TouchSocketConfig对象，用于传输客户端配置。</returns>
-    protected virtual TouchSocketConfig OnGetConfig()
+    protected virtual TouchSocketConfigV4 OnGetConfig()
     {
         return this.GetConfig?.Invoke();
     }

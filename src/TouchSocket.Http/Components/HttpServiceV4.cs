@@ -12,11 +12,27 @@
 
 using TouchSocket.Sockets;
 
-namespace TouchSocket.Dmtp;
+namespace TouchSocket.Http;
 
 /// <summary>
-/// 基于Dmtp协议的Tcp客户端接口
+/// HTTP/HTTPS服务器
 /// </summary>
-public interface ITcpDmtpClient : IDmtpClient, ITcpSession, ITcpConnectableClient
+public abstract class HttpService<TClient> : TcpServiceBase<TClient>, IHttpService<TClient> where TClient : HttpSessionClient
 {
+}
+
+/// <summary>
+/// HTTP/HTTPS服务器
+/// </summary>
+public class HttpServiceV4 : HttpService<HttpSessionClient>, IHttpServiceV4
+{
+    /// <inheritdoc/>
+    protected override HttpSessionClient NewClient()
+    {
+        return new PrivateHttpSessionClient();
+    }
+
+    private sealed class PrivateHttpSessionClient : HttpSessionClient
+    {
+    }
 }

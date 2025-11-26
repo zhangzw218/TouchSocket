@@ -33,12 +33,12 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddSingletonSetupConfigObject<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
-           where TObjectService : class, ISetupConfigObject
+    public static IServiceCollection AddSingletonSetupConfigObjectV4<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
+           where TObjectService : class, ISetupConfigObjectV4
    where TObjectImpService : class, TObjectService
     {
         var aspNetCoreContainer = new AspNetCoreContainer(services);
-        var config = new TouchSocketConfig();
+        var config = new TouchSocketConfigV4();
         config.SetRegistrator(aspNetCoreContainer);
         actionConfig.Invoke(config);
         if (config.GetValue(TouchSocketCoreConfigExtension.ConfigureContainerProperty) is Action<IRegistrator> actionContainer)
@@ -66,12 +66,12 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddTransientSetupConfigObject<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
-             where TObjectService : class, ISetupConfigObject
+    public static IServiceCollection AddTransientSetupConfigObjectV4<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
+             where TObjectService : class, ISetupConfigObjectV4
      where TObjectImpService : class, TObjectService
     {
         var aspNetCoreContainer = new AspNetCoreContainer(services);
-        var config = new TouchSocketConfig();
+        var config = new TouchSocketConfigV4();
         config.SetRegistrator(aspNetCoreContainer);
         actionConfig.Invoke(config);
         if (config.GetValue(TouchSocketCoreConfigExtension.ConfigureContainerProperty) is Action<IRegistrator> actionContainer)
@@ -99,12 +99,12 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddScopedSetupConfigObject<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
-             where TObjectService : class, ISetupConfigObject
+    public static IServiceCollection AddScopedSetupConfigObjectV4<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
+             where TObjectService : class, ISetupConfigObjectV4
      where TObjectImpService : class, TObjectService
     {
         var aspNetCoreContainer = new AspNetCoreContainer(services);
-        var config = new TouchSocketConfig();
+        var config = new TouchSocketConfigV4();
         config.SetRegistrator(aspNetCoreContainer);
         actionConfig.Invoke(config);
         if (config.GetValue(TouchSocketCoreConfigExtension.ConfigureContainerProperty) is Action<IRegistrator> actionContainer)
@@ -129,18 +129,18 @@ public static class ServiceCollectionExtensions
     #region HostedService
 
     /// <summary>
-    /// 添加托管服务,该服务必须实现<see cref="ISetupConfigObject"/>和<see cref="IServiceBase"/>接口
+    /// 添加托管服务,该服务必须实现<see cref="ISetupConfigObjectV4"/>和<see cref="IServiceBase"/>接口
     /// </summary>
     /// <typeparam name="TObjectService">服务接口类型</typeparam>
     /// <typeparam name="TObjectImpService">服务实现类型</typeparam>
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddServiceHostedService<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
-             where TObjectService : class, ISetupConfigObject, IServiceBase
+    public static IServiceCollection AddServiceHostedServiceV4<TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
+             where TObjectService : class, ISetupConfigObjectV4, IServiceBase
      where TObjectImpService : class, TObjectService
     {
-        return AddSetupConfigObjectHostedService<ServiceHost<TObjectService>, TObjectService, TObjectImpService>(services, actionConfig);
+        return AddSetupConfigObjectHostedServiceV4<ServiceHost<TObjectService>, TObjectService, TObjectImpService>(services, actionConfig);
     }
 
     /// <summary>
@@ -152,13 +152,13 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddSetupConfigObjectHostedService<THostService, TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddSetupConfigObjectHostedServiceV4<THostService, TObjectService, [DynamicallyAccessedMembers(AOT.Container)] TObjectImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
              where THostService : SetupConfigObjectHostedService<TObjectService>, new()
-     where TObjectService : class, ISetupConfigObject
+     where TObjectService : class, ISetupConfigObjectV4
      where TObjectImpService : class, TObjectService
     {
         var aspNetCoreContainer = new AspNetCoreContainer(services);
-        var config = new TouchSocketConfig();
+        var config = new TouchSocketConfigV4();
         config.SetRegistrator(aspNetCoreContainer);
         actionConfig.Invoke(config);
         if (config.GetValue(TouchSocketCoreConfigExtension.ConfigureContainerProperty) is Action<IRegistrator> actionContainer)
@@ -190,11 +190,11 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddTcpService<TService, [DynamicallyAccessedMembers(AOT.Container)] TImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddTcpServiceV4<TService, [DynamicallyAccessedMembers(AOT.Container)] TImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
              where TService : class, ITcpServiceBase
      where TImpService : class, TService
     {
-        return AddServiceHostedService<TService, TImpService>(services, actionConfig);
+        return AddServiceHostedServiceV4<TService, TImpService>(services, actionConfig);
     }
 
     /// <summary>
@@ -203,9 +203,9 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddTcpService(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddTcpServiceV4(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
     {
-        return services.AddTcpService<ITcpService, TcpService>(actionConfig);
+        return services.AddTcpServiceV4<ITcpService, TcpService>(actionConfig);
     }
 
     #endregion TcpService
@@ -220,11 +220,11 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddUdpSession<TService, [DynamicallyAccessedMembers(AOT.Container)] TImpService>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddUdpSessionV4<TService, [DynamicallyAccessedMembers(AOT.Container)] TImpService>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
             where TService : class, IUdpSession
     where TImpService : class, TService
     {
-        return AddServiceHostedService<TService, TImpService>(services, actionConfig);
+        return AddServiceHostedServiceV4<TService, TImpService>(services, actionConfig);
     }
 
     /// <summary>
@@ -233,9 +233,9 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddUdpSession(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddUdpSessionV4(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
     {
-        return services.AddUdpSession<IUdpSession, UdpSession>(actionConfig);
+        return services.AddUdpSessionV4<IUdpSession, UdpSession>(actionConfig);
     }
 
     #endregion UdpSession
@@ -250,11 +250,11 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddSingletonTcpClient<TClient, [DynamicallyAccessedMembers(AOT.Container)] TImpClient>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddSingletonTcpClientV4<TClient, [DynamicallyAccessedMembers(AOT.Container)] TImpClient>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
            where TClient : class, ITcpClient
     where TImpClient : class, TClient
     {
-        return AddSingletonSetupConfigObject<TClient, TImpClient>(services, actionConfig);
+        return AddSingletonSetupConfigObjectV4<TClient, TImpClient>(services, actionConfig);
     }
 
     /// <summary>
@@ -263,9 +263,9 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddSingletonTcpClient(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddSingletonTcpClientV4(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
     {
-        return services.AddSingletonTcpClient<ITcpClient, TcpClient>(actionConfig);
+        return services.AddSingletonTcpClientV4<ITcpClient, TcpClient>(actionConfig);
     }
 
     /// <summary>
@@ -276,11 +276,11 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddTransientTcpClient<TClient, [DynamicallyAccessedMembers(AOT.Container)] TImpClient>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddTransientTcpClientV4<TClient, [DynamicallyAccessedMembers(AOT.Container)] TImpClient>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
              where TClient : class, ITcpClient
      where TImpClient : class, TClient
     {
-        return AddTransientSetupConfigObject<TClient, TImpClient>(services, actionConfig);
+        return AddTransientSetupConfigObjectV4<TClient, TImpClient>(services, actionConfig);
     }
 
     /// <summary>
@@ -289,9 +289,9 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddTransientTcpClient(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddTransientTcpClientV4(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
     {
-        return services.AddTransientTcpClient<ITcpClient, TcpClient>(actionConfig);
+        return services.AddTransientTcpClientV4<ITcpClient, TcpClient>(actionConfig);
     }
 
     /// <summary>
@@ -302,10 +302,10 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddScopedTcpClient<TClient, [DynamicallyAccessedMembers(AOT.Container)] TImpClient>(this IServiceCollection services, Action<TouchSocketConfig> actionConfig) where TClient : class, ITcpClient
+    public static IServiceCollection AddScopedTcpClientV4<TClient, [DynamicallyAccessedMembers(AOT.Container)] TImpClient>(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig) where TClient : class, ITcpClient
      where TImpClient : class, TClient
     {
-        return AddScopedSetupConfigObject<TClient, TImpClient>(services, actionConfig);
+        return AddScopedSetupConfigObjectV4<TClient, TImpClient>(services, actionConfig);
     }
 
     /// <summary>
@@ -314,9 +314,9 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="actionConfig">配置操作委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddScopedTcpClient(this IServiceCollection services, Action<TouchSocketConfig> actionConfig)
+    public static IServiceCollection AddScopedTcpClientV4(this IServiceCollection services, Action<TouchSocketConfigV4> actionConfig)
     {
-        return services.AddScopedTcpClient<ITcpClient, TcpClient>(actionConfig);
+        return services.AddScopedTcpClientV4<ITcpClient, TcpClient>(actionConfig);
     }
 
     #endregion TcpClient

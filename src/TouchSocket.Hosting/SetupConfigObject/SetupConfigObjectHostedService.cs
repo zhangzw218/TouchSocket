@@ -18,16 +18,16 @@ namespace TouchSocket.Hosting;
 /// <summary>
 /// SetupObjectHostedService
 /// </summary>
-public abstract class SetupConfigObjectHostedService<TConfigObject> : IHostedService where TConfigObject : ISetupConfigObject
+public abstract class SetupConfigObjectHostedService<TConfigObject> : IHostedService where TConfigObject : ISetupConfigObjectV4
 {
-    private TouchSocketConfig m_config;
+    private TouchSocketConfigV4 m_config;
     private TConfigObject m_configObject;
     private IResolver m_resolver;
 
     /// <summary>
     /// Config配置
     /// </summary>
-    public TouchSocketConfig Config => this.m_config;
+    public TouchSocketConfigV4 Config => this.m_config;
 
     /// <summary>
     /// 实际对象。
@@ -41,7 +41,7 @@ public abstract class SetupConfigObjectHostedService<TConfigObject> : IHostedSer
 
     #region Internal
 
-    internal void SetConfig(TouchSocketConfig config)
+    internal void SetConfig(TouchSocketConfigV4 config)
     {
         this.m_config = config;
     }
@@ -69,7 +69,7 @@ public abstract class SetupConfigObjectHostedService<TConfigObject> : IHostedSer
     }
 
     /// <summary>
-    /// 启动Host。并且调用<see cref="ISetupConfigObject.SetupAsync(TouchSocketConfig)"/>
+    /// 启动Host。并且调用<see cref="ISetupConfigObjectV4.SetupAsync(TouchSocketConfigV4)"/>
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>

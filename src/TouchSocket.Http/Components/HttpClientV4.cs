@@ -15,7 +15,7 @@ namespace TouchSocket.Http;
 /// <summary>
 /// Http客户端
 /// </summary>
-public class HttpClient : HttpClientBase, IHttpClient
+public class HttpClientV4 : HttpClientBase, IHttpClientV4
 {
     private readonly SemaphoreSlim m_semaphoreSlim = new SemaphoreSlim(1, 1);
 

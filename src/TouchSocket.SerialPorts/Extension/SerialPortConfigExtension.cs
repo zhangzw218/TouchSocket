@@ -20,14 +20,14 @@ public static class SerialPortConfigExtension
     /// <summary>
     /// 设置串口适配器
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<Func<SingleStreamDataHandlingAdapter>> SerialDataHandlingAdapterProperty =
         new("SerialDataHandlingAdapter", null);
 
     /// <summary>
     /// 串口属性。
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig), ActionMode = true)]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4), ActionMode = true)]
     public static readonly DependencyProperty<SerialPortOption> SerialPortOptionProperty =
         new("SerialPortOption", default);
 }

@@ -23,7 +23,7 @@ public interface INatSessionClient : ITcpSession, ITcpListenableClient, IClient,
     /// </summary>
     /// <param name="setupAction">配置操作委托，用于设置TouchSocket配置。</param>
     /// <returns>Task异步任务对象。</returns>
-    Task AddTargetClientAsync(Action<TouchSocketConfig> setupAction);
+    Task AddTargetClientAsync(Action<TouchSocketConfigV4> setupAction);
 
     /// <summary>
     /// 异步添加目标客户端。

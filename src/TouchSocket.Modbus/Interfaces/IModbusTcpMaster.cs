@@ -17,6 +17,6 @@ namespace TouchSocket.Modbus;
 /// <summary>
 /// 基于Tcp协议的Modbus主站接口。
 /// </summary>
-public interface IModbusTcpMaster : ISetupConfigObject, IDependencyClient, ITcpSession, IIgnoreSlaveIdModbusMaster, ITcpConnectableClient
+public interface IModbusTcpMaster : ISetupConfigObjectV4, IDependencyClient, ITcpSession, IIgnoreSlaveIdModbusMaster, ITcpConnectableClient
 {
 }

@@ -20,25 +20,25 @@ public static class NamedPipeConfigExtension
     /// <summary>
     /// 命名管道数据处理适配器属性。
     /// </summary>
-    [GeneratorProperty(TargetType =typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType =typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<Func<SingleStreamDataHandlingAdapter>> NamedPipeDataHandlingAdapterProperty = new("NamedPipeDataHandlingAdapter", null
         );
 
     /// <summary>
     /// 直接单个配置命名管道监听的地址组。所需类型<see cref="Action"/>。
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig),ActionMode =true)]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4),ActionMode =true)]
     public static readonly DependencyProperty<List<NamedPipeListenOption>> NamedPipeListenOptionProperty = new("NamedPipeListenOption", null);
 
     /// <summary>
     /// 命名管道名称。
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<string> PipeNameProperty = new("PipeName", null);
 
     /// <summary>
     /// 命名管道的服务主机名称。
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<string> PipeServerNameProperty = new("PipeServerName", ".");
 }

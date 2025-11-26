@@ -95,7 +95,7 @@ public class HttpJsonRpcClient : HttpClientBase, IHttpJsonRpcClient
     /// 加载配置。
     /// </summary>
     /// <param name="config">配置。</param>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         base.LoadConfig(config);
         this.m_jsonRpcActor.Logger = this.Logger;

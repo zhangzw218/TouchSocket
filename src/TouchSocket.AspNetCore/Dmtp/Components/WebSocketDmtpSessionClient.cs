@@ -36,7 +36,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
     #region 字段
     private WebSocket m_client;
     private ClosedEventArgs m_closedEventArgs;
-    private TouchSocketConfig m_config;
+    private TouchSocketConfigV4 m_config;
     private SealedDmtpActor m_dmtpActor;
     private DmtpAdapter m_dmtpAdapter;
     private HttpContext m_httpContext;
@@ -53,7 +53,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
     public CancellationToken ClosedToken => this.m_httpContext?.RequestAborted ?? new CancellationToken(true);
 
     /// <inheritdoc/>
-    public override TouchSocketConfig Config => this.m_config;
+    public override TouchSocketConfigV4 Config => this.m_config;
 
     /// <inheritdoc/>
     public IDmtpActor DmtpActor => this.m_dmtpActor;
@@ -138,7 +138,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
         await this.ProtectedResetIdAsync(newId).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
     }
 
-    internal void InternalSetConfig(TouchSocketConfig config)
+    internal void InternalSetConfig(TouchSocketConfigV4 config)
     {
         this.m_config = config;
         this.m_dmtpAdapter = new DmtpAdapter()

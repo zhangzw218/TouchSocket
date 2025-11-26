@@ -15,14 +15,14 @@ using System.Net;
 namespace TouchSocket.Sockets;
 
 /// <summary>
-/// <see cref="TouchSocketConfig"/>的Http扩展配置。
+/// <see cref="TouchSocketConfigV4"/>的Http扩展配置。
 /// </summary>
 public static class HttpConfigExtensions
 {
     /// <summary>
     /// 代理属性。
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<IWebProxy> ProxyProperty = new DependencyProperty<IWebProxy>("Proxy", default);
 
     /// <summary>
@@ -31,7 +31,7 @@ public static class HttpConfigExtensions
     /// <param name="config">配置对象</param>
     /// <param name="proxyUri">代理Uri</param>
     /// <returns>配置对象</returns>
-    public static TouchSocketConfig SetProxy(this TouchSocketConfig config, Uri proxyUri)
+    public static TouchSocketConfigV4 SetProxy(this TouchSocketConfigV4 config, Uri proxyUri)
     {
         config.SetProxy(new WebProxy(proxyUri));
         return config;
@@ -44,7 +44,7 @@ public static class HttpConfigExtensions
     /// <param name="host">主机</param>
     /// <param name="port">端口</param>
     /// <returns>配置对象</returns>
-    public static TouchSocketConfig SetProxy(this TouchSocketConfig config, string host, int port)
+    public static TouchSocketConfigV4 SetProxy(this TouchSocketConfigV4 config, string host, int port)
     {
         config.SetProxy(new WebProxy(host, port));
         return config;
@@ -58,7 +58,7 @@ public static class HttpConfigExtensions
     /// <param name="username">用户名</param>
     /// <param name="password">密码</param>
     /// <returns>配置对象</returns>
-    public static TouchSocketConfig SetProxy(this TouchSocketConfig config, Uri proxyUri, string username, string password)
+    public static TouchSocketConfigV4 SetProxy(this TouchSocketConfigV4 config, Uri proxyUri, string username, string password)
     {
         config.SetProxy(new WebProxy(proxyUri)
         {
@@ -76,7 +76,7 @@ public static class HttpConfigExtensions
     /// <param name="username">用户名</param>
     /// <param name="password">密码</param>
     /// <returns>配置对象</returns>
-    public static TouchSocketConfig SetProxy(this TouchSocketConfig config, string host, int port, string username, string password)
+    public static TouchSocketConfigV4 SetProxy(this TouchSocketConfigV4 config, string host, int port, string username, string password)
     {
         config.SetProxy(new WebProxy(host, port)
         {
@@ -90,7 +90,7 @@ public static class HttpConfigExtensions
     /// </summary>
     /// <param name="config">配置对象</param>
     /// <returns>配置对象</returns>
-    public static TouchSocketConfig SetSystemProxy(this TouchSocketConfig config)
+    public static TouchSocketConfigV4 SetSystemProxy(this TouchSocketConfigV4 config)
     {
         config.SetProxy(WebRequest.GetSystemWebProxy());
         return config;

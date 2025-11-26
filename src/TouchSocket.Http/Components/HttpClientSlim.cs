@@ -37,7 +37,7 @@ public class HttpClientSlim : SetupConfigObject
     public System.Net.Http.HttpClient HttpClient => this.m_httpClient;
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         this.m_httpClient.BaseAddress ??= config.GetValue(TouchSocketConfigExtension.RemoteIPHostProperty);
         base.LoadConfig(config);

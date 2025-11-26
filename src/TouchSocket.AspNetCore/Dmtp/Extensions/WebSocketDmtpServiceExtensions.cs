@@ -25,11 +25,11 @@ public static class WebSocketDmtpServiceExtensions
     /// 添加<see cref="WebSocketDmtpService"/>服务。
     /// </summary>
     /// <param name="services">要添加服务的<see cref="IServiceCollection"/>集合。</param>
-    /// <param name="configAction">用于配置<see cref="TouchSocketConfig"/>的配置操作。</param>
+    /// <param name="configAction">用于配置<see cref="TouchSocketConfigV4"/>的配置操作。</param>
     /// <returns>返回添加了<see cref="WebSocketDmtpService"/>服务的<see cref="IServiceCollection"/>集合。</returns>
-    public static IServiceCollection AddWebSocketDmtpService(this IServiceCollection services, Action<TouchSocketConfig> configAction)
+    public static IServiceCollection AddWebSocketDmtpService(this IServiceCollection services, Action<TouchSocketConfigV4> configAction)
     {
         // 使用Singleton模式添加WebSocketDmtpService服务，并应用配置操作。
-        return services.AddSingletonSetupConfigObject<IWebSocketDmtpService, WebSocketDmtpService>(configAction);
+        return services.AddSingletonSetupConfigObjectV4<IWebSocketDmtpService, WebSocketDmtpService>(configAction);
     }
 }

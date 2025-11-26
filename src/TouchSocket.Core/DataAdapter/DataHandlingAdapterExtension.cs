@@ -20,11 +20,11 @@ public static class DataHandlingAdapterExtension
     #region SingleStreamDataHandlingAdapter
 
     /// <summary>
-    /// 将<see cref="TouchSocketConfig"/>中的配置，装载在<see cref="SingleStreamDataHandlingAdapter"/>上。
+    /// 将<see cref="TouchSocketConfigV4"/>中的配置，装载在<see cref="SingleStreamDataHandlingAdapter"/>上。
     /// </summary>
     /// <param name="adapter"></param>
     /// <param name="config"></param>
-    public static void Config(this SingleStreamDataHandlingAdapter adapter, TouchSocketConfig config)
+    public static void Config(this SingleStreamDataHandlingAdapter adapter, TouchSocketConfigV4 config)
     {
         var option = config.GetValue(AdapterOptionProperty) ?? throw new ArgumentNullException(nameof(AdapterOptionProperty));
 
@@ -71,7 +71,7 @@ public static class DataHandlingAdapterExtension
     /// </summary>
     /// <param name="adapter"></param>
     /// <param name="config"></param>
-    public static void Config(this DataHandlingAdapter adapter, TouchSocketConfig config)
+    public static void Config(this DataHandlingAdapter adapter, TouchSocketConfigV4 config)
     {
         var option = config.GetValue(AdapterOptionProperty) ?? throw new ArgumentNullException(nameof(AdapterOptionProperty));
 
@@ -86,6 +86,6 @@ public static class DataHandlingAdapterExtension
     /// <summary>
     /// 设置适配器相关的配置
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig), ActionMode = true)]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4), ActionMode = true)]
     public static readonly DependencyProperty<AdapterOption> AdapterOptionProperty = new("AdapterOption", new AdapterOption());
 }

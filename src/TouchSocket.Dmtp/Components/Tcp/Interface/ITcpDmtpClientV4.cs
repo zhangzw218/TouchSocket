@@ -10,17 +10,13 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+using TouchSocket.Sockets;
+
+namespace TouchSocket.Dmtp;
 
 /// <summary>
-/// 具有设置配置的对象接口
+/// 基于Dmtp协议的Tcp客户端接口
 /// </summary>
-public interface ISetupConfigObject : IResolverConfigObject
+public interface ITcpDmtpClientV4 : IDmtpClient, ITcpSession, ITcpConnectableClient
 {
-    /// <summary>
-    /// 异步配置设置项
-    /// </summary>
-    /// <param name="config">配置对象</param>
-    /// <returns>异步任务</returns>
-    Task SetupAsync(TouchSocketConfig config);
 }

@@ -41,7 +41,7 @@ public static class AutofacConfigExtension
     /// <param name="config"></param>
     /// <param name="containerBuilder"></param>
     /// <returns></returns>
-    public static TouchSocketConfig UseAutofacContainer(this TouchSocketConfig config, ContainerBuilder containerBuilder)
+    public static TouchSocketConfigV4 UseAutofacContainer(this TouchSocketConfigV4 config, ContainerBuilder containerBuilder)
     {
         config.SetRegistrator(new AutofacContainer(containerBuilder));
         return config;
@@ -56,7 +56,7 @@ public static class AutofacConfigExtension
     /// <param name="config"></param>
     /// <param name="container"></param>
     /// <returns></returns>
-    public static TouchSocketConfig UseAutofacContainer(this TouchSocketConfig config, Autofac.IContainer container)
+    public static TouchSocketConfigV4 UseAutofacContainer(this TouchSocketConfigV4 config, Autofac.IContainer container)
     {
         config.SetResolver(new AutofacContainer(container));
         return config;
@@ -70,7 +70,7 @@ public static class AutofacConfigExtension
     /// </para>
     /// <param name="config"></param>
     /// <returns></returns>
-    public static TouchSocketConfig UseAutofacContainer(this TouchSocketConfig config)
+    public static TouchSocketConfigV4 UseAutofacContainer(this TouchSocketConfigV4 config)
     {
         return UseAutofacContainer(config, new ContainerBuilder());
     }

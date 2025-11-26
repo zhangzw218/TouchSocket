@@ -20,7 +20,7 @@ namespace TouchSocket.Dmtp;
 /// 这个类的目的是通过HTTP协议提供DMTP客户端功能，
 /// 允许应用程序以一种标准化的方式发送和接收直接邮件。
 /// </summary>
-public partial class HttpDmtpClient : HttpClientBase, IHttpDmtpClient
+public partial class HttpDmtpClientV4 : HttpClientBase, IHttpDmtpClientV4
 {
     #region 字段
 
@@ -140,7 +140,7 @@ public partial class HttpDmtpClient : HttpClientBase, IHttpDmtpClient
     }
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         base.LoadConfig(config);
         var dmtpRouteService = this.Resolver.Resolve<IDmtpRouteService>();

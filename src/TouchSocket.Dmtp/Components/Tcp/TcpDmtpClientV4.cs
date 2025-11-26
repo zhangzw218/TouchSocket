@@ -18,12 +18,12 @@ namespace TouchSocket.Dmtp;
 /// TcpDmtpClient 类是部分类，实现了 ITcpDmtpClient 接口，用于提供基于 TCP 协议的客户端功能。
 /// 继承自 TcpClientBase，复用基础的 TCP 客户端功能。
 /// </summary>
-public partial class TcpDmtpClient : TcpClientBase, ITcpDmtpClient
+public partial class TcpDmtpClientV4 : TcpClientBase, ITcpDmtpClientV4
 {
     /// <summary>
     /// 初始化TcpDmtpClient类的新实例
     /// </summary>
-    public TcpDmtpClient()
+    public TcpDmtpClientV4()
     {
         // 设置协议属性为DmtpProtocol，表示使用DMTP协议
         this.Protocol = DmtpUtility.DmtpProtocol;
@@ -115,7 +115,7 @@ public partial class TcpDmtpClient : TcpClientBase, ITcpDmtpClient
     #endregion ResetId
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         base.LoadConfig(config);
         var dmtpRouteService = this.Resolver.Resolve<IDmtpRouteService>();

@@ -59,7 +59,7 @@ public class WebSocketJsonRpcClient : SetupClientWebSocket, IWebSocketJsonRpcCli
     }
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         base.LoadConfig(config);
 

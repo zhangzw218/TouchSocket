@@ -20,7 +20,7 @@ namespace TouchSocket.JsonRpc;
 
 public static class JsonRpcConfigExtension
 {
-    [GeneratorProperty(TargetType =typeof(TouchSocketConfig),ActionMode =true)]
+    [GeneratorProperty(TargetType =typeof(TouchSocketConfigV4),ActionMode =true)]
     public readonly static DependencyProperty<JsonRpcOption> JsonRpcOptionProperty =
        new("JsonRpcOption", default);
 }

@@ -10,20 +10,22 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchSocket.Http;
 
-namespace TouchSocket.Http;
+namespace TouchSocket.Dmtp;
+
 
 /// <summary>
-/// Http终端接口
+/// 定义了一个泛型的HTTP DMTP服务接口，用于支持不同类型的HTTP DMTP客户端操作。
 /// </summary>
-public interface IHttpClient : IHttpSession, ISetupConfigObject, IOnlineClient, ITcpConnectableClient
+/// <typeparam name="TClient">HTTP DMTP会话客户端类型，必须实现<see cref="IHttpDmtpSessionClient"/>接口。</typeparam>
+public interface IHttpDmtpServiceV4<TClient> : IHttpDmtpServiceBase, IHttpService<TClient> where TClient : IHttpDmtpSessionClient
 {
-    /// <summary>
-    /// 发起请求
-    /// </summary>
-    /// <param name="request">请求体</param>
-    /// <param name="cancellationToken">结束等待令箭</param>
-    /// <returns></returns>
-    ValueTask<HttpResponseResult> RequestAsync(HttpRequest request, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// 定义了一个非泛型的HTTP DMTP服务接口，使用默认的HTTP DMTP会话客户端类型。
+/// </summary>
+public interface IHttpDmtpServiceV4 : IHttpDmtpServiceV4<HttpDmtpSessionClient>
+{
 }

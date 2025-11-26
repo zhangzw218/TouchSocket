@@ -15,17 +15,17 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 配置文件基类
 /// </summary>
-public class TouchSocketConfig : DependencyObject, ICloneable
+public class TouchSocketConfigV4 : DependencyObject, ICloneable
 {
     /// <summary>
     /// 克隆配置依赖项，并返回一个新的克隆对象。
     /// </summary>
     /// <returns></returns>
-    public TouchSocketConfig Clone()
+    public TouchSocketConfigV4 Clone()
     {
         this.ThrowIfDisposed();
 
-        var config = new TouchSocketConfig();
+        var config = new TouchSocketConfigV4();
         this.CloneTo(config, true);
         return config;
     }

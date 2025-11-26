@@ -232,12 +232,12 @@ public static class ClientExtension
     }
 
     /// <inheritdoc cref="IConnectableClient.ConnectAsync(CancellationToken)"/>
-    public static async Task ConnectAsync<TClient>(this TClient client, IPHost ipHost, int millisecondsTimeout = 5000) where TClient : ISetupConfigObject, ITcpConnectableClient
+    public static async Task ConnectAsync<TClient>(this TClient client, IPHost ipHost, int millisecondsTimeout = 5000) where TClient : ISetupConfigObjectV4, ITcpConnectableClient
     {
-        TouchSocketConfig config;
+        TouchSocketConfigV4 config;
         if (client.Config == null)
         {
-            config = new TouchSocketConfig();
+            config = new TouchSocketConfigV4();
             config.SetRemoteIPHost(ipHost);
             await client.SetupAsync(config).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
         }
@@ -277,7 +277,7 @@ public static class ClientExtension
     /// <param name="client">要连接的客户端对象。</param>
     /// <param name="millisecondsTimeout">连接超时时间，以毫秒为单位。默认为5000毫秒（5秒）。</param>
     /// <returns>返回一个Result对象，其中包含连接操作的结果代码和可能的异常消息。</returns>
-    public static async Task<Result> TryConnectAsync<TClient>(this TClient client, int millisecondsTimeout = 5000) where TClient : ISetupConfigObject, IConnectableClient
+    public static async Task<Result> TryConnectAsync<TClient>(this TClient client, int millisecondsTimeout = 5000) where TClient : ISetupConfigObjectV4, IConnectableClient
     {
         try
         {
@@ -318,12 +318,12 @@ public static class ClientExtension
     /// <remarks>
     /// 注意，本同步操作是直接等待的<see cref="IConnectableClient.ConnectAsync(CancellationToken)"/>，所以请谨慎使用。
     /// </remarks>
-    /// <typeparam name="TClient">要连接的客户端类型，必须实现<see cref="ISetupConfigObject"/>和<see cref="IConnectableClient"/>接口。</typeparam>
+    /// <typeparam name="TClient">要连接的客户端类型，必须实现<see cref="ISetupConfigObjectV4"/>和<see cref="IConnectableClient"/>接口。</typeparam>
     /// <param name="client">要进行连接的客户端实例。</param>
     /// <param name="ipHost">连接的目标IP地址和端口信息。</param>
     /// <param name="millisecondsTimeout">连接超时时间，单位为毫秒，默认为5000毫秒。</param>
     [AsyncToSyncWarning]
-    public static void Connect<TClient>(this TClient client, IPHost ipHost, int millisecondsTimeout = 5000) where TClient : ISetupConfigObject, ITcpConnectableClient
+    public static void Connect<TClient>(this TClient client, IPHost ipHost, int millisecondsTimeout = 5000) where TClient : ISetupConfigObjectV4, ITcpConnectableClient
     {
         ConnectAsync(client, ipHost, millisecondsTimeout).GetFalseAwaitResult();
     }
@@ -360,12 +360,12 @@ public static class ClientExtension
     /// <remarks>
     /// 注意，本同步操作是直接等待的<see cref="IConnectableClient.ConnectAsync(CancellationToken)"/>，所以请谨慎使用。
     /// </remarks>
-    /// <typeparam name="TClient">要连接的客户端类型，必须实现<see cref="ISetupConfigObject"/>和<see cref="IConnectableClient"/>.</typeparam>
+    /// <typeparam name="TClient">要连接的客户端类型，必须实现<see cref="ISetupConfigObjectV4"/>和<see cref="IConnectableClient"/>.</typeparam>
     /// <param name="client">要执行连接操作的客户端实例。</param>
     /// <param name="millisecondsTimeout">连接超时时间，以毫秒为单位。默认值为5000毫秒（5秒）。</param>
     /// <returns>一个<see cref="Result"/>实例，包含连接操作的结果代码和可能的异常消息。</returns>
     [AsyncToSyncWarning]
-    public static Result TryConnect<TClient>(this TClient client, int millisecondsTimeout = 5000) where TClient : ISetupConfigObject, IConnectableClient
+    public static Result TryConnect<TClient>(this TClient client, int millisecondsTimeout = 5000) where TClient : ISetupConfigObjectV4, IConnectableClient
     {
         try
         {

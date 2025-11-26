@@ -20,5 +20,5 @@ public interface IConfigObject : IDependencyObject, ILoggerObject
     /// <summary>
     /// 配置项
     /// </summary>
-    TouchSocketConfig Config { get; }
+    TouchSocketConfigV4 Config { get; }
 }

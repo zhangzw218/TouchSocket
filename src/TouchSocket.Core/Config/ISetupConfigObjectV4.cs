@@ -10,29 +10,17 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
-
-namespace TouchSocket.Http;
+namespace TouchSocket.Core;
 
 /// <summary>
-/// HTTP/HTTPS服务器
+/// 具有设置配置的对象接口
 /// </summary>
-public abstract class HttpService<TClient> : TcpServiceBase<TClient>, IHttpService<TClient> where TClient : HttpSessionClient
+public interface ISetupConfigObjectV4 : IResolverConfigObject
 {
-}
-
-/// <summary>
-/// HTTP/HTTPS服务器
-/// </summary>
-public class HttpService : HttpService<HttpSessionClient>, IHttpService
-{
-    /// <inheritdoc/>
-    protected override HttpSessionClient NewClient()
-    {
-        return new PrivateHttpSessionClient();
-    }
-
-    private sealed class PrivateHttpSessionClient : HttpSessionClient
-    {
-    }
+    /// <summary>
+    /// 异步配置设置项
+    /// </summary>
+    /// <param name="config">配置对象</param>
+    /// <returns>异步任务</returns>
+    Task SetupAsync(TouchSocketConfigV4 config);
 }

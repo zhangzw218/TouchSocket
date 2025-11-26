@@ -19,6 +19,6 @@ namespace TouchSocket.XmlRpc;
 /// <summary>
 /// IWebApiClient
 /// </summary>
-public interface IXmlRpcClient : IRpcClient, IHttpSession, ISetupConfigObject, IOnlineClient, ITcpConnectableClient
+public interface IXmlRpcClient : IRpcClient, IHttpSession, ISetupConfigObjectV4, IOnlineClient, ITcpConnectableClient
 {
 }

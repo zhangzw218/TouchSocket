@@ -25,7 +25,7 @@ public static class HttpClientExtension
     /// <param name="cancellationToken">用于取消操作的取消令牌。</param>
     /// <returns>包含从URL获取的字节的数组。</returns>
     /// <exception cref="Exception">如果HTTP请求失败，将抛出异常。</exception>
-    public static async Task<byte[]> GetByteArrayAsync(this IHttpClient httpClient, string url, CancellationToken cancellationToken)
+    public static async Task<byte[]> GetByteArrayAsync(this IHttpClientV4 httpClient, string url, CancellationToken cancellationToken)
     {
         // 创建HTTP请求对象
         var request = new HttpRequest();
@@ -60,7 +60,7 @@ public static class HttpClientExtension
     /// <param name="url">要请求的URL。</param>
     /// <param name="cancellationToken">用于取消操作的取消令牌。</param>
     /// <returns>返回从指定URL获取的字符串。</returns>
-    public static async Task<string> GetStringAsync(this IHttpClient httpClient, string url, CancellationToken cancellationToken = default)
+    public static async Task<string> GetStringAsync(this IHttpClientV4 httpClient, string url, CancellationToken cancellationToken = default)
     {
         // 将获取到的字节数组转换为UTF-8编码的字符串
         return (await GetByteArrayAsync(httpClient, url, cancellationToken)).ToUtf8String();
@@ -76,7 +76,7 @@ public static class HttpClientExtension
     /// <param name="stream">用于存储文件内容的目标流</param>
     /// <param name="cancellationToken">用于取消操作的取消令牌</param>
     /// <returns>返回一个异步任务</returns>
-    public static async Task GetFileAsync(this IHttpClient httpClient, HttpRequest request, Stream stream, CancellationToken cancellationToken)
+    public static async Task GetFileAsync(this IHttpClientV4 httpClient, HttpRequest request, Stream stream, CancellationToken cancellationToken)
     {
         // 使用using语句确保响应对象正确地被释放
         using (var responseResult = await httpClient.RequestAsync(request, cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext))
@@ -97,7 +97,7 @@ public static class HttpClientExtension
     /// <param name="stream">用于存储文件内容的目标流</param>
     /// <param name="flowOperator">用于控制下载过程的操作符。</param>
     /// <returns>返回一个Result对象，表示下载结果。</returns>
-    public static async Task<Result> GetFileAsync(this IHttpClient httpClient, HttpRequest request, Stream stream, HttpFlowOperator flowOperator)
+    public static async Task<Result> GetFileAsync(this IHttpClientV4 httpClient, HttpRequest request, Stream stream, HttpFlowOperator flowOperator)
     {
         var cancellationToken = flowOperator.Token;
 
@@ -120,7 +120,7 @@ public static class HttpClientExtension
     /// <param name="stream">将文件内容写入的流。</param>
     /// <param name="cancellationToken">用于取消异步操作的取消令牌。</param>
     /// <returns>返回一个Task对象，表示异步操作。</returns>
-    public static Task GetFileAsync(this IHttpClient httpClient, string url, Stream stream, CancellationToken cancellationToken)
+    public static Task GetFileAsync(this IHttpClientV4 httpClient, string url, Stream stream, CancellationToken cancellationToken)
     {
         // 创建并初始化HttpRequest对象，用于封装HTTP请求的相关信息和操作
         var request = new HttpRequest();
@@ -139,7 +139,7 @@ public static class HttpClientExtension
     /// <param name="stream">将文件内容写入的流。</param>
     /// <param name="flowOperator">用于控制下载过程的操作符。</param>
     /// <returns>返回一个Result对象，表示下载结果。</returns>
-    public static Task<Result> GetFileAsync(this IHttpClient httpClient, string url, Stream stream, HttpFlowOperator flowOperator)
+    public static Task<Result> GetFileAsync(this IHttpClientV4 httpClient, string url, Stream stream, HttpFlowOperator flowOperator)
     {
         // 创建并初始化HttpRequest对象，用于封装HTTP请求的相关信息和操作
         var request = new HttpRequest();
@@ -163,7 +163,7 @@ public static class HttpClientExtension
     /// <param name="cancellationToken">用于取消操作的取消令牌。</param>
     /// <typeparam name="TClient">客户端类型，必须继承自HttpClientBase并实现IHttpClient接口。</typeparam>
     public static async Task<Result> UploadFileAsync<TClient>(this TClient client, string url, FileInfo fileInfo, CancellationToken cancellationToken)
-        where TClient : HttpClientBase, IHttpClient
+        where TClient : HttpClientBase, IHttpClientV4
     {
         using (var stream = fileInfo.OpenRead())
         {
@@ -198,7 +198,7 @@ public static class HttpClientExtension
     /// <param name="flowOperator">用于控制上传过程的操作符。</param>
     /// <returns>返回一个Result对象，表示上传结果。</returns>
     public static async Task<Result> UploadFileAsync<TClient>(this TClient client, HttpRequest request, Stream stream, HttpFlowOperator flowOperator)
-       where TClient : HttpClientBase, IHttpClient
+       where TClient : HttpClientBase, IHttpClientV4
     {
         try
         {

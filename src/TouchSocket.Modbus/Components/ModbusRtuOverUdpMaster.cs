@@ -35,7 +35,7 @@ public class ModbusRtuOverUdpMaster : UdpSessionBase, IModbusRtuOverUdpMaster
     #endregion 字段
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         this.SetAdapter(new ModbusUdpRtuAdapter());
         base.LoadConfig(config);

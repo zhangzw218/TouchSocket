@@ -16,12 +16,12 @@ namespace TouchSocket.Dmtp;
 
 
 /// <summary>
-/// 定义了一个泛型接口<see cref="ITcpDmtpService{TClient}"/>，它继承自<see cref="ITcpDmtpServiceBase"/>和<see cref="ITcpServiceBase{TClient}"/>，
+/// 定义了一个泛型接口<see cref="ITcpDmtpServiceV4{TClient}"/>，它继承自<see cref="ITcpDmtpServiceBase"/>和<see cref="ITcpServiceBase{TClient}"/>，
 /// 其中 TClient 必须是 ITcpDmtpSessionClient 的实现。
 /// 该接口用于提供基于 TCP 协议的 Dmtp 服务，支持泛型客户端类型 TClient。
 /// </summary>
 /// <typeparam name="TClient">客户端类型，必须实现 ITcpDmtpSessionClient 接口。</typeparam>
-public interface ITcpDmtpService<TClient> : ITcpDmtpServiceBase, ITcpServiceBase<TClient> where TClient : ITcpDmtpSessionClient
+public interface ITcpDmtpServiceV4<TClient> : ITcpDmtpServiceBase, ITcpServiceBase<TClient> where TClient : ITcpDmtpSessionClient
 {
 }
 
@@ -30,6 +30,6 @@ public interface ITcpDmtpService<TClient> : ITcpDmtpServiceBase, ITcpServiceBase
 /// 其中 TClient 被固定为 TcpDmtpSessionClient 类型。
 /// 该接口用于提供基于 TCP 协议的 Dmtp 服务，使用默认的 TcpDmtpSessionClient 作为客户端类型。
 /// </summary>
-public interface ITcpDmtpService : ITcpDmtpService<TcpDmtpSessionClient>
+public interface ITcpDmtpServiceV4 : ITcpDmtpServiceV4<TcpDmtpSessionClient>
 {
 }

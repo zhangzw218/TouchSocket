@@ -46,11 +46,11 @@ public abstract class NatSessionClient : TcpSessionClientBase, INatSessionClient
     }
 
     /// <inheritdoc/>
-    public async Task AddTargetClientAsync(Action<TouchSocketConfig> setupAction)
+    public async Task AddTargetClientAsync(Action<TouchSocketConfigV4> setupAction)
     {
         // 创建一个新的TcpClient实例。
         var client = new NatTargetClient();
-        var config = new TouchSocketConfig();
+        var config = new TouchSocketConfigV4();
         setupAction.Invoke(config);
 
         await client.SetupAsync(config).ConfigureAwait(EasyTask.ContinueOnCapturedContext);

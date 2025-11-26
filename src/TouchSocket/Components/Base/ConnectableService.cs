@@ -78,7 +78,7 @@ public abstract class ConnectableService : ServiceBase, IConnectableService
     }
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         if (config.TryGetValue(TouchSocketConfigExtension.GetDefaultNewIdProperty,out var func))
         {

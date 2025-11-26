@@ -31,7 +31,7 @@ public static class TouchSocketCoreConfigExtension
     /// <param name="config">配置对象。</param>
     /// <param name="value">一个作用于IPluginManager的委托，用于配置插件。</param>
     /// <returns>返回更新后的配置对象。</returns>
-    public static TouchSocketConfig ConfigurePlugins(this TouchSocketConfig config, Action<IPluginManager> value)
+    public static TouchSocketConfigV4 ConfigurePlugins(this TouchSocketConfigV4 config, Action<IPluginManager> value)
     {
         // 尝试从配置中获取已存在的ConfigurePluginsProperty的值，该值是一个委托
         if (config.TryGetValue(ConfigurePluginsProperty, out var action))
@@ -62,14 +62,14 @@ public static class TouchSocketCoreConfigExtension
     /// <summary>
     /// 容器注册
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<IRegistrator> RegistratorProperty =
         new("Registrator", default);
 
     /// <summary>
     /// 容器提供者
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4))]
     public static readonly DependencyProperty<IResolver> ResolverProperty =
         new("Resolver", null);
 
@@ -79,7 +79,7 @@ public static class TouchSocketCoreConfigExtension
     /// <param name="config">待配置的TouchSocketConfig对象。</param>
     /// <param name="value">一个Action委托，用于注册依赖项。</param>
     /// <returns>返回配置对象，允许链式调用。</returns>
-    public static TouchSocketConfig ConfigureContainer(this TouchSocketConfig config, Action<IRegistrator> value)
+    public static TouchSocketConfigV4 ConfigureContainer(this TouchSocketConfigV4 config, Action<IRegistrator> value)
     {
         // 尝试从配置中获取已存在的Action委托
         if (config.TryGetValue(ConfigureContainerProperty, out var action))

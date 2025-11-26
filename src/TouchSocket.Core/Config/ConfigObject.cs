@@ -21,7 +21,7 @@ namespace TouchSocket.Core;
 public abstract class ConfigObject : DependencyObject, IConfigObject
 {
     /// <inheritdoc/>
-    public abstract TouchSocketConfig Config { get; }
+    public abstract TouchSocketConfigV4 Config { get; }
 
     /// <inheritdoc/>
     public ILog Logger { get; protected set; }

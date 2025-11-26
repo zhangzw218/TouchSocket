@@ -17,7 +17,7 @@ using TouchSocket.Sockets;
 
 namespace TouchSocket.Hosting.Sockets.HostService;
 
-internal class ServiceHost<TService> : SetupConfigObjectHostedService<TService> where TService : ISetupConfigObject, IServiceBase
+internal class ServiceHost<TService> : SetupConfigObjectHostedService<TService> where TService : ISetupConfigObjectV4, IServiceBase
 {
     private ILogger<TService> m_logger;
 

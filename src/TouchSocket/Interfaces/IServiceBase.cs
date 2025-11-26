@@ -15,7 +15,7 @@ namespace TouchSocket.Sockets;
 /// <summary>
 /// 服务器接口
 /// </summary>
-public interface IServiceBase : ISetupConfigObject
+public interface IServiceBase : ISetupConfigObjectV4
 {
     /// <summary>
     /// 服务器名称

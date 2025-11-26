@@ -60,10 +60,10 @@ public static class ServiceExtension
     /// <inheritdoc cref="IServiceBase.StartAsync"/>
     public static async Task StartAsync<TService>(this TService service, params IPHost[] iPHosts) where TService : ITcpServiceBase
     {
-        TouchSocketConfig config;
+        TouchSocketConfigV4 config;
         if (service.Config == null)
         {
-            config = new TouchSocketConfig();
+            config = new TouchSocketConfigV4();
             config.SetListenIPHosts(iPHosts);
             await service.SetupAsync(config).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
         }
@@ -89,10 +89,10 @@ public static class ServiceExtension
     /// <inheritdoc cref="IServiceBase.StartAsync"/>
     public static async Task StartAsync<TService>(this TService service, IPHost iPHost) where TService : IUdpSession
     {
-        TouchSocketConfig config;
+        TouchSocketConfigV4 config;
         if (service.Config == null)
         {
-            config = new TouchSocketConfig();
+            config = new TouchSocketConfigV4();
             config.SetBindIPHost(iPHost);
             await service.SetupAsync(config).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
         }

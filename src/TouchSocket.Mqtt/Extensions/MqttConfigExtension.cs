@@ -20,6 +20,6 @@ public static class MqttConfigExtension
     /// <summary>
     /// Mqtt连接选项的依赖属性。
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig), ActionMode = true)]
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfigV4), ActionMode = true)]
     public static readonly DependencyProperty<MqttConnectOptions> MqttConnectOptionsProperty = new DependencyProperty<MqttConnectOptions>("MqttConnectOptions", null);
 }

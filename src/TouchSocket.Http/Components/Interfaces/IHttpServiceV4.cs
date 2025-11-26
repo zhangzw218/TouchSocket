@@ -10,15 +10,20 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
 using TouchSocket.Sockets;
 
-namespace TouchSocket.Dmtp;
-
+namespace TouchSocket.Http;
 
 /// <summary>
-/// 定义了一个HTTP DMTP客户端接口，该接口继承了DMTP客户端、HTTP会话和TCP连接客户端的基本行为。
+/// IHttpService
 /// </summary>
-public interface IHttpDmtpClient : IDmtpClient, IHttpSession, ITcpConnectableClient
+public interface IHttpService<TClient> : IHttpServiceBase, ITcpServiceBase<TClient> where TClient : IHttpSessionClient
+{
+}
+
+/// <summary>
+/// IHttpService
+/// </summary>
+public interface IHttpServiceV4 : IHttpService<HttpSessionClient>
 {
 }

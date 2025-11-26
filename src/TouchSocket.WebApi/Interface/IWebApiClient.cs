@@ -23,6 +23,6 @@ namespace TouchSocket.WebApi;
 /// 提供了一种综合的方法来实现Web API的客户端操作。实现这个接口的类将能够发起Web API请求，
 /// 管理会话状态，配置客户端设置，处理在线状态，并支持TCP连接管理。
 /// </remarks>
-public interface IWebApiClient : IWebApiClientBase, IHttpSession, ISetupConfigObject, IOnlineClient, ITcpConnectableClient
+public interface IWebApiClient : IWebApiClientBase, IHttpSession, ISetupConfigObjectV4, IOnlineClient, ITcpConnectableClient
 {
 }

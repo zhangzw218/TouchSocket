@@ -18,7 +18,7 @@ namespace TouchSocket.Dmtp;
 /// TCP分布式消息传输服务类，继承自TcpDmtpService并实现ITcpDmtpService接口。
 /// 该类提供了基于TCP协议的分布式消息传输服务功能。
 /// </summary>
-public class TcpDmtpService : TcpDmtpService<TcpDmtpSessionClient>, ITcpDmtpService
+public class TcpDmtpServiceV4 : TcpDmtpServiceV4<TcpDmtpSessionClient>, ITcpDmtpServiceV4
 {
     /// <inheritdoc/>
     protected sealed override TcpDmtpSessionClient NewClient()
@@ -32,12 +32,12 @@ public class TcpDmtpService : TcpDmtpService<TcpDmtpSessionClient>, ITcpDmtpServ
 }
 
 /// <summary>
-/// 抽象类<see cref="TcpDmtpService{TClient}"/>;为基于TCP协议的Dmtp服务提供基础实现。
-/// 它扩展了<see cref="TcpServiceBase{TClient}"/>;，并实现了<see cref="ITcpDmtpService{TClient}"/>接口。
+/// 抽象类<see cref="TcpDmtpServiceV4{TClient}"/>;为基于TCP协议的Dmtp服务提供基础实现。
+/// 它扩展了<see cref="TcpServiceBase{TClient}"/>;，并实现了<see cref="ITcpDmtpServiceV4{TClient}"/>接口。
 /// TClient必须是<see cref="TcpDmtpSessionClient"/>的派生类。
 /// </summary>
 /// <typeparam name="TClient">客户端会话类型，必须继承自<see cref="TcpDmtpSessionClient"/>。</typeparam>
-public abstract class TcpDmtpService<TClient> : TcpServiceBase<TClient>, ITcpDmtpService<TClient> where TClient : TcpDmtpSessionClient
+public abstract class TcpDmtpServiceV4<TClient> : TcpServiceBase<TClient>, ITcpDmtpServiceV4<TClient> where TClient : TcpDmtpSessionClient
 {
     /// <inheritdoc/>
     public string VerifyToken => this.Config.GetValue(DmtpConfigExtension.DmtpOptionProperty).VerifyToken;

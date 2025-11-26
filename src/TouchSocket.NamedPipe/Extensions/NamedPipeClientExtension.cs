@@ -35,11 +35,11 @@ public static class NamedPipeClientExtension
     public static async Task<TClient> ConnectAsync<TClient>(this TClient client, string pipeName, int millisecondsTimeout = 5000, CancellationToken cancellationToken = default) where TClient : INamedPipeClient
     {
         // 配置客户端连接参数
-        TouchSocketConfig config;
+        TouchSocketConfigV4 config;
         if (client.Config == null)
         {
             // 客户端未配置时，创建新的配置对象
-            config = new TouchSocketConfig();
+            config = new TouchSocketConfigV4();
             config.SetPipeName(pipeName);
             await client.SetupAsync(config).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
         }

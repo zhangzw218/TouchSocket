@@ -16,7 +16,7 @@ namespace TouchSocket.Http.WebSockets;
 
 /// <summary>
 /// 基于Http的WebSocket的扩展。
-/// <para>此组件只能挂载在<see cref="HttpService"/>中</para>
+/// <para>此组件只能挂载在<see cref="HttpServiceV4"/>中</para>
 /// </summary>
 [PluginOption(Singleton = true)]
 public sealed class WebSocketFeature : PluginBase, IHttpPlugin

@@ -55,7 +55,7 @@ public class ModbusUdpMaster : UdpSessionBase, IModbusUdpMaster
     }
 
     /// <inheritdoc/>
-    protected override void LoadConfig(TouchSocketConfig config)
+    protected override void LoadConfig(TouchSocketConfigV4 config)
     {
         this.SetAdapter(new ModbusUdpAdapter());
         base.LoadConfig(config);

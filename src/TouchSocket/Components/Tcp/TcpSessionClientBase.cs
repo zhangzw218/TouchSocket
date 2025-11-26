@@ -73,7 +73,7 @@ public abstract partial class TcpSessionClientBase : ResolverConfigObject, ITcpS
     public CancellationToken ClosedToken => this.m_transport == null ? new CancellationToken(true) : this.m_transport.ClosedToken;
 
     /// <inheritdoc/>
-    public sealed override TouchSocketConfig Config => this.Service?.Config;
+    public sealed override TouchSocketConfigV4 Config => this.Service?.Config;
 
     /// <inheritdoc/>
     public SingleStreamDataHandlingAdapter DataHandlingAdapter => this.m_dataHandlingAdapter;

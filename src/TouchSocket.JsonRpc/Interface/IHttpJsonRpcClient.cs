@@ -18,6 +18,6 @@ namespace TouchSocket.JsonRpc;
 /// <summary>
 /// IHttpJsonRpcClient
 /// </summary>
-public interface IHttpJsonRpcClient : IJsonRpcClient, IHttpSession, ISetupConfigObject, ITcpConnectableClient
+public interface IHttpJsonRpcClient : IJsonRpcClient, IHttpSession, ISetupConfigObjectV4, ITcpConnectableClient
 {
 }
