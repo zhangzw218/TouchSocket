@@ -327,7 +327,7 @@ public partial class TcpDmtpClientV4 : TcpClientBase, ITcpDmtpClientV4
     //}
 
     /// <inheritdoc/>
-    protected override async ValueTask<bool> OnTcpReceiving(IBytesReader reader)
+    protected override async ValueTask<bool> OnTcpReceiving(IBytesReaderV4 reader)
     {
         while (reader.BytesRemaining > 0)
         {

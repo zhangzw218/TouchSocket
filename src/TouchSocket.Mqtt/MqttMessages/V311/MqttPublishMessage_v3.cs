@@ -92,7 +92,7 @@ public sealed partial class MqttPublishMessage : MqttIdentifierMessage
     }
 
     private ReadOnlyMemory<byte> ReadPayload<TReader>(ref TReader reader)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
     {
         var payloadLength = (int)(this.EndPosition - reader.BytesRead);
         var payloadArray = new byte[payloadLength];

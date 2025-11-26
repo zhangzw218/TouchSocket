@@ -153,13 +153,13 @@ public class MultithreadingDataAdapterTester : SafetyDisposableObject
         return EasyTask.CompletedTask;
     }
 
-    private bool TryGet(out List<ByteBlock> byteBlocks)
+    private bool TryGet(out List<ByteBlockV4> byteBlocks)
     {
-        byteBlocks = new List<ByteBlock>();
+        byteBlocks = new List<ByteBlockV4>();
 
         while (this.m_asyncBytes.TryDequeue(out var asyncByte))
         {
-            var block = new ByteBlock(asyncByte.Length);
+            var block = new ByteBlockV4(asyncByte.Length);
             block.Write(new ReadOnlySpan<byte>(asyncByte.Buffer, asyncByte.Offset, asyncByte.Length));
             byteBlocks.Add(block);
         }

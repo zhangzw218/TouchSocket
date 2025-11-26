@@ -16,14 +16,14 @@ namespace TouchSocket.Core;
 
 /// <summary>
 /// 表示一个基于<see cref="PipeWriter"/>的字节写入器，提供对管道写入器的高性能包装。
-/// 实现了<see cref="IBytesWriter"/>接口，支持异步刷新操作。
+/// 实现了<see cref="IBytesWriterV4"/>接口，支持异步刷新操作。
 /// </summary>
 /// <remarks>
 /// PipeBytesWriter作为值类型实现，为System.IO.Pipelines的PipeWriter提供了IBytesWriter接口的适配。
 /// 适用于需要与管道系统集成的高性能字节写入场景，不支持回退操作。
 /// 提供了异步刷新功能，可以与异步I/O操作良好配合。
 /// </remarks>
-public struct PipeBytesWriter : IBytesWriter
+public struct PipeBytesWriter : IBytesWriterV4
 {
     private readonly PipeWriter m_writer;
     private long m_writtenCount;

@@ -55,7 +55,7 @@ public static class SenderExtension
     /// <returns>返回一个Task对象，表示异步操作。</returns>
     public static async Task SendAsync<TClient>(this TClient client, string value) where TClient : ISender
     {
-        var byteBlock = new ByteBlock(1024);
+        var byteBlock = new ByteBlockV4(1024);
 
         try
         {
@@ -188,7 +188,7 @@ public static class SenderExtension
     /// <returns>返回一个Task对象，代表异步操作的完成状态。</returns>
     public static async Task SendAsync<TClient>(this TClient client, EndPoint endPoint, string value) where TClient : IUdpClientSender
     {
-        var byteBlock = new ByteBlock(1024);
+        var byteBlock = new ByteBlockV4(1024);
 
         try
         {

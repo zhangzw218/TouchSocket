@@ -94,7 +94,7 @@ public sealed class HttpStaticPagePlugin : PluginBase, IHttpPlugin
 
                 if (request.IsAcceptGzip())
                 {
-                    using (var byteBlock = new ByteBlock(data.Length))
+                    using (var byteBlock = new ByteBlockV4(data.Length))
                     {
                         using (var zipStream = new GZipStream(byteBlock.AsStream(false), CompressionMode.Compress, true))
                         {

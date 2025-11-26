@@ -24,13 +24,13 @@ namespace TouchSocket.Core;
 public sealed partial class GZipDataCompressor : IDataCompressor
 {
     /// <inheritdoc/>
-    public void Compress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriter
+    public void Compress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriterV4
     {
         GZip.Compress(ref writer, data);
     }
 
     /// <inheritdoc/>
-    public void Decompress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriter
+    public void Decompress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriterV4
     {
         GZip.Decompress(ref writer, data);
     }

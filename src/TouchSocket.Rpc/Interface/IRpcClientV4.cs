@@ -17,7 +17,7 @@ namespace TouchSocket.Rpc;
 /// 定义了远程过程调用(RPC)客户端的基本操作。
 /// 该接口提供了发起RPC请求的方法。
 /// </summary>
-public interface IRpcClient
+public interface IRpcClientV4
 {
     /// <summary>
     /// 异步调用一个操作。

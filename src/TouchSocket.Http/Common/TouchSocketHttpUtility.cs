@@ -58,7 +58,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendAnd<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendAnd<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("&"u8);
     }
@@ -68,7 +68,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendColon<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendColon<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write(":"u8);
     }
@@ -78,7 +78,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendEqual<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendEqual<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("="u8);
     }
@@ -88,7 +88,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendHTTP<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendHTTP<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("HTTP"u8);
     }
@@ -98,7 +98,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendQuestionMark<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendQuestionMark<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("?"u8);
     }
@@ -108,7 +108,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendRn<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendRn<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write(CRLF);
     }
@@ -118,7 +118,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendSlash<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendSlash<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write("/"u8);
     }
@@ -128,7 +128,7 @@ public static class TouchSocketHttpUtility
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
-    public static void AppendSpace<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public static void AppendSpace<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         writer.Write(StringExtension.DefaultSpaceUtf8Span);
     }
@@ -139,7 +139,7 @@ public static class TouchSocketHttpUtility
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
     /// <param name="value">要追加的字符串。</param>
-    public static void AppendUtf8String<TWriter>(ref TWriter writer, string value) where TWriter : IBytesWriter
+    public static void AppendUtf8String<TWriter>(ref TWriter writer, string value) where TWriter : IBytesWriterV4
     {
         WriterExtension.WriteNormalString(ref writer, value, Encoding.UTF8);
     }
@@ -150,7 +150,7 @@ public static class TouchSocketHttpUtility
     /// <typeparam name="TWriter">实现了 <see cref="IByteBlock"/> 的类型。</typeparam>
     /// <param name="writer">字节块实例。</param>
     /// <param name="value">要追加的整数值。</param>
-    public static void AppendHex<TWriter>(ref TWriter writer, int value) where TWriter : IBytesWriter
+    public static void AppendHex<TWriter>(ref TWriter writer, int value) where TWriter : IBytesWriterV4
     {
         AppendUtf8String(ref writer, $"{value:X}");
     }

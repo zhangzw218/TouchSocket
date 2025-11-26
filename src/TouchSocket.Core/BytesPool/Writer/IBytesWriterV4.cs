@@ -23,7 +23,7 @@ namespace TouchSocket.Core;
 /// 同时增加了版本管理、写入计数统计和回退操作支持等高级功能。
 /// 适用于需要高性能字节写入和精确控制的场景。
 /// </remarks>
-public interface IBytesWriter : IBufferWriter<byte>
+public interface IBytesWriterV4 : IBufferWriter<byte>
 {
     /// <summary>
     /// 获取写入器的版本号。

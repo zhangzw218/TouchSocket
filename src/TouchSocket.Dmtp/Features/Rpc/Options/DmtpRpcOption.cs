@@ -37,17 +37,17 @@ public class DmtpRpcOption : DmtpFeatureOption
     public Func<IDmtpActor, IRpcServerProvider, IRpcDispatcher<IDmtpActor, IDmtpRpcCallContext>, DmtpRpcActor> CreateDmtpRpcActor { get; set; }
 
     /// <summary>
-    /// 序列化选择器，默认使用<see cref="DefaultSerializationSelector"/>
+    /// 序列化选择器，默认使用<see cref="DefaultSerializationSelectorV4"/>
     /// </summary>
-    public ISerializationSelector SerializationSelector { get; set; } = new DefaultSerializationSelector();
+    public ISerializationSelectorV4 SerializationSelector { get; set; } = new DefaultSerializationSelectorV4();
 
     /// <summary>
     /// 配置默认的序列化选择器
     /// </summary>
     /// <param name="selector">用于配置默认序列化选择器的操作</param>
-    public void ConfigureDefaultSerializationSelector(Action<DefaultSerializationSelector> selector)
+    public void ConfigureDefaultSerializationSelector(Action<DefaultSerializationSelectorV4> selector)
     {
-        var serializationSelector = new DefaultSerializationSelector();
+        var serializationSelector = new DefaultSerializationSelectorV4();
         selector.Invoke(serializationSelector);
         this.SerializationSelector = serializationSelector;
     }

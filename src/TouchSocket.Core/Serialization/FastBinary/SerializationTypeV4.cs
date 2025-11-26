@@ -15,7 +15,7 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 序列化类型
 /// </summary>
-public enum SerializationType : byte
+public enum SerializationTypeV4 : byte
 {
     /// <summary>
     /// 内置快速二进制

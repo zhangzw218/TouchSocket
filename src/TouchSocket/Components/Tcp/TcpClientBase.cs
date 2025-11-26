@@ -249,7 +249,7 @@ public abstract partial class TcpClientBase : SetupConfigObject, ITcpSession
     /// <returns>
     /// 如果返回<see langword="true"/>，则表示数据已被处理，且不会再向下传递。
     /// </returns>
-    protected virtual ValueTask<bool> OnTcpReceiving(IBytesReader reader)
+    protected virtual ValueTask<bool> OnTcpReceiving(IBytesReaderV4 reader)
     {
         return this.PluginManager.RaiseITcpReceivingPluginAsync(this.Resolver, this, new BytesReaderEventArgs(reader));
     }

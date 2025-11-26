@@ -24,15 +24,15 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
     private object[] m_parameters;
     private readonly Type m_returnType;
     private RpcMethod m_rpcMethod;
-    private ISerializationSelector m_selector;
+    private ISerializationSelectorV4 m_selector;
 
-    private SerializationType m_serializationType;
+    private SerializationTypeV4 m_serializationType;
     public DmtpRpcRequestPackage()
     {
 
     }
 
-    public DmtpRpcRequestPackage(string invokeKey, InvokeOption option, object[] parameters, Type returnType, ISerializationSelector selector)
+    public DmtpRpcRequestPackage(string invokeKey, InvokeOption option, object[] parameters, Type returnType, ISerializationSelectorV4 selector)
     {
         this.m_invokeKey = invokeKey;
 
@@ -45,7 +45,7 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
         else if (option is InvokeOption invokeOption)
         {
             this.m_feedback = invokeOption.FeedbackType;
-            this.m_serializationType = SerializationType.FastBinary;
+            this.m_serializationType = SerializationTypeV4.FastBinary;
         }
         this.m_parameters = parameters;
         this.m_returnType = returnType;
@@ -80,7 +80,7 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
     /// <summary>
     /// 序列化类型
     /// </summary>
-    public SerializationType SerializationType => this.m_serializationType;
+    public SerializationTypeV4 SerializationType => this.m_serializationType;
 
     /// <inheritdoc/>
     protected override bool IncludedRouter => true;
@@ -90,7 +90,7 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
         this.m_rpcMethod = rpcMethod;
     }
 
-    public void LoadInfo(DmtpRpcCallContext callContext, ISerializationSelector selector)
+    public void LoadInfo(DmtpRpcCallContext callContext, ISerializationSelectorV4 selector)
     {
         this.m_callContext = callContext;
         this.m_rpcMethod = callContext.RpcMethod;
@@ -175,7 +175,7 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
     public override void UnpackageRouter<TReader>(ref TReader reader)
     {
         base.UnpackageRouter(ref reader);
-        this.m_serializationType = (SerializationType)ReaderExtension.ReadValue<TReader, byte>(ref reader);
+        this.m_serializationType = (SerializationTypeV4)ReaderExtension.ReadValue<TReader, byte>(ref reader);
         this.m_invokeKey = ReaderExtension.ReadString(ref reader, FixedHeaderType.Byte);
         this.m_feedback = (FeedbackType)ReaderExtension.ReadValue<TReader, byte>(ref reader);
         if (!ReaderExtension.ReadIsNull(ref reader))

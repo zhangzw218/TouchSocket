@@ -75,7 +75,7 @@ public class SingleStreamDataAdapterTester : DisposableObject
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var valueByteBlock = new ValueByteBlock(memory.Length + 1024);
+            var valueByteBlock = new ValueByteBlockV4(memory.Length + 1024);
             try
             {
                 this.m_adapter.SendInput(ref valueByteBlock, memory);

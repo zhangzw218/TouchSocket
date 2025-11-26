@@ -112,7 +112,7 @@ public class StreamHttpContent : HttpContent
         {
             if (this.IsChunk)
             {
-                var byteBlock = new ByteBlock(blockSize + 1024);
+                var byteBlock = new ByteBlockV4(blockSize + 1024);
                 try
                 {
                     while (true)

@@ -57,7 +57,7 @@ public readonly struct WebSocketMessage : IDisposable
 /// </summary>
 public sealed class WebSocketMessageCombinator
 {
-    private ByteBlock m_byteBlock = default;//中继包缓存
+    private ByteBlockV4 m_byteBlock = default;//中继包缓存
     private bool m_combining;
     private WSDataType m_wSDataType;
 
@@ -119,7 +119,7 @@ public sealed class WebSocketMessageCombinator
 
                         //否，则说明数据太大了，分中继包了。
                         //则，初始化缓存容器
-                        this.m_byteBlock ??= new ByteBlock(1024 * 64);
+                        this.m_byteBlock ??= new ByteBlockV4(1024 * 64);
 
                         this.m_byteBlock.Write(data.Span);
 

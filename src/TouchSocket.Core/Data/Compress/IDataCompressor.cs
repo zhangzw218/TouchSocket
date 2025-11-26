@@ -25,7 +25,7 @@ public interface IDataCompressor
     /// <summary>
     /// 将指定的数据进行压缩，并将压缩结果写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">用于写入压缩数据的字节写入器。</param>
     /// <param name="data">要压缩的原始数据。</param>
     /// <remarks>
@@ -33,12 +33,12 @@ public interface IDataCompressor
     /// 然后将压缩后的数据写入到提供的字节写入器中。
     /// 压缩算法的选择取决于具体的实现类。
     /// </remarks>
-    void Compress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriter;
+    void Compress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriterV4;
 
     /// <summary>
     /// 将指定的压缩数据进行解压缩，并将解压缩结果写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">用于写入解压缩数据的字节写入器。</param>
     /// <param name="data">要解压缩的压缩数据。</param>
     /// <remarks>
@@ -47,5 +47,5 @@ public interface IDataCompressor
     /// 解压缩算法必须与压缩时使用的算法相匹配。
     /// </remarks>
     /// <exception cref="InvalidDataException">当压缩数据格式无效或损坏时可能抛出。</exception>
-    void Decompress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriter;
+    void Decompress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> data) where TWriter : IBytesWriterV4;
 }

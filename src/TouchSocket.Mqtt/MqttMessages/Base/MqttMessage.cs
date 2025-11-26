@@ -79,7 +79,7 @@ public abstract class MqttMessage : IRequestInfo, IRequestInfoBuilder
     }
 
     protected BytesWriter CreateVariableWriter<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
         return new BytesWriter(writer.GetMemory(this.GetMinimumRemainingLength() + 1024));
     }
@@ -92,7 +92,7 @@ public abstract class MqttMessage : IRequestInfo, IRequestInfoBuilder
     /// <typeparam name="TWriter">字节块类型。</typeparam>
     /// <param name="writer">字节块引用。</param>
     public void Build<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
     {
         MqttExtension.WriteMqttFixedHeader(ref writer, this.MessageType, this.Flags);
@@ -108,12 +108,12 @@ public abstract class MqttMessage : IRequestInfo, IRequestInfoBuilder
     }
 
     protected abstract void BuildVariableBodyWithMqtt3<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
         ;
 
     protected abstract void BuildVariableBodyWithMqtt5<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
         ;
 
@@ -124,7 +124,7 @@ public abstract class MqttMessage : IRequestInfo, IRequestInfoBuilder
     protected abstract int GetMinimumRemainingLength();
 
     private void BuildVariableBody<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
     {
         switch (this.Version)
@@ -155,7 +155,7 @@ public abstract class MqttMessage : IRequestInfo, IRequestInfoBuilder
     /// <typeparam name="TReader">字节块类型。</typeparam>
     /// <param name="reader">字节块引用。</param>
     public virtual void Unpack<TReader>(ref TReader reader)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
     {
         var firstByte = ReaderExtension.ReadValue<TReader, byte>(ref reader);
         this.SetFlags((byte)firstByte.GetLow4());
@@ -180,16 +180,16 @@ public abstract class MqttMessage : IRequestInfo, IRequestInfoBuilder
     }
 
     protected bool EndOfByteBlock<TReader>(in TReader reader)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
     {
         return this.m_endPosition == reader.BytesRead;
     }
 
     protected abstract void UnpackWithMqtt3<TReader>(ref TReader reader)
-        where TReader : IBytesReader;
+        where TReader : IBytesReaderV4;
 
     protected abstract void UnpackWithMqtt5<TReader>(ref TReader reader)
-        where TReader : IBytesReader;
+        where TReader : IBytesReaderV4;
 
     #endregion Unpack
 

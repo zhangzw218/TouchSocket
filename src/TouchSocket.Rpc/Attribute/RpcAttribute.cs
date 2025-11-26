@@ -50,7 +50,7 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 生成泛型方法的约束
     /// </summary>
-    public Type[] GenericConstraintTypes { get; set; } = new Type[] { typeof(IRpcClient) };
+    public Type[] GenericConstraintTypes { get; set; } = new Type[] { typeof(IRpcClientV4) };
 
     /// <summary>
     /// 调用键。
@@ -213,7 +213,7 @@ public abstract class RpcAttribute : Attribute
     }
 
     /// <summary>
-    /// 获取生成的函数泛型限定名称。默认<see cref="IRpcClient"/>
+    /// 获取生成的函数泛型限定名称。默认<see cref="IRpcClientV4"/>
     /// </summary>
     /// <returns></returns>
     public virtual Type[] GetGenericConstraintTypes()

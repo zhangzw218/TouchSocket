@@ -47,7 +47,7 @@ public class ModbusTcpMaster : TcpClientBase, IModbusTcpMaster
         {
             var modbusTcpRequest = new ModbusTcpRequest((ushort)sign, request);
 
-            var valueByteBlock = new ValueByteBlock(modbusTcpRequest.MaxLength);
+            var valueByteBlock = new ValueByteBlockV4(modbusTcpRequest.MaxLength);
             try
             {
                 modbusTcpRequest.Build(ref valueByteBlock);

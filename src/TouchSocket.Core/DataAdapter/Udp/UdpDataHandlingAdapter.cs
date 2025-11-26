@@ -118,7 +118,7 @@ public abstract class UdpDataHandlingAdapter : DataHandlingAdapter
 
         var requestInfoBuilder = (IRequestInfoBuilder)requestInfo;
 
-        var byteBlock = new ByteBlock(requestInfoBuilder.MaxLength);
+        var byteBlock = new ByteBlockV4(requestInfoBuilder.MaxLength);
         try
         {
             requestInfoBuilder.Build(ref byteBlock);

@@ -52,7 +52,7 @@ public sealed class Metadata : Dictionary<string, string>, IPackage
 
     /// <inheritdoc/>
     public void Package<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
     {
         WriterExtension.WriteValue<TWriter, int>(ref writer, this.Count);
@@ -65,7 +65,7 @@ public sealed class Metadata : Dictionary<string, string>, IPackage
 
     /// <inheritdoc/>
     public void Unpackage<TReader>(ref TReader reader)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
 #if AllowsRefStruct
 , allows ref struct
 #endif

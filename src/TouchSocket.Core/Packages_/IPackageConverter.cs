@@ -20,18 +20,18 @@ public interface IPackageConverter<T>
     /// <summary>
     /// 将 <typeparamref name="T"/> 类型的数据包写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须实现 <see cref="IBytesWriter"/> 接口。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须实现 <see cref="IBytesWriterV4"/> 接口。</typeparam>
     /// <param name="writer">字节写入器的引用。</param>
     /// <param name="value">要写入的数据包。</param>
     void Package<TWriter>(ref TWriter writer, T value)
-        where TWriter : IBytesWriter;
+        where TWriter : IBytesWriterV4;
 
     /// <summary>
     /// 从字节读取器中读取并还原为 <typeparamref name="T"/> 类型的数据包。
     /// </summary>
-    /// <typeparam name="TReader">字节读取器类型，必须实现 <see cref="IBytesReader"/> 接口。</typeparam>
+    /// <typeparam name="TReader">字节读取器类型，必须实现 <see cref="IBytesReaderV4"/> 接口。</typeparam>
     /// <param name="reader">字节读取器的引用。</param>
     /// <returns>还原后的数据包。</returns>
     T Unpackage<TReader>(ref TReader reader)
-        where TReader : IBytesReader;
+        where TReader : IBytesReaderV4;
 }

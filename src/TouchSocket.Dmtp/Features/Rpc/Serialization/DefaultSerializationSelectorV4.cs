@@ -18,9 +18,9 @@ using TouchSocket.Rpc;
 namespace TouchSocket.Dmtp.Rpc;
 
 /// <summary>
-/// 默认序列化选择器，实现了<see cref="ISerializationSelector"/>接口
+/// 默认序列化选择器，实现了<see cref="ISerializationSelectorV4"/>接口
 /// </summary>
-public class DefaultSerializationSelector : ISerializationSelector
+public class DefaultSerializationSelectorV4 : ISerializationSelectorV4
 {
     private JsonSerializerOptions m_jsonSerializerOptions;
 
@@ -29,7 +29,7 @@ public class DefaultSerializationSelector : ISerializationSelector
     /// <summary>
     /// 快速序列化上下文属性
     /// </summary>
-    public FastSerializerContext FastSerializerContext { get; set; } = FastBinaryFormatter.DefaultFastSerializerContext;
+    public FastSerializerContext FastSerializerContext { get; set; } = FastBinaryFormatterV4.DefaultFastSerializerContext;
 
     /// <summary>
     /// Json序列化配置
@@ -49,15 +49,15 @@ public class DefaultSerializationSelector : ISerializationSelector
     /// <param name="parameterType">预期反序列化出的对象类型。</param>
     /// <returns>反序列化后的对象。</returns>
     /// <exception cref="RpcException">抛出当未识别序列化类型时。</exception>
-    public virtual object DeserializeParameter<TReader>(ref TReader reader, SerializationType serializationType, Type parameterType) where TReader : IBytesReader
+    public virtual object DeserializeParameter<TReader>(ref TReader reader, SerializationTypeV4 serializationType, Type parameterType) where TReader : IBytesReaderV4
 
     {
         switch (serializationType)
         {
-            case SerializationType.FastBinary:
-                return FastBinaryFormatter.Deserialize(ref reader, parameterType, this.FastSerializerContext);
+            case SerializationTypeV4.FastBinary:
+                return FastBinaryFormatterV4.Deserialize(ref reader, parameterType, this.FastSerializerContext);
 
-            case SerializationType.SystemBinary:
+            case SerializationTypeV4.SystemBinary:
                 if (ReaderExtension.ReadIsNull(ref reader))
                 {
                     return parameterType.GetDefault();
@@ -67,7 +67,7 @@ public class DefaultSerializationSelector : ISerializationSelector
                 {
                     return SerializeConvert.BinaryDeserialize(block.AsStream(), this.SerializationBinder);
                 }
-            case SerializationType.Json:
+            case SerializationTypeV4.Json:
                 {
                     if (ReaderExtension.ReadIsNull(ref reader))
                     {
@@ -81,7 +81,7 @@ public class DefaultSerializationSelector : ISerializationSelector
 
                     return JsonConvert.DeserializeObject(ReaderExtension.ReadString(ref reader), parameterType, this.JsonSerializerSettings);
                 }
-            case SerializationType.Xml:
+            case SerializationTypeV4.Xml:
                 if (ReaderExtension.ReadIsNull(ref reader))
                 {
                     return parameterType.GetDefault();
@@ -100,17 +100,17 @@ public class DefaultSerializationSelector : ISerializationSelector
     /// <param name="serializationType">序列化类型，决定了使用哪种方式序列化</param>
     /// <param name="parameter">待序列化的参数对象</param>
     /// <typeparam name="TWriter">字节块类型，必须实现IByteBlock接口</typeparam>
-    public virtual void SerializeParameter<TWriter>(ref TWriter writer, SerializationType serializationType, in object parameter) where TWriter : IBytesWriter
+    public virtual void SerializeParameter<TWriter>(ref TWriter writer, SerializationTypeV4 serializationType, in object parameter) where TWriter : IBytesWriterV4
 
     {
         switch (serializationType)
         {
-            case SerializationType.FastBinary:
+            case SerializationTypeV4.FastBinary:
                 {
-                    FastBinaryFormatter.Serialize(ref writer, parameter, this.FastSerializerContext);
+                    FastBinaryFormatterV4.Serialize(ref writer, parameter, this.FastSerializerContext);
                     break;
                 }
-            case SerializationType.SystemBinary:
+            case SerializationTypeV4.SystemBinary:
                 {
                     if (parameter is null)
                     {
@@ -119,7 +119,7 @@ public class DefaultSerializationSelector : ISerializationSelector
                     else
                     {
                         WriterExtension.WriteNotNull(ref writer);
-                        using (var block = new ByteBlock(1024 * 64))
+                        using (var block = new ByteBlockV4(1024 * 64))
                         {
                             SerializeConvert.BinarySerialize(block.AsStream(), parameter);
                             WriterExtension.WriteByteBlock(ref writer, block);
@@ -127,7 +127,7 @@ public class DefaultSerializationSelector : ISerializationSelector
                     }
                     break;
                 }
-            case SerializationType.Json:
+            case SerializationTypeV4.Json:
                 {
                     if (this.m_useSystemTextJson)
                     {
@@ -153,7 +153,7 @@ public class DefaultSerializationSelector : ISerializationSelector
                     }
                     break;
                 }
-            case SerializationType.Xml:
+            case SerializationTypeV4.Xml:
                 {
                     if (parameter is null)
                     {

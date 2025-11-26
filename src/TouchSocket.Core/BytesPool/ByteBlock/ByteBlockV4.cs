@@ -18,41 +18,42 @@ using System.Runtime.InteropServices;
 namespace TouchSocket.Core;
 
 /// <summary>
-/// 表示一个值类型的字节块，提供高性能的字节缓冲区操作，避免堆分配开销。
-/// 实现了<see cref="IByteBlock"/>接口。
+/// 表示一个字节块，提供高效的字节缓冲区操作，支持自动扩容和内存池管理。
+/// 实现了<see cref="IByteBlock"/>接口，线程安全。
 /// </summary>
 /// <remarks>
-/// ValueByteBlock作为值类型实现，适用于高频使用且对性能要求较高的场景。
-/// 支持内存池管理、自动扩容、读写操作等功能。
-/// 注意：由于是值类型，在多线程环境下使用时需要特别小心。
+/// ByteBlock作为引用类型实现，适用于需要在多个方法间传递或长期持有的场景。
+/// 支持内存池管理、线程安全的释放操作、自动扩容、读写操作等功能。
 /// </remarks>
 [DebuggerDisplay("Length={Length},Position={Position},Capacity={Capacity}")]
-public struct ValueByteBlock : IByteBlock
+public sealed class ByteBlockV4 : IByteBlock
 {
     #region Common
+
     private readonly Func<int, Memory<byte>> m_onRent;
     private readonly Action<Memory<byte>> m_onReturn;
-    private bool m_dis;
+    private int m_dis;
+    private bool m_holding;
     private int m_length;
     private Memory<byte> m_memory;
     private short m_version;
 
     /// <summary>
-    /// 使用指定内存块初始化<see cref="ValueByteBlock"/>的新实例。
+    /// 使用指定内存块初始化<see cref="ByteBlockV4"/>的新实例。
     /// </summary>
     /// <param name="memory">要使用的内存块。</param>
-    public ValueByteBlock(Memory<byte> memory)
+    public ByteBlockV4(Memory<byte> memory)
     {
         this.m_memory = memory;
     }
 
     /// <summary>
-    /// 使用指定容量和内存管理委托初始化<see cref="ValueByteBlock"/>的新实例。
+    /// 使用指定容量和内存管理委托初始化<see cref="ByteBlockV4"/>的新实例。
     /// </summary>
     /// <param name="capacity">初始容量，最小为1024字节。</param>
     /// <param name="onRent">内存租赁委托。</param>
     /// <param name="onReturn">内存归还委托。</param>
-    public ValueByteBlock(int capacity, Func<int, Memory<byte>> onRent, Action<Memory<byte>> onReturn)
+    public ByteBlockV4(int capacity, Func<int, Memory<byte>> onRent, Action<Memory<byte>> onReturn)
     {
         capacity = Math.Max(capacity, 1024);
         this.m_memory = onRent(capacity);
@@ -62,10 +63,10 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <summary>
-    /// 使用指定容量初始化<see cref="ValueByteBlock"/>的新实例，使用默认的<see cref="ArrayPool{T}"/>进行内存管理。
+    /// 使用指定容量初始化<see cref="ByteBlockV4"/>的新实例，使用默认的<see cref="ArrayPool{T}"/>进行内存管理。
     /// </summary>
     /// <param name="capacity">初始容量，最小为1024字节。</param>
-    public ValueByteBlock(int capacity)
+    public ByteBlockV4(int capacity)
     {
         capacity = Math.Max(capacity, 1024);
         this.m_onRent = (c) =>
@@ -84,61 +85,55 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    public long BytesRead { readonly get => this.Position; set => this.Position = (int)value; }
+    public long BytesRemaining => this.Length - this.Position;
 
     /// <inheritdoc/>
-    public readonly long BytesRemaining => this.Length - this.Position;
+    public int CanReadLength => this.Length - this.Position;
 
     /// <inheritdoc/>
-    public readonly int CanReadLength => this.Length - this.Position;
+    public int Capacity => this.m_memory.Length;
 
     /// <inheritdoc/>
-    public readonly int Capacity => this.m_memory.Length;
+    public int FreeLength => this.Capacity - this.Position;
 
     /// <inheritdoc/>
-    public readonly int FreeLength => this.Capacity - this.Position;
-
-    /// <summary>
-    /// 获取一个值，该值指示内存块是否为空。
-    /// </summary>
-    /// <value>如果内存块为空，则为 <see langword="true"/>；否则为 <see langword="false"/>。</value>
-    public readonly bool IsEmpty => this.m_memory.IsEmpty;
+    public int Length => this.m_length;
 
     /// <inheritdoc/>
-    public readonly int Length => this.m_length;
-
-    /// <inheritdoc/>
-    public readonly ReadOnlyMemory<byte> Memory => this.m_memory.Slice(0, this.m_length);
+    public ReadOnlyMemory<byte> Memory => this.m_memory.Slice(0, this.m_length);
 
     /// <inheritdoc/>
     public int Position { get; set; }
 
     /// <inheritdoc/>
-    public readonly ReadOnlySpan<byte> Span => this.Memory.Span;
+    public ReadOnlySpan<byte> Span => this.Memory.Span;
 
     /// <inheritdoc/>
-    public readonly bool SupportsRewind => true;
+    public bool SupportsRewind => true;
 
     /// <inheritdoc/>
-    public readonly Memory<byte> TotalMemory => this.m_memory;
+    public Memory<byte> TotalMemory => this.m_memory;
 
     /// <inheritdoc/>
-    public readonly bool Using => !this.m_dis;
+    public bool Using => this.m_dis == 0;
 
     /// <inheritdoc/>
-    public readonly short Version => this.m_version;
+    public short Version => this.m_version;
 
     /// <inheritdoc/>
-    public readonly ReadOnlySequence<byte> TotalSequence => new ReadOnlySequence<byte>(this.Memory);
+    long IBytesWriterV4.WrittenCount => this.Position;
 
     /// <inheritdoc/>
-    public readonly ReadOnlySequence<byte> Sequence => this.TotalSequence.Slice(this.Position);
+    public ReadOnlySequence<byte> TotalSequence => new ReadOnlySequence<byte>(this.Memory);
 
     /// <inheritdoc/>
-    public readonly long WrittenCount => this.Position;
+    public ReadOnlySequence<byte> Sequence => this.TotalSequence.Slice(this.Position);
 
     /// <inheritdoc/>
-    public readonly void Clear()
+    public long BytesRead { get => this.Position; set => this.Position = (int)value; }
+
+    /// <inheritdoc/>
+    public void Clear()
     {
         this.m_memory.Span.Clear();
     }
@@ -146,22 +141,25 @@ public struct ValueByteBlock : IByteBlock
     /// <inheritdoc/>
     public void Dispose()
     {
-        if (this.m_dis)
-        {
-            return;
-        }
-        this.m_dis = true;
-        var memory = this.m_memory;
-        if (memory.IsEmpty)
+        if (this.m_holding)
         {
             return;
         }
 
-        this.m_memory = default;
-        this.m_length = 0;
-        this.Position = 0;
+        if (Interlocked.Increment(ref this.m_dis) == 1)
+        {
+            var memory = this.m_memory;
+            if (memory.IsEmpty)
+            {
+                return;
+            }
 
-        this.m_onReturn?.Invoke(memory);
+            this.m_memory = default;
+            this.m_length = 0;
+            this.Position = 0;
+
+            this.m_onReturn?.Invoke(memory);
+        }
     }
 
     /// <inheritdoc/>
@@ -188,14 +186,30 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <summary>
+    /// 设置字节块的持有状态，防止在特定情况下被意外释放。
+    /// </summary>
+    /// <param name="holding">如果为 <see langword="true"/>，则防止释放；如果为 <see langword="false"/>，则允许释放并立即调用 <see cref="Dispose()"/>。</param>
+    /// <remarks>
+    /// 当设置为 <see langword="false"/> 时，会立即调用 <see cref="Dispose()"/> 方法释放资源。
+    /// </remarks>
+    public void SetHolding(bool holding)
+    {
+        this.m_holding = holding;
+        if (!holding)
+        {
+            this.Dispose();
+        }
+    }
+
+    /// <summary>
     /// 返回当前字节块的UTF-8字符串表示形式。
     /// </summary>
     /// <returns>UTF-8编码的字符串。</returns>
-    public override readonly string ToString()
+    public override string ToString()
     {
         return this.Span.ToString(Encoding.UTF8);
     }
-    #endregion
+    #endregion Common
 
     #region Reader
 
@@ -214,7 +228,7 @@ public struct ValueByteBlock : IByteBlock
         return length;
     }
 
-    #endregion
+    #endregion Reader
 
     #region Writer
 
@@ -273,7 +287,7 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    ReadOnlyMemory<byte> IBytesReader.GetMemory(int count)
+    ReadOnlyMemory<byte> IBytesReaderV4.GetMemory(int count)
     {
         return this.GetMemory(count).Slice(0, count);
     }
@@ -285,7 +299,7 @@ public struct ValueByteBlock : IByteBlock
     }
 
     /// <inheritdoc/>
-    ReadOnlySpan<byte> IBytesReader.GetSpan(int count)
+    ReadOnlySpan<byte> IBytesReaderV4.GetSpan(int count)
     {
         return this.GetSpan(count).Slice(0, count);
     }
@@ -316,10 +330,10 @@ public struct ValueByteBlock : IByteBlock
         this.m_length = Math.Max(this.Position, this.m_length);
     }
 
-    private readonly Span<byte> GetCurrentSpan()
+    private Span<byte> GetCurrentSpan()
     {
         return this.m_memory.Span.Slice(this.Position);
     }
-    #endregion
-}
 
+    #endregion Writer
+}

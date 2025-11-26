@@ -282,7 +282,7 @@ public static partial class HttpExtensions
         {
             boundaryString = $"--{boundaryString}";
 
-            var valueByteBlock = new ValueByteBlock(Encoding.UTF8.GetMaxByteCount(boundaryString.Length));
+            var valueByteBlock = new ValueByteBlockV4(Encoding.UTF8.GetMaxByteCount(boundaryString.Length));
 
             try
             {

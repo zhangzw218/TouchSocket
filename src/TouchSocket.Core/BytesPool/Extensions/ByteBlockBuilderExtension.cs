@@ -37,7 +37,7 @@ public static class ByteBlockBuilderExtension
     /// </summary>
     /// <param name="builder">实现IByteBlockBuilder接口的构建器对象。</param>
     /// <param name="byteBlock">要构建的字节块对象。</param>
-    public static void Build(this IBytesBuilder builder, ByteBlock byteBlock)
+    public static void Build(this IBytesBuilder builder, ByteBlockV4 byteBlock)
     {
         builder.Build(ref byteBlock);
     }
@@ -51,7 +51,7 @@ public static class ByteBlockBuilderExtension
     /// <returns></returns>
     public static ReadOnlyMemory<byte> BuildAsBytes(this IBytesBuilder builder)
     {
-        var byteBlock = new ByteBlock(builder.MaxLength);
+        var byteBlock = new ByteBlockV4(builder.MaxLength);
         try
         {
             builder.Build(ref byteBlock);

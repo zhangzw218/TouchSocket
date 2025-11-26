@@ -20,5 +20,5 @@ public interface IRemoteServer
     /// <summary>
     /// 客户端
     /// </summary>
-    IRpcClient Client { get; }
+    IRpcClientV4 Client { get; }
 }

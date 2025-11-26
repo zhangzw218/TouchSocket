@@ -159,7 +159,7 @@ public class FileResourceLocator : DisposableObject
                 return new FileSectionResult(ResultCode.Error, "数据块不一致。", default, fileSection);
             }
             // 创建一个与文件块长度相同的字节块，用于存储读取的数据。
-            var bufferByteBlock = new ByteBlock(fileSection.Length);
+            var bufferByteBlock = new ByteBlockV4(fileSection.Length);
             // 从文件存储中读取数据到字节块中。
             var r = this.FileStorage.Read(oldFileSection.Offset, bufferByteBlock.TotalMemory.Span.Slice(0, fileSection.Length));
             // 验证读取的长度是否与预期一致。

@@ -14,13 +14,13 @@ namespace TouchSocket.Core;
 
 /// <summary>
 /// 表示一个基于固定内存的字节写入器，提供高性能的字节缓冲区写入功能。
-/// 实现了<see cref="IBytesWriter"/>接口。
+/// 实现了<see cref="IBytesWriterV4"/>接口。
 /// </summary>
 /// <remarks>
 /// BytesWriter作为值类型实现，适用于高频使用且对性能要求较高的场景。
 /// 基于固定大小的内存块进行操作，不支持自动扩容，当空间不足时会抛出异常。
 /// </remarks>
-public struct BytesWriter : IBytesWriter
+public struct BytesWriter : IBytesWriterV4
 {
     private readonly Memory<byte> m_memory;
 

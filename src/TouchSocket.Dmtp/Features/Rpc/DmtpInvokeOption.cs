@@ -39,7 +39,7 @@ public class DmtpInvokeOption : InvokeOption
     /// <summary>
     /// DmtpRpc序列化类型
     /// </summary>
-    public SerializationType SerializationType { get; init; } = SerializationType.FastBinary;
+    public SerializationTypeV4 SerializationType { get; init; } = SerializationTypeV4.FastBinary;
 
     /// <summary>
     /// 元数据

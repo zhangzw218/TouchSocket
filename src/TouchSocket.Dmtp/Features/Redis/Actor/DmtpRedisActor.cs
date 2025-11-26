@@ -69,7 +69,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(package);
         try
         {
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 var block = byteBlock;
                 package.Package(ref block);
@@ -119,7 +119,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(package);
         try
         {
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 var block = byteBlock;
                 package.Package(ref block);
@@ -185,7 +185,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(package);
         try
         {
-            using (var byteBlock = new ByteBlock((package.value.Length) + 1024))
+            using (var byteBlock = new ByteBlockV4((package.value.Length) + 1024))
             {
                 var block = byteBlock;
                 package.Package(ref block);
@@ -290,7 +290,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
                 waitResult.Message = ex.Message;
             }
 
-            using (var byteBlock = new ByteBlock(1024 * 64))
+            using (var byteBlock = new ByteBlockV4(1024 * 64))
             {
                 var block = byteBlock;
                 waitResult.Package(ref block);
@@ -326,7 +326,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(package);
         try
         {
-            using (var byteBlock = new ByteBlock((package.value.Length) + 1024))
+            using (var byteBlock = new ByteBlockV4((package.value.Length) + 1024))
             {
                 var block = byteBlock;
                 package.Package(ref block);
@@ -389,7 +389,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
         var waitData = this.DmtpActor.WaitHandlePool.GetWaitDataAsync(package);
         try
         {
-            using (var byteBlock = new ByteBlock((package.value.Length) + 1024))
+            using (var byteBlock = new ByteBlockV4((package.value.Length) + 1024))
             {
                 var block = byteBlock;
                 package.Package(ref block);

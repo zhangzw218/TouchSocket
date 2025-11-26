@@ -20,7 +20,7 @@ namespace TouchSocket.Core;
 /// </summary>
 public class PeriodPackageAdapter : SingleStreamDataHandlingAdapter
 {
-    private readonly ConcurrentQueue<ValueByteBlock> m_bytes = new ConcurrentQueue<ValueByteBlock>();
+    private readonly ConcurrentQueue<ValueByteBlockV4> m_bytes = new ConcurrentQueue<ValueByteBlockV4>();
     private readonly CancellationTokenSource m_cts = new CancellationTokenSource();
     private readonly SemaphoreSlim m_semaphoreSlim = new SemaphoreSlim(1, 1);
     private int m_dataCount;
@@ -33,7 +33,7 @@ public class PeriodPackageAdapter : SingleStreamDataHandlingAdapter
         this.m_exceptionDispatchInfo?.Throw();
 
         var dataLength = (int)reader.Sequence.Length;
-        var valueByteBlock = new ValueByteBlock(dataLength);
+        var valueByteBlock = new ValueByteBlockV4(dataLength);
 
         foreach (var item in reader.Sequence)
         {
@@ -67,7 +67,7 @@ public class PeriodPackageAdapter : SingleStreamDataHandlingAdapter
         await Task.Delay(this.CacheTimeout).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
         if (Interlocked.Decrement(ref this.m_fireCount) == 0)
         {
-            using (var byteBlock = new ValueByteBlock(this.m_dataCount))
+            using (var byteBlock = new ValueByteBlockV4(this.m_dataCount))
             {
                 while (this.m_bytes.TryDequeue(out var valueByteBlock))
                 {

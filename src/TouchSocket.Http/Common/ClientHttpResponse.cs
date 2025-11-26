@@ -20,7 +20,7 @@ internal sealed class ClientHttpResponse : HttpResponse
 {
     private readonly HttpClientBase m_httpClientBase;
     private long m_bytesRead = 0;
-    private ByteBlock m_contentByteBlock;
+    private ByteBlockV4 m_contentByteBlock;
     private ReadOnlyMemory<byte> m_contentMemory;
     private bool m_isContentReadingStarted = false;
 
@@ -48,7 +48,7 @@ internal sealed class ClientHttpResponse : HttpResponse
 
             try
             {
-                var byteBlock = new ByteBlock((int)contentLength);
+                var byteBlock = new ByteBlockV4((int)contentLength);
 
                 while (true)
                 {
@@ -399,7 +399,7 @@ internal sealed class ClientHttpResponse : HttpResponse
             this.ContentStatus = ContentCompletionStatus.ContentCompleted;
             return;
         }
-        this.m_contentByteBlock = new ByteBlock((int)content.Length);
+        this.m_contentByteBlock = new ByteBlockV4((int)content.Length);
 
         foreach (var item in content)
         {
@@ -410,7 +410,7 @@ internal sealed class ClientHttpResponse : HttpResponse
         this.ContentStatus = ContentCompletionStatus.ContentCompleted;
     }
 
-    internal void InternalSetContent(ByteBlock byteBlock)
+    internal void InternalSetContent(ByteBlockV4 byteBlock)
     {
         this.m_contentByteBlock = byteBlock;
         this.m_contentMemory = this.m_contentByteBlock.Memory;

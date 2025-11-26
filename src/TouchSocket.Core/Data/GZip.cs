@@ -44,16 +44,16 @@ public static partial class GZip
     /// <summary>
     /// 将字节跨度压缩并写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">实现<see cref="IBytesWriter"/>接口的写入器类型。</typeparam>
+    /// <typeparam name="TWriter">实现<see cref="IBytesWriterV4"/>接口的写入器类型。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="span">要压缩的只读字节跨度。</param>
     /// <remarks>
-    /// 此方法内部使用临时<see cref="ByteBlock"/>进行压缩操作，压缩完成后将结果写入指定的写入器。
+    /// 此方法内部使用临时<see cref="ByteBlockV4"/>进行压缩操作，压缩完成后将结果写入指定的写入器。
     /// </remarks>
     public static void Compress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> span)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
-        using (var byteBlock = new ByteBlock(span.Length))
+        using (var byteBlock = new ByteBlockV4(span.Length))
         {
             Compress(byteBlock.AsStream(), span);
             writer.Write(byteBlock.Span);
@@ -63,12 +63,12 @@ public static partial class GZip
     /// <summary>
     /// 将字节跨度压缩并写入到字节块中。
     /// </summary>
-    /// <param name="byteBlock">要写入压缩数据的<see cref="ByteBlock"/>。</param>
+    /// <param name="byteBlock">要写入压缩数据的<see cref="ByteBlockV4"/>。</param>
     /// <param name="span">要压缩的只读字节跨度。</param>
     /// <remarks>
     /// 此方法将压缩数据直接写入指定的字节块中。
     /// </remarks>
-    public static void Compress(ByteBlock byteBlock, ReadOnlySpan<byte> span)
+    public static void Compress(ByteBlockV4 byteBlock, ReadOnlySpan<byte> span)
     {
         Compress(byteBlock.AsStream(), span);
     }
@@ -83,7 +83,7 @@ public static partial class GZip
     /// </remarks>
     public static ReadOnlyMemory<byte> Compress(ReadOnlySpan<byte> span)
     {
-        using (var byteBlock = new ByteBlock(span.Length))
+        using (var byteBlock = new ByteBlockV4(span.Length))
         {
             Compress(byteBlock.AsStream(), span);
             return byteBlock.ToArray();
@@ -93,7 +93,7 @@ public static partial class GZip
     /// <summary>
     /// 解压缩字节跨度并将结果写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">实现<see cref="IBytesWriter"/>接口的写入器类型。</typeparam>
+    /// <typeparam name="TWriter">实现<see cref="IBytesWriterV4"/>接口的写入器类型。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="span">要解压缩的只读字节跨度。</param>
     /// <remarks>
@@ -101,9 +101,9 @@ public static partial class GZip
     /// 内部使用<see cref="ArrayPool{T}.Shared"/>来管理缓冲区内存。
     /// </remarks>
     public static void Decompress<TWriter>(ref TWriter writer, ReadOnlySpan<byte> span)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
-        using (var streamByteBlock = new ByteBlock(span.Length))
+        using (var streamByteBlock = new ByteBlockV4(span.Length))
         {
             streamByteBlock.Write(span);
             streamByteBlock.SeekToStart();
@@ -138,7 +138,7 @@ public static partial class GZip
     /// </remarks>
     public static ReadOnlyMemory<byte> Decompress(ReadOnlySpan<byte> span)
     {
-        var byteBlock = new ByteBlock(span.Length);
+        var byteBlock = new ByteBlockV4(span.Length);
         try
         {
             Decompress(ref byteBlock, span);

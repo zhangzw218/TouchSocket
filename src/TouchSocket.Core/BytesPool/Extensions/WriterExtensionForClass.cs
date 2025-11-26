@@ -19,7 +19,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将布尔值数组写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="values">要写入的布尔值只读跨度。</param>
     /// <remarks>
@@ -27,7 +27,7 @@ public static partial class WriterExtension
     /// 如果值为空，则不执行任何操作。
     /// </remarks>
     public static void WriteBooleans<TWriter>(this TWriter writer, ReadOnlySpan<bool> values)
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         if (values.IsEmpty)
         {
@@ -42,17 +42,17 @@ public static partial class WriterExtension
     }
 
     /// <summary>
-    /// 将<see cref="ByteBlock"/>实例写入到字节写入器中。
+    /// 将<see cref="ByteBlockV4"/>实例写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
-    /// <param name="byteBlock">要写入的<see cref="ByteBlock"/>实例。</param>
+    /// <param name="byteBlock">要写入的<see cref="ByteBlockV4"/>实例。</param>
     /// <remarks>
     /// 如果<paramref name="byteBlock"/>为<see langword="null"/>，则写入长度值0。
     /// 否则写入长度+1后跟随实际数据。使用变长编码存储长度信息。
     /// </remarks>
-    public static void WriteByteBlock<TWriter>(this TWriter writer, ByteBlock byteBlock)
-        where TWriter : class, IBytesWriter
+    public static void WriteByteBlock<TWriter>(this TWriter writer, ByteBlockV4 byteBlock)
+        where TWriter : class, IBytesWriterV4
     {
         if (byteBlock is null)
         {
@@ -70,7 +70,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将字节跨度写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="span">要写入的字节只读跨度。</param>
     /// <remarks>
@@ -78,7 +78,7 @@ public static partial class WriterExtension
     /// 如果跨度为空，则只写入长度0。
     /// </remarks>
     public static void WriteByteSpan<TWriter>(this TWriter writer, scoped ReadOnlySpan<byte> span)
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         WriteVarUInt32(writer, (uint)span.Length);
         if (span.IsEmpty)
@@ -94,7 +94,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 写入引用类型的空值标记。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <typeparam name="T">要检查的引用类型。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="t">要检查的对象实例。</param>
@@ -104,7 +104,7 @@ public static partial class WriterExtension
     /// </remarks>
     public static void WriteIsNull<TWriter, T>(this TWriter writer, T t)
         where T : class
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         if (t == null)
         {
@@ -119,7 +119,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 写入可空值类型的空值标记。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <typeparam name="T">要检查的值类型。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="t">要检查的可空值类型实例。</param>
@@ -129,7 +129,7 @@ public static partial class WriterExtension
     /// </remarks>
     public static void WriteIsNull<TWriter, T>(this TWriter writer, T? t)
         where T : struct
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         if (t.HasValue)
         {
@@ -144,7 +144,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将字符串以指定编码写入到字节写入器中（不包含长度前缀）。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="value">要写入的字符串。不能为<see langword="null"/>。</param>
     /// <param name="encoding">字符编码方式。</param>
@@ -154,7 +154,7 @@ public static partial class WriterExtension
     /// 实际编码使用UTF-8，忽略<paramref name="encoding"/>参数。
     /// </remarks>
     public static void WriteNormalString<TWriter>(this TWriter writer, string value, Encoding encoding)
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         ThrowHelper.ThrowIfNull(value, nameof(value));
         var maxSize = encoding.GetMaxByteCount(value.Length);
@@ -177,10 +177,10 @@ public static partial class WriterExtension
     /// <summary>
     /// 写入非空值标记（值为1的字节）。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     public static void WriteNotNull<TWriter>(this TWriter writer)
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         WriteValue<TWriter, byte>(writer, 1);
     }
@@ -188,10 +188,10 @@ public static partial class WriterExtension
     /// <summary>
     /// 写入空值标记（值为0的字节）。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     public static void WriteNull<TWriter>(this TWriter writer)
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         WriteValue<TWriter, byte>(writer, 0);
     }
@@ -199,7 +199,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将字符串以指定的固定包头类型写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="value">要写入的字符串。</param>
     /// <param name="headerType">固定包头类型，默认为<see cref="FixedHeaderType.Int"/>。</param>
@@ -213,7 +213,7 @@ public static partial class WriterExtension
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">当字符串编码后的长度超过指定包头类型的最大值时抛出。</exception>
     public static void WriteString<TWriter>(this TWriter writer, string value, FixedHeaderType headerType = FixedHeaderType.Int)
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         if (value == null)
         {
@@ -318,7 +318,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将非托管类型的值写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <typeparam name="T">要写入的值的类型，必须是非托管类型。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="value">要写入的值。</param>
@@ -327,7 +327,7 @@ public static partial class WriterExtension
     /// </remarks>
     public static void WriteValue<TWriter, T>(this TWriter writer, T value)
         where T : unmanaged
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         var size = Unsafe.SizeOf<T>();
         var span = writer.GetSpan(size);
@@ -338,7 +338,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将非托管类型的值以指定字节序写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <typeparam name="T">要写入的值的类型，必须是非托管类型。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="value">要写入的值。</param>
@@ -348,7 +348,7 @@ public static partial class WriterExtension
     /// </remarks>
     public static void WriteValue<TWriter, T>(this TWriter writer, T value, EndianType endianType)
         where T : unmanaged
-        where TWriter : class, IBytesWriter
+        where TWriter : class, IBytesWriterV4
     {
         var size = Unsafe.SizeOf<T>();
         var span = writer.GetSpan(size);
@@ -359,7 +359,7 @@ public static partial class WriterExtension
     /// <summary>
     /// 将32位无符号整数以变长编码格式写入到字节写入器中。
     /// </summary>
-    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriter"/>。</typeparam>
+    /// <typeparam name="TWriter">字节写入器类型，必须继承自<see cref="IBytesWriterV4"/>。</typeparam>
     /// <param name="writer">字节写入器实例。</param>
     /// <param name="value">要写入的32位无符号整数值。</param>
     /// <returns>写入的字节数（1-5个字节）。</returns>
@@ -372,7 +372,7 @@ public static partial class WriterExtension
     /// </list>
     /// </remarks>
     public static int WriteVarUInt32<TWriter>(this TWriter writer, uint value)
-                                                where TWriter : class, IBytesWriter
+                                                where TWriter : class, IBytesWriterV4
     {
         var span = writer.GetSpan(5); //最多需要5个字节
 

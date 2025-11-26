@@ -23,7 +23,7 @@ public interface IPackage
     /// </summary>
     /// <param name="writer"></param>
     void Package<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter;
+        where TWriter : IBytesWriterV4;
 
     /// <summary>
     /// 解包。
@@ -31,5 +31,5 @@ public interface IPackage
     /// </summary>
     /// <param name="reader"></param>
     void Unpackage<TReader>(ref TReader reader)
-        where TReader : IBytesReader;
+        where TReader : IBytesReaderV4;
 }

@@ -25,7 +25,7 @@ public interface IDmtpRpcRequestPackage : IReadonlyRouterPackage
     /// 序列化类型指示了用于序列化包内容的方法或格式。
     /// </summary>
     /// <value>序列化类型</value>
-    SerializationType SerializationType { get; }
+    SerializationTypeV4 SerializationType { get; }
 
     /// <summary>
     /// 获取元数据。

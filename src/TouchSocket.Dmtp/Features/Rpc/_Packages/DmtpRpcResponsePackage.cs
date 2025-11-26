@@ -22,15 +22,15 @@ internal class DmtpRpcResponsePackage : WaitRouterPackage
 
     private Type m_returnType;
 
-    private ISerializationSelector m_selector;
+    private ISerializationSelectorV4 m_selector;
 
-    private SerializationType m_serializationType;
+    private SerializationTypeV4 m_serializationType;
 
     public DmtpRpcResponsePackage()
     {
     }
 
-    public DmtpRpcResponsePackage(DmtpRpcRequestPackage requestPackage, ISerializationSelector selector, object returnParameter)
+    public DmtpRpcResponsePackage(DmtpRpcRequestPackage requestPackage, ISerializationSelectorV4 selector, object returnParameter)
     {
         this.TargetId = requestPackage.SourceId;
         this.SourceId = requestPackage.TargetId;
@@ -41,7 +41,7 @@ internal class DmtpRpcResponsePackage : WaitRouterPackage
         this.m_serializationType = requestPackage.SerializationType;
     }
 
-    public DmtpRpcResponsePackage(DmtpRpcRequestPackage requestPackage, ISerializationSelector selector, TouchSocketDmtpStatus status, string message)
+    public DmtpRpcResponsePackage(DmtpRpcRequestPackage requestPackage, ISerializationSelectorV4 selector, TouchSocketDmtpStatus status, string message)
     {
         this.TargetId = requestPackage.SourceId;
         this.SourceId = requestPackage.TargetId;
@@ -60,7 +60,7 @@ internal class DmtpRpcResponsePackage : WaitRouterPackage
     /// <inheritdoc/>
     protected override bool IncludedRouter => true;
 
-    public void LoadInfo(Type retuenType, ISerializationSelector selector, SerializationType serializationType)
+    public void LoadInfo(Type retuenType, ISerializationSelectorV4 selector, SerializationTypeV4 serializationType)
     {
         this.m_returnType = retuenType;
         this.m_selector = selector;
@@ -96,7 +96,7 @@ internal class DmtpRpcResponsePackage : WaitRouterPackage
     public override void UnpackageRouter<TReader>(ref TReader reader)
     {
         base.UnpackageRouter(ref reader);
-        this.m_serializationType = (SerializationType)ReaderExtension.ReadValue<TReader, byte>(ref reader);
+        this.m_serializationType = (SerializationTypeV4)ReaderExtension.ReadValue<TReader, byte>(ref reader);
     }
 
     internal void ThrowStatus()

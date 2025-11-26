@@ -341,7 +341,7 @@ public abstract partial class TcpSessionClientBase : ResolverConfigObject, ITcpS
     /// </summary>
     /// <param name="reader">包含收到的原始数据。</param>
     /// <returns>如果返回<see langword="true"/>则表示数据已被处理，且不会再向下传递。</returns>
-    protected virtual ValueTask<bool> OnTcpReceiving(IBytesReader reader)
+    protected virtual ValueTask<bool> OnTcpReceiving(IBytesReaderV4 reader)
     {
         // 将原始数据传递给所有相关的预处理插件，以进行初步的数据处理
         return this.PluginManager.RaiseAsync(typeof(ITcpReceivingPlugin), this.Resolver, this, new BytesReaderEventArgs(reader));

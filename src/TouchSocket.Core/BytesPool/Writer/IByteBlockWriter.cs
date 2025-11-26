@@ -14,13 +14,13 @@ namespace TouchSocket.Core;
 
 /// <summary>
 /// 表示字节块写入器接口，提供字节块的写入功能和容量管理。
-/// 继承自<see cref="IBytesWriter"/>和<see cref="IByteBlockCore"/>接口。
+/// 继承自<see cref="IBytesWriterV4"/>和<see cref="IByteBlockCore"/>接口。
 /// </summary>
 /// <remarks>
 /// IByteBlockWriter接口结合了通用字节写入和字节块核心功能，
 /// 为字节块的写入操作提供了专门的接口定义，并增加了容量管理能力。
 /// </remarks>
-public interface IByteBlockWriter : IBytesWriter, IByteBlockCore
+public interface IByteBlockWriter : IBytesWriterV4, IByteBlockCore
 {
     /// <summary>
     /// 获取字节块的总容量。

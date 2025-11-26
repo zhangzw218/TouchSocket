@@ -13,16 +13,16 @@
 namespace TouchSocket.Core;
 
 /// <summary>
-/// 大数据用户自定义固定包头解析器，使用该适配器时，接收方收到的数据中，<see cref="ByteBlock"/>将为<see langword="null"/>，同时<see cref="IRequestInfo"/>将实现为TFixedHeaderRequestInfo。
+/// 大数据用户自定义固定包头解析器，使用该适配器时，接收方收到的数据中，<see cref="ByteBlockV4"/>将为<see langword="null"/>，同时<see cref="IRequestInfo"/>将实现为TFixedHeaderRequestInfo。
 /// </summary>
 public abstract class CustomBigUnfixedHeaderDataHandlingAdapter<TFixedHeaderRequestInfo> : CustomDataHandlingAdapter<TFixedHeaderRequestInfo>
     where TFixedHeaderRequestInfo : IBigUnfixedHeaderRequestInfo
 {
     /// <summary>
     /// 筛选解析数据。实例化的TRequest会一直保存，直至解析成功，或手动清除。
-    /// <para>当不满足解析条件时，请返回<see cref="FilterResult.Cache"/>，此时会保存<see cref="ByteBlock.CanReadLength"/>的数据</para>
-    /// <para>当数据部分异常时，请移动<see cref="ByteBlock.Position"/>到指定位置，然后返回<see cref="FilterResult.GoOn"/></para>
-    /// <para>当完全满足解析条件时，请返回<see cref="FilterResult.Success"/>最后将<see cref="ByteBlock.Position"/>移至指定位置。</para>
+    /// <para>当不满足解析条件时，请返回<see cref="FilterResult.Cache"/>，此时会保存<see cref="ByteBlockV4.CanReadLength"/>的数据</para>
+    /// <para>当数据部分异常时，请移动<see cref="ByteBlockV4.Position"/>到指定位置，然后返回<see cref="FilterResult.GoOn"/></para>
+    /// <para>当完全满足解析条件时，请返回<see cref="FilterResult.Success"/>最后将<see cref="ByteBlockV4.Position"/>移至指定位置。</para>
     /// </summary>
     /// <param name="reader">字节块</param>
     /// <param name="beCached">是否为上次遗留对象，当该参数为<see langword="true"/>时，request也将是上次实例化的对象。</param>
@@ -120,13 +120,13 @@ public interface IBigUnfixedHeaderRequestInfo : IRequestInfo
 
     /// <summary>
     /// 当收到数据，由框架封送数据，您需要在此函数中，解析自己的数据包头。
-    /// <para>如果满足包头的解析，请返回True，并且递增整个包头的长度到<see cref="ByteBlock.Position"/>，然后赋值<see cref="BodyLength"/></para>
+    /// <para>如果满足包头的解析，请返回True，并且递增整个包头的长度到<see cref="ByteBlockV4.Position"/>，然后赋值<see cref="BodyLength"/></para>
     /// <para>如果返回<see langword="false"/>，意味着缓存剩余数据，此时如果仅仅是因为长度不足，则不必修改其他。</para>
-    /// <para>但是如果是因为数据错误，则需要修改<see cref="ByteBlock.Position"/>到正确位置，如果都不正确，则设置<see cref="ByteBlock.Position"/>等于<see cref="ByteBlock.Length"/></para>
+    /// <para>但是如果是因为数据错误，则需要修改<see cref="ByteBlockV4.Position"/>到正确位置，如果都不正确，则设置<see cref="ByteBlockV4.Position"/>等于<see cref="ByteBlockV4.Length"/></para>
     /// </summary>
     /// <param name="reader"></param>
     /// <returns>是否满足解析包头</returns>
-    bool OnParsingHeader<TReader>(ref TReader reader) where TReader : IBytesReader;
+    bool OnParsingHeader<TReader>(ref TReader reader) where TReader : IBytesReaderV4;
 
     /// <summary>
     /// 当收到数据，由框架封送数据。

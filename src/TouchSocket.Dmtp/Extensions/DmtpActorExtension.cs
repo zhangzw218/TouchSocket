@@ -158,12 +158,12 @@ public static class DmtpActorExtension
     /// <param name="client">要发送数据包的客户端对象。</param>
     /// <param name="protocol">发送数据包所使用的协议。</param>
     /// <param name="package">要发送的数据包实例。</param>
-    /// <param name="maxSize">数据包的预估最大大小，用于指导<see cref="ByteBlock"/>内存的分配。</param>
+    /// <param name="maxSize">数据包的预估最大大小，用于指导<see cref="ByteBlockV4"/>内存的分配。</param>
     /// <param name="cancellationToken">可取消令箭</param>
     public static async Task SendAsync(this IDmtpActorObject client, ushort protocol, IPackage package, int maxSize, CancellationToken cancellationToken = default)
     {
         // 使用ByteBlock管理内存，根据预估的最大大小来分配内存。
-        using (var byteBlock = new ByteBlock(maxSize))
+        using (var byteBlock = new ByteBlockV4(maxSize))
         {
             // 将ByteBlock对象赋予block变量，便于后续操作。
             var block = byteBlock;

@@ -67,7 +67,7 @@ public class UdpPackageAdapter : UdpDataHandlingAdapter
             {
                 if (this.m_revStore.TryRemove(udpPackage.Id, out _))
                 {
-                    using (var block = new ByteBlock(udpPackage.Length))
+                    using (var block = new ByteBlockV4(udpPackage.Length))
                     {
                         if (udpPackage.TryGetData(block))
                         {
@@ -93,15 +93,15 @@ public class UdpPackageAdapter : UdpDataHandlingAdapter
         /*|********|**|*|**|*/
         while (surLen > 0)
         {
-            var byteBlock = new ByteBlock(this.m_mtu);
+            var byteBlock = new ByteBlockV4(this.m_mtu);
             try
             {
-                WriterExtension.WriteValue<ByteBlock, long>(ref byteBlock, id);
-                WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, sn++);
+                WriterExtension.WriteValue<ByteBlockV4, long>(ref byteBlock, id);
+                WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, sn++);
 
                 if (surLen > freeRoom)//有余
                 {
-                    WriterExtension.WriteValue<ByteBlock, byte>(ref byteBlock, 0);
+                    WriterExtension.WriteValue<ByteBlockV4, byte>(ref byteBlock, 0);
                     byteBlock.Write(memory.Span.Slice(off, freeRoom));
                     //Buffer.BlockCopy(buffer, off, data, 11, freeRoom);
                     off += freeRoom;
@@ -112,12 +112,12 @@ public class UdpPackageAdapter : UdpDataHandlingAdapter
                 {
 
                     var flag = ((byte)0).SetBit(7, true);//设置终结帧
-                    WriterExtension.WriteValue<ByteBlock, byte>(ref byteBlock, flag);
+                    WriterExtension.WriteValue<ByteBlockV4, byte>(ref byteBlock, flag);
 
                     byteBlock.Write(memory.Span.Slice(off, surLen));
                     //Buffer.BlockCopy(buffer, off, data, 11, surLen);
 
-                    WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, Crc.Crc16Value(memory.Span), EndianType.Big);
+                    WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, Crc.Crc16Value(memory.Span), EndianType.Big);
                     //Buffer.BlockCopy(Crc.Crc16(buffer, offset, length), 0, data, 11 + surLen, 2);
 
                     //Buffer.BlockCopy(Crc.Crc16(memory.Span), 0, data, 11 + surLen, 2);
@@ -130,7 +130,7 @@ public class UdpPackageAdapter : UdpDataHandlingAdapter
                 }
                 else//结束但不能容纳Crc
                 {
-                    WriterExtension.WriteValue<ByteBlock, byte>(ref byteBlock, 0);
+                    WriterExtension.WriteValue<ByteBlockV4, byte>(ref byteBlock, 0);
                     byteBlock.Write(memory.Span.Slice(off, surLen));
                     //Buffer.BlockCopy(buffer, off, data, 11, surLen);
                     await this.GoSendAsync(endPoint, byteBlock.Memory, cancellationToken);
@@ -142,10 +142,10 @@ public class UdpPackageAdapter : UdpDataHandlingAdapter
 
                     //var finData = new byte[13];
 
-                    WriterExtension.WriteValue<ByteBlock, long>(ref byteBlock, id);
-                    WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, sn++);
-                    WriterExtension.WriteValue<ByteBlock, byte>(ref byteBlock, ((byte)0).SetBit(7, true));
-                    WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, Crc.Crc16Value(memory.Span), EndianType.Big);
+                    WriterExtension.WriteValue<ByteBlockV4, long>(ref byteBlock, id);
+                    WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, sn++);
+                    WriterExtension.WriteValue<ByteBlockV4, byte>(ref byteBlock, ((byte)0).SetBit(7, true));
+                    WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, Crc.Crc16Value(memory.Span), EndianType.Big);
 
                     //Buffer.BlockCopy(TouchSocketBitConverter.Default.GetBytes(id), 0, finData, 0, 8);
                     //Buffer.BlockCopy(TouchSocketBitConverter.Default.GetBytes(sn++), 0, finData, 8, 2);

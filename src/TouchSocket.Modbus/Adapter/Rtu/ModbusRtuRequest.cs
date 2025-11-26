@@ -35,7 +35,7 @@ internal sealed class ModbusRtuRequest : ModbusRtuBase, IRequestInfoBuilder, IRe
 
     /// <inheritdoc/>
     public void Build<TWriter>(ref TWriter writer)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
 
     {
         var memory = writer.GetMemory(this.MaxLength);

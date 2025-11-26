@@ -20,7 +20,7 @@ namespace TouchSocket.Rpc;
 /// RpcDispatchProxy
 /// </summary>
 [RequiresUnreferencedCode("动态代理不支持AOT环境")]
-public abstract class RpcDispatchProxy<TClient, TAttribute> : DispatchProxy where TClient : IRpcClient where TAttribute : RpcAttribute
+public abstract class RpcDispatchProxy<TClient, TAttribute> : DispatchProxy where TClient : IRpcClientV4 where TAttribute : RpcAttribute
 {
     private readonly ConcurrentDictionary<MethodInfo, ProxyModel> m_methods = new ConcurrentDictionary<MethodInfo, ProxyModel>();
     private readonly MethodInfo m_fromResultMethod;

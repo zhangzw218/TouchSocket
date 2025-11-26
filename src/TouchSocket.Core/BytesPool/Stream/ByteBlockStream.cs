@@ -21,7 +21,7 @@ namespace TouchSocket.Core;
 [DebuggerDisplay("Len={Length},Pos={Position},Capacity={Capacity}")]
 internal sealed partial class ByteBlockStream : Stream
 {
-    private readonly ByteBlock m_byteBlock;
+    private readonly ByteBlockV4 m_byteBlock;
     private readonly bool m_releaseTogether;
 
     /// <summary>
@@ -29,7 +29,7 @@ internal sealed partial class ByteBlockStream : Stream
     /// </summary>
     /// <param name="byteBlock">一个 ByteBlock 对象，表示字节块。</param>
     /// <param name="releaseTogether">一个布尔值，指示是否在释放流时同时释放字节块。</param>
-    public ByteBlockStream(ByteBlock byteBlock, bool releaseTogether)
+    public ByteBlockStream(ByteBlockV4 byteBlock, bool releaseTogether)
     {
         this.m_byteBlock = byteBlock;
         this.m_releaseTogether = releaseTogether;
@@ -38,7 +38,7 @@ internal sealed partial class ByteBlockStream : Stream
     /// <summary>
     /// 获取此实例关联的 ByteBlock 对象。
     /// </summary>
-    public ByteBlock ByteBlock => this.m_byteBlock;
+    public ByteBlockV4 ByteBlock => this.m_byteBlock;
 
     /// <summary>
     /// 仅当内存块可用，且<see cref="CanReadLength"/>>0时为<see langword="true"/>。

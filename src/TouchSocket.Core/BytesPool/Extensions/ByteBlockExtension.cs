@@ -17,7 +17,7 @@ namespace TouchSocket.Core;
 /// </summary>
 /// <remarks>
 /// 此类为字节块类型提供了丰富的扩展方法，包括类型转换、数据读写、数组操作等功能。
-/// 支持与<see cref="ByteBlock"/>、<see cref="ValueByteBlock"/>等字节块类型的操作。
+/// 支持与<see cref="ByteBlockV4"/>、<see cref="ValueByteBlockV4"/>等字节块类型的操作。
 /// </remarks>
 public static class ByteBlockExtension
 {
@@ -25,14 +25,14 @@ public static class ByteBlockExtension
     /// 将值类型的字节块转换为普通的字节块。
     /// </summary>
     /// <param name="valueByteBlock">要转换的值类型字节块。</param>
-    /// <returns>一个新的<see cref="ByteBlock"/>对象。</returns>
+    /// <returns>一个新的<see cref="ByteBlockV4"/>对象。</returns>
     /// <remarks>
     /// 此方法会创建一个新的字节块对象，并复制值类型字节块的数据和状态。
     /// 包括位置、长度等信息都会被保留。
     /// </remarks>
-    public static ByteBlock AsByteBlock(this in ValueByteBlock valueByteBlock)
+    public static ByteBlockV4 AsByteBlock(this in ValueByteBlockV4 valueByteBlock)
     {
-        var byteBlock = new ByteBlock(valueByteBlock.TotalMemory.Slice(0, valueByteBlock.Length));
+        var byteBlock = new ByteBlockV4(valueByteBlock.TotalMemory.Slice(0, valueByteBlock.Length));
         byteBlock.Position = valueByteBlock.Position;
         byteBlock.SetLength(valueByteBlock.Length);
         return byteBlock;
@@ -48,7 +48,7 @@ public static class ByteBlockExtension
     /// 此方法将字节块包装为流对象，使其能够与标准的<see cref="Stream"/>API兼容。
     /// 当<paramref name="releaseTogether"/>为<see langword="true"/>时，流被释放时会同时释放底层的字节块。
     /// </remarks>
-    public static Stream AsStream(this ByteBlock byteBlock, bool releaseTogether = true)
+    public static Stream AsStream(this ByteBlockV4 byteBlock, bool releaseTogether = true)
     {
         return new ByteBlockStream(byteBlock, releaseTogether);
     }
@@ -130,9 +130,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的字节值。</param>
-    public static void WriteByte(this ByteBlock byteBlock, byte value)
+    public static void WriteByte(this ByteBlockV4 byteBlock, byte value)
     {
-        WriterExtension.WriteValue<ByteBlock, byte>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, byte>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -140,9 +140,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="DateTime"/>值。</param>
-    public static void WriteDateTime(this ByteBlock byteBlock, DateTime value)
+    public static void WriteDateTime(this ByteBlockV4 byteBlock, DateTime value)
     {
-        WriterExtension.WriteValue<ByteBlock, DateTime>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, DateTime>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -150,9 +150,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="decimal"/>值。</param>
-    public static void WriteDecimal(this ByteBlock byteBlock, decimal value)
+    public static void WriteDecimal(this ByteBlockV4 byteBlock, decimal value)
     {
-        WriterExtension.WriteValue<ByteBlock, decimal>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, decimal>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -161,9 +161,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="decimal"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteDecimal(this ByteBlock byteBlock, decimal value, EndianType endianType)
+    public static void WriteDecimal(this ByteBlockV4 byteBlock, decimal value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, decimal>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, decimal>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -171,9 +171,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="double"/>值。</param>
-    public static void WriteDouble(this ByteBlock byteBlock, double value)
+    public static void WriteDouble(this ByteBlockV4 byteBlock, double value)
     {
-        WriterExtension.WriteValue<ByteBlock, double>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, double>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -182,9 +182,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="double"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteDouble(this ByteBlock byteBlock, double value, EndianType endianType)
+    public static void WriteDouble(this ByteBlockV4 byteBlock, double value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, double>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, double>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -192,9 +192,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="float"/>值。</param>
-    public static void WriteFloat(this ByteBlock byteBlock, float value)
+    public static void WriteFloat(this ByteBlockV4 byteBlock, float value)
     {
-        WriterExtension.WriteValue<ByteBlock, float>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, float>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -203,9 +203,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="float"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteFloat(this ByteBlock byteBlock, float value, EndianType endianType)
+    public static void WriteFloat(this ByteBlockV4 byteBlock, float value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, float>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, float>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -213,9 +213,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="Guid"/>值。</param>
-    public static void WriteGuid(this ByteBlock byteBlock, Guid value)
+    public static void WriteGuid(this ByteBlockV4 byteBlock, Guid value)
     {
-        WriterExtension.WriteValue<ByteBlock, Guid>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, Guid>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -223,9 +223,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="short"/>值。</param>
-    public static void WriteInt16(this ByteBlock byteBlock, short value)
+    public static void WriteInt16(this ByteBlockV4 byteBlock, short value)
     {
-        WriterExtension.WriteValue<ByteBlock, short>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, short>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -234,9 +234,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="short"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteInt16(this ByteBlock byteBlock, short value, EndianType endianType)
+    public static void WriteInt16(this ByteBlockV4 byteBlock, short value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, short>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, short>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -244,9 +244,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="int"/>值。</param>
-    public static void WriteInt32(this ByteBlock byteBlock, int value)
+    public static void WriteInt32(this ByteBlockV4 byteBlock, int value)
     {
-        WriterExtension.WriteValue<ByteBlock, int>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, int>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -255,9 +255,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="int"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteInt32(this ByteBlock byteBlock, int value, EndianType endianType)
+    public static void WriteInt32(this ByteBlockV4 byteBlock, int value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, int>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, int>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -265,9 +265,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="long"/>值。</param>
-    public static void WriteInt64(this ByteBlock byteBlock, long value)
+    public static void WriteInt64(this ByteBlockV4 byteBlock, long value)
     {
-        WriterExtension.WriteValue<ByteBlock, long>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, long>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -276,9 +276,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="long"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteInt64(this ByteBlock byteBlock, long value, EndianType endianType)
+    public static void WriteInt64(this ByteBlockV4 byteBlock, long value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, long>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, long>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -286,9 +286,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="sbyte"/>值。</param>
-    public static void WriteSByte(this ByteBlock byteBlock, sbyte value)
+    public static void WriteSByte(this ByteBlockV4 byteBlock, sbyte value)
     {
-        WriterExtension.WriteValue<ByteBlock, sbyte>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, sbyte>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -296,7 +296,7 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的字符串值。</param>
-    public static void WriteString(this ByteBlock byteBlock, string value)
+    public static void WriteString(this ByteBlockV4 byteBlock, string value)
     {
         WriterExtension.WriteString(ref byteBlock, value);
     }
@@ -307,7 +307,7 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的字符串值。</param>
     /// <param name="headerType">固定头部类型，用于指示字符串长度的编码方式。</param>
-    public static void WriteString(this ByteBlock byteBlock, string value, FixedHeaderType headerType)
+    public static void WriteString(this ByteBlockV4 byteBlock, string value, FixedHeaderType headerType)
     {
         WriterExtension.WriteString(ref byteBlock, value, headerType);
     }
@@ -317,9 +317,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="TimeSpan"/>值。</param>
-    public static void WriteTimeSpan(this ByteBlock byteBlock, TimeSpan value)
+    public static void WriteTimeSpan(this ByteBlockV4 byteBlock, TimeSpan value)
     {
-        WriterExtension.WriteValue<ByteBlock, TimeSpan>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, TimeSpan>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -327,9 +327,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="ushort"/>值。</param>
-    public static void WriteUInt16(this ByteBlock byteBlock, ushort value)
+    public static void WriteUInt16(this ByteBlockV4 byteBlock, ushort value)
     {
-        WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -338,9 +338,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="ushort"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteUInt16(this ByteBlock byteBlock, ushort value, EndianType endianType)
+    public static void WriteUInt16(this ByteBlockV4 byteBlock, ushort value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, ushort>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, ushort>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -348,9 +348,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="uint"/>值。</param>
-    public static void WriteUInt32(this ByteBlock byteBlock, uint value)
+    public static void WriteUInt32(this ByteBlockV4 byteBlock, uint value)
     {
-        WriterExtension.WriteValue<ByteBlock, uint>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, uint>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -359,9 +359,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="uint"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteUInt32(this ByteBlock byteBlock, uint value, EndianType endianType)
+    public static void WriteUInt32(this ByteBlockV4 byteBlock, uint value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, uint>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, uint>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -369,9 +369,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="ulong"/>值。</param>
-    public static void WriteUInt64(this ByteBlock byteBlock, ulong value)
+    public static void WriteUInt64(this ByteBlockV4 byteBlock, ulong value)
     {
-        WriterExtension.WriteValue<ByteBlock, ulong>(ref byteBlock, value);
+        WriterExtension.WriteValue<ByteBlockV4, ulong>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -380,9 +380,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="ulong"/>值。</param>
     /// <param name="endianType">字节序类型。</param>
-    public static void WriteUInt64(this ByteBlock byteBlock, ulong value, EndianType endianType)
+    public static void WriteUInt64(this ByteBlockV4 byteBlock, ulong value, EndianType endianType)
     {
-        WriterExtension.WriteValue<ByteBlock, ulong>(ref byteBlock, value, endianType);
+        WriterExtension.WriteValue<ByteBlockV4, ulong>(ref byteBlock, value, endianType);
     }
 
     /// <summary>
@@ -391,10 +391,10 @@ public static class ByteBlockExtension
     /// <typeparam name="T">引用类型。</typeparam>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="t">要检查<see langword="null"/>状态的对象。</param>
-    public static void WriteIsNull<T>(this ByteBlock byteBlock, T t)
+    public static void WriteIsNull<T>(this ByteBlockV4 byteBlock, T t)
          where T : class
     {
-        WriterExtension.WriteIsNull<ByteBlock, T>(ref byteBlock, t);
+        WriterExtension.WriteIsNull<ByteBlockV4, T>(ref byteBlock, t);
     }
 
     /// <summary>
@@ -403,28 +403,28 @@ public static class ByteBlockExtension
     /// <typeparam name="T">值类型。</typeparam>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="t">要检查<see langword="null"/>状态的可空值类型对象。</param>
-    public static void WriteIsNull<T>(this ByteBlock byteBlock, T? t)
+    public static void WriteIsNull<T>(this ByteBlockV4 byteBlock, T? t)
         where T : struct
     {
-        WriterExtension.WriteIsNull<ByteBlock, T>(ref byteBlock, t);
+        WriterExtension.WriteIsNull<ByteBlockV4, T>(ref byteBlock, t);
     }
 
     /// <summary>
     /// 向字节块写入非<see langword="null"/>标识。
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
-    public static void WriteNotNull(this ByteBlock byteBlock)
+    public static void WriteNotNull(this ByteBlockV4 byteBlock)
     {
-        WriterExtension.WriteNotNull<ByteBlock>(ref byteBlock);
+        WriterExtension.WriteNotNull<ByteBlockV4>(ref byteBlock);
     }
 
     /// <summary>
     /// 向字节块写入<see langword="null"/>标识。
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
-    public static void WriteNull(this ByteBlock byteBlock)
+    public static void WriteNull(this ByteBlockV4 byteBlock)
     {
-        WriterExtension.WriteNull<ByteBlock>(ref byteBlock);
+        WriterExtension.WriteNull<ByteBlockV4>(ref byteBlock);
     }
 
     /// <summary>
@@ -433,9 +433,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的<see cref="uint"/>值。</param>
     /// <returns>写入的字节数。</returns>
-    public static int WriteVarUInt32(this ByteBlock byteBlock, uint value)
+    public static int WriteVarUInt32(this ByteBlockV4 byteBlock, uint value)
     {
-        return WriterExtension.WriteVarUInt32<ByteBlock>(ref byteBlock, value);
+        return WriterExtension.WriteVarUInt32<ByteBlockV4>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -444,9 +444,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的字符串值。</param>
     /// <param name="encoding">字符串编码。</param>
-    public static void WriteNormalString(this ByteBlock byteBlock, string value, Encoding encoding)
+    public static void WriteNormalString(this ByteBlockV4 byteBlock, string value, Encoding encoding)
     {
-        WriterExtension.WriteNormalString<ByteBlock>(ref byteBlock, value, encoding);
+        WriterExtension.WriteNormalString<ByteBlockV4>(ref byteBlock, value, encoding);
     }
 
     /// <summary>
@@ -454,9 +454,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="span">要写入的字节跨度。</param>
-    public static void WriteByteSpan(this ByteBlock byteBlock, scoped ReadOnlySpan<byte> span)
+    public static void WriteByteSpan(this ByteBlockV4 byteBlock, scoped ReadOnlySpan<byte> span)
     {
-        WriterExtension.WriteByteSpan<ByteBlock>(ref byteBlock, span);
+        WriterExtension.WriteByteSpan<ByteBlockV4>(ref byteBlock, span);
     }
 
     /// <summary>
@@ -464,9 +464,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要写入的目标字节块。</param>
     /// <param name="value">要写入的源字节块。</param>
-    public static void WriteByteBlock(this ByteBlock byteBlock, ByteBlock value)
+    public static void WriteByteBlock(this ByteBlockV4 byteBlock, ByteBlockV4 value)
     {
-        WriterExtension.WriteByteBlock<ByteBlock>(ref byteBlock, value);
+        WriterExtension.WriteByteBlock<ByteBlockV4>(ref byteBlock, value);
     }
 
     /// <summary>
@@ -475,7 +475,7 @@ public static class ByteBlockExtension
     /// <typeparam name="TPackage">数据包类型，必须实现<see cref="IPackage"/>接口。</typeparam>
     /// <param name="byteBlock">要写入的字节块。</param>
     /// <param name="value">要写入的数据包对象。</param>
-    public static void WritePackage<TPackage>(this ByteBlock byteBlock, TPackage value)
+    public static void WritePackage<TPackage>(this ByteBlockV4 byteBlock, TPackage value)
         where TPackage : class, IPackage
     {
         WriterExtension.WritePackage(ref byteBlock, value);
@@ -489,9 +489,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的字节值。</returns>
-    public static byte ReadByte(this ByteBlock byteBlock)
+    public static byte ReadByte(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, byte>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, byte>(ref byteBlock);
     }
 
     /// <summary>
@@ -499,9 +499,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="DateTime"/>值。</returns>
-    public static DateTime ReadDateTime(this ByteBlock byteBlock)
+    public static DateTime ReadDateTime(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, DateTime>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, DateTime>(ref byteBlock);
     }
 
     /// <summary>
@@ -509,9 +509,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="decimal"/>值。</returns>
-    public static decimal ReadDecimal(this ByteBlock byteBlock)
+    public static decimal ReadDecimal(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, decimal>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, decimal>(ref byteBlock);
     }
 
     /// <summary>
@@ -520,9 +520,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="decimal"/>值。</returns>
-    public static decimal ReadDecimal(this ByteBlock byteBlock, EndianType endianType)
+    public static decimal ReadDecimal(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, decimal>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, decimal>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -530,9 +530,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="double"/>值。</returns>
-    public static double ReadDouble(this ByteBlock byteBlock)
+    public static double ReadDouble(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, double>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, double>(ref byteBlock);
     }
 
     /// <summary>
@@ -541,9 +541,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="double"/>值。</returns>
-    public static double ReadDouble(this ByteBlock byteBlock, EndianType endianType)
+    public static double ReadDouble(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, double>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, double>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -551,9 +551,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="float"/>值。</returns>
-    public static float ReadFloat(this ByteBlock byteBlock)
+    public static float ReadFloat(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, float>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, float>(ref byteBlock);
     }
 
     /// <summary>
@@ -562,9 +562,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="float"/>值。</returns>
-    public static float ReadFloat(this ByteBlock byteBlock, EndianType endianType)
+    public static float ReadFloat(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, float>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, float>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -572,9 +572,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="Guid"/>值。</returns>
-    public static Guid ReadGuid(this ByteBlock byteBlock)
+    public static Guid ReadGuid(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, Guid>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, Guid>(ref byteBlock);
     }
 
     /// <summary>
@@ -582,9 +582,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="short"/>值。</returns>
-    public static short ReadInt16(this ByteBlock byteBlock)
+    public static short ReadInt16(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, short>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, short>(ref byteBlock);
     }
 
     /// <summary>
@@ -593,9 +593,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="short"/>值。</returns>
-    public static short ReadInt16(this ByteBlock byteBlock, EndianType endianType)
+    public static short ReadInt16(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, short>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, short>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -603,9 +603,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="int"/>值。</returns>
-    public static int ReadInt32(this ByteBlock byteBlock)
+    public static int ReadInt32(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, int>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, int>(ref byteBlock);
     }
 
     /// <summary>
@@ -614,9 +614,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="int"/>值。</returns>
-    public static int ReadInt32(this ByteBlock byteBlock, EndianType endianType)
+    public static int ReadInt32(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, int>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, int>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -624,9 +624,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="long"/>值。</returns>
-    public static long ReadInt64(this ByteBlock byteBlock)
+    public static long ReadInt64(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, long>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, long>(ref byteBlock);
     }
 
     /// <summary>
@@ -635,9 +635,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="long"/>值。</returns>
-    public static long ReadInt64(this ByteBlock byteBlock, EndianType endianType)
+    public static long ReadInt64(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, long>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, long>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -645,9 +645,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="sbyte"/>值。</returns>
-    public static sbyte ReadSByte(this ByteBlock byteBlock)
+    public static sbyte ReadSByte(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, sbyte>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, sbyte>(ref byteBlock);
     }
 
     /// <summary>
@@ -655,7 +655,7 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的字符串值。</returns>
-    public static string ReadString(this ByteBlock byteBlock)
+    public static string ReadString(this ByteBlockV4 byteBlock)
     {
         return ReaderExtension.ReadString(ref byteBlock);
     }
@@ -666,7 +666,7 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="headerType">固定头部类型，用于指示字符串长度的编码方式。</param>
     /// <returns>读取的字符串值。</returns>
-    public static string ReadString(this ByteBlock byteBlock, FixedHeaderType headerType)
+    public static string ReadString(this ByteBlockV4 byteBlock, FixedHeaderType headerType)
     {
         return ReaderExtension.ReadString(ref byteBlock, headerType);
     }
@@ -676,9 +676,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="TimeSpan"/>值。</returns>
-    public static TimeSpan ReadTimeSpan(this ByteBlock byteBlock)
+    public static TimeSpan ReadTimeSpan(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, TimeSpan>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, TimeSpan>(ref byteBlock);
     }
 
     /// <summary>
@@ -686,9 +686,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="ushort"/>值。</returns>
-    public static ushort ReadUInt16(this ByteBlock byteBlock)
+    public static ushort ReadUInt16(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, ushort>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, ushort>(ref byteBlock);
     }
 
     /// <summary>
@@ -697,9 +697,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="ushort"/>值。</returns>
-    public static ushort ReadUInt16(this ByteBlock byteBlock, EndianType endianType)
+    public static ushort ReadUInt16(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, ushort>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, ushort>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -707,9 +707,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="uint"/>值。</returns>
-    public static uint ReadUInt32(this ByteBlock byteBlock)
+    public static uint ReadUInt32(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, uint>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, uint>(ref byteBlock);
     }
 
     /// <summary>
@@ -718,9 +718,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="uint"/>值。</returns>
-    public static uint ReadUInt32(this ByteBlock byteBlock, EndianType endianType)
+    public static uint ReadUInt32(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, uint>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, uint>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -728,9 +728,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="ulong"/>值。</returns>
-    public static ulong ReadUInt64(this ByteBlock byteBlock)
+    public static ulong ReadUInt64(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadValue<ByteBlock, ulong>(ref byteBlock);
+        return ReaderExtension.ReadValue<ByteBlockV4, ulong>(ref byteBlock);
     }
 
     /// <summary>
@@ -739,9 +739,9 @@ public static class ByteBlockExtension
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <param name="endianType">字节序类型。</param>
     /// <returns>读取的<see cref="ulong"/>值。</returns>
-    public static ulong ReadUInt64(this ByteBlock byteBlock, EndianType endianType)
+    public static ulong ReadUInt64(this ByteBlockV4 byteBlock, EndianType endianType)
     {
-        return ReaderExtension.ReadValue<ByteBlock, ulong>(ref byteBlock, endianType);
+        return ReaderExtension.ReadValue<ByteBlockV4, ulong>(ref byteBlock, endianType);
     }
 
     /// <summary>
@@ -749,9 +749,9 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>如果读取到<see langword="null"/>标识则返回<see langword="true"/>；否则返回<see langword="false"/>。</returns>
-    public static bool ReadIsNull(this ByteBlock byteBlock)
+    public static bool ReadIsNull(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadIsNull<ByteBlock>(ref byteBlock);
+        return ReaderExtension.ReadIsNull<ByteBlockV4>(ref byteBlock);
     }
 
     /// <summary>
@@ -759,17 +759,17 @@ public static class ByteBlockExtension
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的<see cref="uint"/>值。</returns>
-    public static uint ReadVarUInt32(this ByteBlock byteBlock)
+    public static uint ReadVarUInt32(this ByteBlockV4 byteBlock)
     {
-        return ReaderExtension.ReadVarUInt32<ByteBlock>(ref byteBlock);
+        return ReaderExtension.ReadVarUInt32<ByteBlockV4>(ref byteBlock);
     }
 
     /// <summary>
     /// 从字节块读取一个字节块对象。
     /// </summary>
     /// <param name="byteBlock">要读取的字节块。</param>
-    /// <returns>读取的<see cref="ByteBlock"/>对象。</returns>
-    public static ByteBlock ReadByteBlock(this ByteBlock byteBlock)
+    /// <returns>读取的<see cref="ByteBlockV4"/>对象。</returns>
+    public static ByteBlockV4 ReadByteBlock(this ByteBlockV4 byteBlock)
     {
         return ReaderExtension.ReadByteBlock(ref byteBlock);
     }
@@ -780,10 +780,10 @@ public static class ByteBlockExtension
     /// <typeparam name="TPackage">数据包类型，必须实现<see cref="IPackage"/>接口并具有无参构造函数。</typeparam>
     /// <param name="byteBlock">要读取的字节块。</param>
     /// <returns>读取的数据包对象。</returns>
-    public static TPackage ReadPackage<TPackage>(this ByteBlock byteBlock)
+    public static TPackage ReadPackage<TPackage>(this ByteBlockV4 byteBlock)
         where TPackage : class, IPackage, new()
     {
-        return ReaderExtension.ReadPackage<ByteBlock, TPackage>(ref byteBlock);
+        return ReaderExtension.ReadPackage<ByteBlockV4, TPackage>(ref byteBlock);
     }
     #endregion Read
 }

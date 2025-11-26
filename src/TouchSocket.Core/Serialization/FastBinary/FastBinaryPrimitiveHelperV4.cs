@@ -14,13 +14,13 @@ namespace TouchSocket.Core;
 /// <summary>
 /// 原生类型（含字符串、时间、decimal 等）读写辅助。保持与原始协议编码完全一致（尤其 sbyte 仍按短整型写入以保证兼容）。
 /// </summary>
-internal static class FastBinaryPrimitiveHelper
+internal static class FastBinaryPrimitiveHelperV4
 {
     /// <summary>
     /// 写入已知原生类型。成功返回 true。
     /// </summary>
     public static bool TryWritePrimitive<TWriter, T>(ref TWriter writer, T value)
-        where TWriter : IBytesWriter
+        where TWriter : IBytesWriterV4
     {
         switch (value)
         {
@@ -48,7 +48,7 @@ internal static class FastBinaryPrimitiveHelper
     /// 读取基础类型。若处理则返回 true。
     /// </summary>
     public static bool TryReadPrimitive<TReader>(ref TReader reader, Type type, out object value)
-        where TReader : IBytesReader
+        where TReader : IBytesReaderV4
     {
         switch (Type.GetTypeCode(type))
         {

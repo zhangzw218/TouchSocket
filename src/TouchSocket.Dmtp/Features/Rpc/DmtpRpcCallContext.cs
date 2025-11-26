@@ -40,7 +40,7 @@ internal sealed class DmtpRpcCallContext : CallContext, IDmtpRpcCallContext
     public Metadata Metadata => this.DmtpRpcPackage.Metadata;
 
     /// <inheritdoc/>
-    public SerializationType SerializationType => this.DmtpRpcPackage == null ? (SerializationType)byte.MaxValue : this.DmtpRpcPackage.SerializationType;
+    public SerializationTypeV4 SerializationType => this.DmtpRpcPackage == null ? (SerializationTypeV4)byte.MaxValue : this.DmtpRpcPackage.SerializationType;
 
     public void SetParameters(object[] ps)
     {

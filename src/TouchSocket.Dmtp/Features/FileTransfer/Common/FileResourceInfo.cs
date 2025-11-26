@@ -87,7 +87,7 @@ public class FileResourceInfo : PackageBase
     /// </summary>
     /// <param name="byteBlock">字节块，用于读取文件资源信息。</param>
     /// <returns>返回一个新的 <see cref="FileResourceInfo"/> 实例。</returns>
-    public static FileResourceInfo Create(ByteBlock byteBlock)
+    public static FileResourceInfo Create(ByteBlockV4 byteBlock)
     {
         return Create(ref byteBlock);
     }
@@ -99,7 +99,7 @@ public class FileResourceInfo : PackageBase
     /// <returns>返回一个新的 <see cref="FileResourceInfo"/> 实例。</returns>
     public static FileResourceInfo Create(Stream stream)
     {
-        return Create(new ByteBlock(stream.ReadAllToByteArray()));
+        return Create(new ByteBlockV4(stream.ReadAllToByteArray()));
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public class FileResourceInfo : PackageBase
     /// <typeparam name="TReader">字节块的类型，必须实现 <see cref="IByteBlock"/> 接口。</typeparam>
     /// <param name="reader">引用的字节块，用于读取文件资源信息。</param>
     /// <returns>返回一个新的 <see cref="FileResourceInfo"/> 实例。</returns>
-    public static FileResourceInfo Create<TReader>(ref TReader reader) where TReader : IBytesReader
+    public static FileResourceInfo Create<TReader>(ref TReader reader) where TReader : IBytesReaderV4
     {
         var fileResourceInfo = new FileResourceInfo();
         // 读取文件区块大小
@@ -229,7 +229,7 @@ public class FileResourceInfo : PackageBase
     /// 将<see cref="FileResourceInfo"/>对象保存到内存。
     /// </summary>
     /// <param name="writer">用于存储文件资源信息的字节块参数。</param>
-    public void Save<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    public void Save<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         WriterExtension.WriteValue<TWriter, int>(ref writer, this.FileSectionSize);
 
@@ -266,7 +266,7 @@ public class FileResourceInfo : PackageBase
     /// 将<see cref="FileResourceInfo"/>对象保存到内存。
     /// </summary>
     /// <param name="byteBlock">用于存储文件资源信息的字节块参数。</param>
-    public void Save(ByteBlock byteBlock)
+    public void Save(ByteBlockV4 byteBlock)
     {
         this.Save(ref byteBlock);
     }
@@ -277,7 +277,7 @@ public class FileResourceInfo : PackageBase
     /// <param name="stream">目标流，用于存储文件资源信息。</param>
     public void Save(Stream stream)
     {
-        using (var byteBlock = new ByteBlock(1024 * 64))
+        using (var byteBlock = new ByteBlockV4(1024 * 64))
         {
             this.Save(byteBlock);
             // 将字节块的内容写入到指定的流中

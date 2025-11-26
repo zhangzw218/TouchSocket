@@ -25,7 +25,7 @@ public interface IFastBinaryConverter
     /// <param name="type">要读取的对象的类型。</param>
     /// <typeparam name="TReader">字节块的类型，实现了IByteBlock接口。</typeparam>
     /// <returns>从字节块中读取的对象实例。</returns>
-    object Read<TReader>(ref TReader reader, Type type) where TReader : IBytesReader;
+    object Read<TReader>(ref TReader reader, Type type) where TReader : IBytesReaderV4;
 
     /// <summary>
     /// 将对象写入字节块。
@@ -33,7 +33,7 @@ public interface IFastBinaryConverter
     /// <param name="writer">将要包含对象数据的字节块。</param>
     /// <param name="obj">要写入的对象实例。</param>
     /// <typeparam name="TWriter">字节块的类型，实现了IByteBlock接口。</typeparam>
-    void Write<TWriter>(ref TWriter writer, in object obj) where TWriter : IBytesWriter;
+    void Write<TWriter>(ref TWriter writer, in object obj) where TWriter : IBytesWriterV4;
 }
 
 /// <summary>
@@ -72,7 +72,7 @@ public abstract class FastBinaryConverter<T> : IFastBinaryConverter
     /// <param name="type">要读取的对象的类型。</param>
     /// <typeparam name="TReader">字节块的类型，实现了IByteBlock接口。</typeparam>
     /// <returns>从字节块中读取的对象实例。</returns>
-    protected abstract T Read<TReader>(ref TReader reader, Type type) where TReader : IBytesReader;
+    protected abstract T Read<TReader>(ref TReader reader, Type type) where TReader : IBytesReaderV4;
 
     /// <summary>
     /// 将对象写入字节块。必须由具体实现类实现。
@@ -80,5 +80,5 @@ public abstract class FastBinaryConverter<T> : IFastBinaryConverter
     /// <param name="writer">将要包含对象数据的字节块。</param>
     /// <param name="obj">要写入的对象实例。</param>
     /// <typeparam name="TWriter">字节块的类型，实现了IByteBlock接口。</typeparam>
-    protected abstract void Write<TWriter>(ref TWriter writer, in T obj) where TWriter : IBytesWriter;
+    protected abstract void Write<TWriter>(ref TWriter writer, in T obj) where TWriter : IBytesWriterV4;
 }

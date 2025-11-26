@@ -134,7 +134,7 @@ public class HttpRequest : HttpBase
         return this;
     }
 
-    internal void BuildHeader<TWriter>(ref TWriter writer) where TWriter : IBytesWriter
+    internal void BuildHeader<TWriter>(ref TWriter writer) where TWriter : IBytesWriterV4
     {
         WriterExtension.WriteNormalString(ref writer, this.Method.ToString(), Encoding.UTF8);//Get
         TouchSocketHttpUtility.AppendSpace(ref writer);//空格
