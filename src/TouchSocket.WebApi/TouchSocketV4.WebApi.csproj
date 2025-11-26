@@ -18,8 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\TouchSocket.Http\TouchSocket.Http.csproj" />
-		<ProjectReference Include="..\TouchSocket.Rpc\TouchSocket.Rpc.csproj" />
+		<ProjectReference Include="..\TouchSocket.Http\TouchSocketV4.Http.csproj" />
+		<ProjectReference Include="..\TouchSocket.Rpc\TouchSocketV4.Rpc.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Exceptions\" />

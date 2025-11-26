@@ -18,8 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.Dmtp\TouchSocket.Dmtp.csproj" />
-	  <ProjectReference Include="..\TouchSocket.Hosting\TouchSocket.Hosting.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Dmtp\TouchSocketV4.Dmtp.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Hosting\TouchSocketV4.Hosting.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

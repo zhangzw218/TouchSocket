@@ -13,7 +13,7 @@
 		<None Include="..\TouchSocket.Rpc.SourceGenerator\bin\$(Configuration)\netstandard2.0\TouchSocket.Rpc.SourceGenerator.dll" PackagePath="analyzers\dotnet\cs" Pack="true" Visible="false" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.Core\TouchSocket.Core.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Core\TouchSocketV4.Core.csproj" />
 	</ItemGroup>
 	
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TouchSocket.WebApi\TouchSocket.WebApi.csproj" />
+    <ProjectReference Include="..\TouchSocket.WebApi\TouchSocketV4.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

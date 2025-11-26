@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\TouchSocket.Core.DependencyInjection\TouchSocket.Core.DependencyInjection.csproj" />
-		<ProjectReference Include="..\TouchSocket\TouchSocket.csproj" />
+		<ProjectReference Include="..\TouchSocket.Core.DependencyInjection\TouchSocketV4.Core.DependencyInjection.csproj" />
+		<ProjectReference Include="..\TouchSocket\TouchSocketV4.csproj" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'=='net462'">

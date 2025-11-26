@@ -19,7 +19,7 @@ TouchSocket is Net (including C #, VB An integrated socket network communication
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\TouchSocket.Core\TouchSocket.Core.csproj" /> 
+		<ProjectReference Include="..\TouchSocket.Core\TouchSocketV4.Core.csproj" /> 
 	</ItemGroup>
 
 	<ItemGroup>

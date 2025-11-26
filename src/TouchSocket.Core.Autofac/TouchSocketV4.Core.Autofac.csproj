@@ -11,6 +11,6 @@
 	  <PackageReference Include="Autofac" Version="8.4.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.Core\TouchSocket.Core.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Core\TouchSocketV4.Core.csproj" />
 	</ItemGroup>
 </Project>

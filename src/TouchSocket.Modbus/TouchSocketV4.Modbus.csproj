@@ -8,7 +8,7 @@
 		<Title>TouchSocket.Modbus</Title>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.SerialPorts\TouchSocket.SerialPorts.csproj" />
-	  <ProjectReference Include="..\TouchSocket\TouchSocket.csproj" />
+	  <ProjectReference Include="..\TouchSocket.SerialPorts\TouchSocketV4.SerialPorts.csproj" />
+	  <ProjectReference Include="..\TouchSocket\TouchSocketV4.csproj" />
 	</ItemGroup>
 </Project>

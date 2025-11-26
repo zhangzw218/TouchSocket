@@ -1,29 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11217.181 d18.0
+VisualStudioVersion = 18.0.11217.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Core", "Src\TouchSocket.Core\TouchSocket.Core.csproj", "{12471445-B5C5-49E2-A7AC-15782299C5A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Core", "Src\TouchSocket.Core\TouchSocketV4.Core.csproj", "{12471445-B5C5-49E2-A7AC-15782299C5A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket", "Src\TouchSocket\TouchSocket.csproj", "{375335C0-529E-4EE9-B80B-A3EC861783A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4", "Src\TouchSocket\TouchSocketV4.csproj", "{375335C0-529E-4EE9-B80B-A3EC861783A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Http", "Src\TouchSocket.Http\TouchSocket.Http.csproj", "{5DA6EA96-6762-4390-89E3-EECA272487F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Http", "Src\TouchSocket.Http\TouchSocketV4.Http.csproj", "{5DA6EA96-6762-4390-89E3-EECA272487F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.WebApi", "Src\TouchSocket.WebApi\TouchSocket.WebApi.csproj", "{B2591766-592C-45BD-A1A5-1395ACAA7EEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.WebApi", "Src\TouchSocket.WebApi\TouchSocketV4.WebApi.csproj", "{B2591766-592C-45BD-A1A5-1395ACAA7EEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.JsonRpc", "Src\TouchSocket.JsonRpc\TouchSocket.JsonRpc.csproj", "{D31FBB16-D47E-4811-BBAA-D6E05C850DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.JsonRpc", "Src\TouchSocket.JsonRpc\TouchSocketV4.JsonRpc.csproj", "{D31FBB16-D47E-4811-BBAA-D6E05C850DB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Rpc", "Src\TouchSocket.Rpc\TouchSocket.Rpc.csproj", "{BA8EABBF-89EA-4D24-9066-7003ADC9CD66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Rpc", "Src\TouchSocket.Rpc\TouchSocketV4.Rpc.csproj", "{BA8EABBF-89EA-4D24-9066-7003ADC9CD66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.XmlRpc", "Src\TouchSocket.XmlRpc\TouchSocket.XmlRpc.csproj", "{3EA36139-BC17-4A9A-8B34-B19CBB9DD60A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.XmlRpc", "Src\TouchSocket.XmlRpc\TouchSocketV4.XmlRpc.csproj", "{3EA36139-BC17-4A9A-8B34-B19CBB9DD60A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Core.DependencyInjection", "Src\TouchSocket.Core.DependencyInjection\TouchSocket.Core.DependencyInjection.csproj", "{AF0DAD14-1212-43D2-86CF-B14463D46C46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Core.DependencyInjection", "Src\TouchSocket.Core.DependencyInjection\TouchSocketV4.Core.DependencyInjection.csproj", "{AF0DAD14-1212-43D2-86CF-B14463D46C46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.AspNetCore", "Src\TouchSocket.AspNetCore\TouchSocket.AspNetCore.csproj", "{8846520A-DE8F-4FCF-8313-015D6C2D1B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.AspNetCore", "Src\TouchSocket.AspNetCore\TouchSocketV4.AspNetCore.csproj", "{8846520A-DE8F-4FCF-8313-015D6C2D1B54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "开源版", "开源版", "{065EA3E8-D90E-4074-9979-D651EE4E6B3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Dmtp", "Src\TouchSocket.Dmtp\TouchSocket.Dmtp.csproj", "{FA1CB5DE-B746-4E27-BFA2-CD727E086B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Dmtp", "Src\TouchSocket.Dmtp\TouchSocketV4.Dmtp.csproj", "{FA1CB5DE-B746-4E27-BFA2-CD727E086B0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案配置", "解决方案配置", "{8D840BCD-6E10-4BF0-A44A-DC7BD97C1ADA}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,17 +32,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案配置", "解�
 		TouchSocketVersion.props = TouchSocketVersion.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.NamedPipe", "Src\TouchSocket.NamedPipe\TouchSocket.NamedPipe.csproj", "{DB92CBD6-A2D9-490B-A2C7-004D8C45CE21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.NamedPipe", "Src\TouchSocket.NamedPipe\TouchSocketV4.NamedPipe.csproj", "{DB92CBD6-A2D9-490B-A2C7-004D8C45CE21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.WebApi.Swagger", "Src\TouchSocket.WebApi.Swagger\TouchSocket.WebApi.Swagger.csproj", "{6D9EDD94-B7D2-4609-86A9-000EE8D3838C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.WebApi.Swagger", "Src\TouchSocket.WebApi.Swagger\TouchSocketV4.WebApi.Swagger.csproj", "{6D9EDD94-B7D2-4609-86A9-000EE8D3838C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Hosting", "Src\TouchSocket.Hosting\TouchSocket.Hosting.csproj", "{F2151B0D-E8C8-4434-9DDF-7112B708ED8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Hosting", "Src\TouchSocket.Hosting\TouchSocketV4.Hosting.csproj", "{F2151B0D-E8C8-4434-9DDF-7112B708ED8A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.SerialPorts", "Src\TouchSocket.SerialPorts\TouchSocket.SerialPorts.csproj", "{BB60C1A6-D7EE-4252-B9E8-F68BECE57D0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.SerialPorts", "Src\TouchSocket.SerialPorts\TouchSocketV4.SerialPorts.csproj", "{BB60C1A6-D7EE-4252-B9E8-F68BECE57D0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Core.Autofac", "Src\TouchSocket.Core.Autofac\TouchSocket.Core.Autofac.csproj", "{EB7FF3DC-7DFD-4917-9A0A-01E2DD3F5406}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Core.Autofac", "Src\TouchSocket.Core.Autofac\TouchSocketV4.Core.Autofac.csproj", "{EB7FF3DC-7DFD-4917-9A0A-01E2DD3F5406}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Modbus", "Src\TouchSocket.Modbus\TouchSocket.Modbus.csproj", "{DE45D1DC-6764-433B-929C-F17147D338AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Modbus", "Src\TouchSocket.Modbus\TouchSocketV4.Modbus.csproj", "{DE45D1DC-6764-433B-929C-F17147D338AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "源生成器", "源生成器", "{33F8723D-9853-4E00-97DB-521E34EC895C}"
 EndProject
@@ -50,9 +50,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Core.SourceGene
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Rpc.SourceGenerator", "Src\TouchSocket.Rpc.SourceGenerator\TouchSocket.Rpc.SourceGenerator.csproj", "{C9A87AE1-1512-4AD8-8E0C-9F0028E0F72B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Rpc.RateLimiting", "Src\TouchSocket.Rpc.RateLimiting\TouchSocket.Rpc.RateLimiting.csproj", "{781923FE-AF2E-4CB0-B7EF-98EA09DDEDB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Rpc.RateLimiting", "Src\TouchSocket.Rpc.RateLimiting\TouchSocketV4.Rpc.RateLimiting.csproj", "{781923FE-AF2E-4CB0-B7EF-98EA09DDEDB3}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocket.Shared", "Src\TouchSocket.Shared\TouchSocket.Shared.shproj", "{BA463F9B-D28C-4C8A-AEB7-ECDC7FC1C3A1}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocketV4.Shared", "Src\TouchSocket.Shared\TouchSocketV4.Shared.shproj", "{BA463F9B-D28C-4C8A-AEB7-ECDC7FC1C3A1}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocket.SourceGenerator.SharedProject", "Src\TouchSocket.SourceGenerator.SharedProject\TouchSocket.SourceGenerator.SharedProject.shproj", "{5D348476-DB26-4BBA-AB83-272412C3BE71}"
 EndProject
@@ -64,7 +64,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.JsonRpc.SourceG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.WebApi.SourceGenerator", "Src\TouchSocket.WebApi.SourceGenerator\TouchSocket.WebApi.SourceGenerator.csproj", "{0A228D44-AE15-4515-A85A-DC9026E52615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchSocket.Mqtt", "Src\TouchSocket.Mqtt\TouchSocket.Mqtt.csproj", "{201772F1-8C5E-4815-85F2-0CD8507006E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchSocketV4.Mqtt", "Src\TouchSocket.Mqtt\TouchSocketV4.Mqtt.csproj", "{201772F1-8C5E-4815-85F2-0CD8507006E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
