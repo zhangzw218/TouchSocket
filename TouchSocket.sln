@@ -46,23 +46,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Modbus", "Src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "源生成器", "源生成器", "{33F8723D-9853-4E00-97DB-521E34EC895C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Core.SourceGenerator", "Src\TouchSocket.Core.SourceGenerator\TouchSocket.Core.SourceGenerator.csproj", "{5FC2A71D-D865-4D53-A0B8-DCCABC9926A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Core.SourceGenerator", "Src\TouchSocket.Core.SourceGenerator\TouchSocketV4.Core.SourceGenerator.csproj", "{5FC2A71D-D865-4D53-A0B8-DCCABC9926A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Rpc.SourceGenerator", "Src\TouchSocket.Rpc.SourceGenerator\TouchSocket.Rpc.SourceGenerator.csproj", "{C9A87AE1-1512-4AD8-8E0C-9F0028E0F72B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Rpc.SourceGenerator", "Src\TouchSocket.Rpc.SourceGenerator\TouchSocketV4.Rpc.SourceGenerator.csproj", "{C9A87AE1-1512-4AD8-8E0C-9F0028E0F72B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Rpc.RateLimiting", "Src\TouchSocket.Rpc.RateLimiting\TouchSocketV4.Rpc.RateLimiting.csproj", "{781923FE-AF2E-4CB0-B7EF-98EA09DDEDB3}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocketV4.Shared", "Src\TouchSocket.Shared\TouchSocketV4.Shared.shproj", "{BA463F9B-D28C-4C8A-AEB7-ECDC7FC1C3A1}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocket.SourceGenerator.SharedProject", "Src\TouchSocket.SourceGenerator.SharedProject\TouchSocket.SourceGenerator.SharedProject.shproj", "{5D348476-DB26-4BBA-AB83-272412C3BE71}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TouchSocketV4.SourceGenerator.SharedProject", "Src\TouchSocket.SourceGenerator.SharedProject\TouchSocketV4.SourceGenerator.SharedProject.shproj", "{5D348476-DB26-4BBA-AB83-272412C3BE71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.XmlRpc.SourceGenerator", "Src\TouchSocket.XmlRpc.SourceGenerator\TouchSocket.XmlRpc.SourceGenerator.csproj", "{4F50F291-2110-4D10-B5F7-9F2AAC40AA27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.XmlRpc.SourceGenerator", "Src\TouchSocket.XmlRpc.SourceGenerator\TouchSocketV4.XmlRpc.SourceGenerator.csproj", "{4F50F291-2110-4D10-B5F7-9F2AAC40AA27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.Dmtp.SourceGenerator", "Src\TouchSocket.Dmtp.SourceGenerator\TouchSocket.Dmtp.SourceGenerator.csproj", "{087F7541-0310-4EC6-B3D0-595AF37E30C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.Dmtp.SourceGenerator", "Src\TouchSocket.Dmtp.SourceGenerator\TouchSocketV4.Dmtp.SourceGenerator.csproj", "{087F7541-0310-4EC6-B3D0-595AF37E30C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.JsonRpc.SourceGenerator", "Src\TouchSocket.JsonRpc.SourceGenerator\TouchSocket.JsonRpc.SourceGenerator.csproj", "{8C2A5D9A-5A3B-4643-922A-71344C5E5991}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.JsonRpc.SourceGenerator", "Src\TouchSocket.JsonRpc.SourceGenerator\TouchSocketV4.JsonRpc.SourceGenerator.csproj", "{8C2A5D9A-5A3B-4643-922A-71344C5E5991}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocket.WebApi.SourceGenerator", "Src\TouchSocket.WebApi.SourceGenerator\TouchSocket.WebApi.SourceGenerator.csproj", "{0A228D44-AE15-4515-A85A-DC9026E52615}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouchSocketV4.WebApi.SourceGenerator", "Src\TouchSocket.WebApi.SourceGenerator\TouchSocketV4.WebApi.SourceGenerator.csproj", "{0A228D44-AE15-4515-A85A-DC9026E52615}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchSocketV4.Mqtt", "Src\TouchSocket.Mqtt\TouchSocketV4.Mqtt.csproj", "{201772F1-8C5E-4815-85F2-0CD8507006E7}"
 EndProject
