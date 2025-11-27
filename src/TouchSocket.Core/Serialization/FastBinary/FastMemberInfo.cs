@@ -25,9 +25,9 @@ internal class FastMemberInfo
     {
         if (enableIndex)
         {
-            this.Index = memberInfo.GetCustomAttribute(typeof(FastMemberAttribute), false) is FastMemberAttribute fastMamberAttribute
+            this.Index = memberInfo.GetCustomAttribute(typeof(FastMemberV4Attribute), false) is FastMemberV4Attribute fastMamberAttribute
                 ? fastMamberAttribute.Index
-                : throw new Exception($"成员{memberInfo.Name}未标识{nameof(FastMemberAttribute)}特性。");
+                : throw new Exception($"成员{memberInfo.Name}未标识{nameof(FastMemberV4Attribute)}特性。");
         }
 
         if (memberInfo is PropertyInfo propertyInfo)

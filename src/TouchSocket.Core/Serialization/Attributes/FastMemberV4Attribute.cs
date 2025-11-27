@@ -13,13 +13,22 @@
 namespace TouchSocket.Core;
 
 /// <summary>
-/// 显式Fast序列化。一般当某个属性为只读时，使用该特性。
+/// 标识Fast序列化成员编号。以此来代替属性、字段名。
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
-public sealed class FastSerializedAttribute : Attribute
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+public class FastMemberV4Attribute : Attribute
 {
     /// <summary>
-    /// 使用索引替代属性名称。
+    /// 索引号
     /// </summary>
-    public bool EnableIndex { get; set; }
+    public byte Index { get; private set; }
+
+    /// <summary>
+    /// 标识Fast序列化成员编号。以此来代替属性、字段名。
+    /// </summary>
+    /// <param name="index">最大支持255个成员</param>
+    public FastMemberV4Attribute(byte index)
+    {
+        this.Index = index;
+    }
 }

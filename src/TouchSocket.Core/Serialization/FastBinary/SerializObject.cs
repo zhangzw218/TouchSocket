@@ -112,7 +112,7 @@ public sealed class SerializObject
                 this.Converter = (IFastBinaryConverter)Activator.CreateInstance(attribute.Type);
             }
 
-            if (type.GetCustomAttribute<FastSerializedAttribute>(false) is FastSerializedAttribute fastSerializedAttribute)
+            if (type.GetCustomAttribute<FastSerializedV4Attribute>(false) is FastSerializedV4Attribute fastSerializedAttribute)
             {
                 this.EnableIndex = fastSerializedAttribute.EnableIndex;
             }
@@ -131,7 +131,7 @@ public sealed class SerializObject
                     var fastMemberInfo = new FastMemberInfo(memberInfo, true);
                     if (this.FastMemberInfoDicForIndex.ContainsKey(fastMemberInfo.Index))
                     {
-                        throw new Exception($"类型：{type}中的成员{memberInfo.Name}，在标识{nameof(FastMemberAttribute)}特性时Index重复。");
+                        throw new Exception($"类型：{type}中的成员{memberInfo.Name}，在标识{nameof(FastMemberV4Attribute)}特性时Index重复。");
                     }
                     this.FastMemberInfoDicForIndex.Add(fastMemberInfo.Index, fastMemberInfo);
                 }
@@ -183,7 +183,7 @@ public sealed class SerializObject
         return type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Default)
                       .Where(p =>
                       {
-                          if (p.IsDefined(typeof(FastSerializedAttribute), false))
+                          if (p.IsDefined(typeof(FastSerializedV4Attribute), false))
                           {
                               return true;
                           }
