@@ -13,7 +13,7 @@
 using System.Reflection;
 using System.Threading.RateLimiting;
 
-namespace TouchSocket.Rpc.RateLimiting;
+namespace TouchV4Socket.Rpc.RateLimiting;
 
 internal sealed class ConcurrencyLimiterPolicy : RateLimiterPolicy<MethodInfo>
 {

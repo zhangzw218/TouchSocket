@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TouchSocket.WebApi.Swagger;
+namespace TouchV4Socket.WebApi.Swagger;
 
 public class SwaggerOption
 {

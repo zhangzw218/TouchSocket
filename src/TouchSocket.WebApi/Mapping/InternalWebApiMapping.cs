@@ -12,14 +12,14 @@
 
 using System.Collections;
 using System.Text.RegularExpressions;
-using TouchSocket.Http;
-using TouchSocket.Rpc;
+using TouchV4Socket.Http;
+using TouchV4Socket.Rpc;
 
 #if NET8_0_OR_GREATER
 using System.Collections.Frozen;
 #endif
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 internal sealed class InternalWebApiMapping : IWebApiMapping
 {

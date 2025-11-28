@@ -12,10 +12,10 @@
 
 using System.Buffers;
 using System.Net.WebSockets;
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// WebSocketDmtpClient 类，继承自 SetupConfigObject 并实现了 IWebSocketDmtpClient 接口。

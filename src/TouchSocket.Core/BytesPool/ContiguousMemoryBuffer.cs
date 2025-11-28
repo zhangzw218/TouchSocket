@@ -14,7 +14,7 @@ using System;
 using System.Buffers;
 using System.Runtime.InteropServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个连续内存缓冲区，用于将<see cref="ReadOnlySequence{T}"/>转换为连续的内存块。

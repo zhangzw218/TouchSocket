@@ -12,7 +12,7 @@
 
 using System.Collections.Concurrent;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 队列数据

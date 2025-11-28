@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// Http扩展辅助
@@ -326,7 +326,7 @@ public static partial class HttpExtensions
         // 添加禁止缓存的头，确保请求最新
         request.Headers.TryAdd(HttpHeaders.Pragma, "no-cache");
         // 设置用户代理头，标识使用的Http库
-        request.Headers.TryAdd(HttpHeaders.UserAgent, "TouchSocket.Http");
+        request.Headers.TryAdd(HttpHeaders.UserAgent, "TouchV4Socket.Http");
         return request;
     }
 
@@ -602,7 +602,7 @@ public static partial class HttpExtensions
     /// <summary>
     /// 表示 HTTP 头部的服务器信息。
     /// </summary>
-    public static readonly string HttpHeadersServer = $"TouchSocket.Http";
+    public static readonly string HttpHeadersServer = $"TouchV4Socket.Http";
 
     /// <summary>
     /// 设置HTML内容。

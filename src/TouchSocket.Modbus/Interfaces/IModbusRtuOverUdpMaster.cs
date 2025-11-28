@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 /// <summary>
 /// 基于Udp协议，且使用Rtu格式的Modbus主站接口

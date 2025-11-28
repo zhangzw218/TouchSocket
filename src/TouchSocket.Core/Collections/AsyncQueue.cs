@@ -11,9 +11,9 @@
 // ------------------------------------------------------------------------------
 
 using System.Diagnostics;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 一个线程安全的、支持异步出队的队列。

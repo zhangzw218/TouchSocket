@@ -16,7 +16,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace TouchSocket.Http.WebSockets
+//namespace TouchV4Socket.Http.WebSockets
 //{
 //    /// <summary>
 //    /// 表示WebSocket连接关闭的状态码。

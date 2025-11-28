@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 internal class ChannelPackage : MsgRouterPackage, IDisposable
 {

@@ -13,11 +13,11 @@
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal sealed class DmtpRpcClientCodeBuilder : RpcClientCodeBuilder
 {
-    public const string DmtpRpcAttribute = "TouchSocket.Dmtp.Rpc.DmtpRpcAttribute";
+    public const string DmtpRpcAttribute = "TouchV4Socket.Dmtp.Rpc.DmtpRpcAttribute";
 
     public DmtpRpcClientCodeBuilder(INamedTypeSymbol rpcApi) : base(rpcApi, DmtpRpcAttribute)
     {
@@ -36,7 +36,7 @@ internal sealed class DmtpRpcClientCodeBuilder : RpcClientCodeBuilder
         var strings = new List<string>();
         strings.AddRange(base.GetGenericConstraintTypes(method, namedArguments));
 
-        strings.Add("TouchSocket.Dmtp.Rpc.IDmtpRpcActor");
+        strings.Add("TouchV4Socket.Dmtp.Rpc.IDmtpRpcActor");
         return strings.ToArray();
     }
 }

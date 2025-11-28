@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.IO.Compression;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 提供GZip压缩和解压缩功能的静态工具类。

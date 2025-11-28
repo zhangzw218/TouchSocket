@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.Dmtp.Rpc;
+namespace TouchV4Socket.Dmtp.Rpc;
 
 /// <summary>
 /// IDmtpRpcRequestPackage接口定义了远程过程调用请求包的结构和行为。

@@ -12,7 +12,7 @@
 
 using System.Diagnostics;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 [DebuggerDisplay("Id={Id},Status={Status}")]
 internal sealed partial class InternalChannel : SafetyDisposableObject, IDmtpChannel

@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// A flavor of <see cref="ManualResetEvent"/> that can be asynchronously awaited on.

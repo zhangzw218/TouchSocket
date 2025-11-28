@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Rpc;
-using TouchSocket.WebApi;
+using TouchV4Socket.Rpc;
+using TouchV4Socket.WebApi;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// WebApi插件管理器扩展

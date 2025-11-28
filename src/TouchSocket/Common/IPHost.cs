@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Net;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// IP解析映射

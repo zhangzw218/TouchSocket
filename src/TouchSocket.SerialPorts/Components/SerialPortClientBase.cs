@@ -12,9 +12,9 @@
 
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 
 /// <summary>
 /// 串口客户端基类

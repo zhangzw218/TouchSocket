@@ -14,7 +14,7 @@ using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal class FastSerializeCodeBuilder : TypeCodeBuilder<INamedTypeSymbol>
 {

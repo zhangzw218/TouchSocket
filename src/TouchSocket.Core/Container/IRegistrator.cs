@@ -12,7 +12,7 @@
 
 using System.Collections.Generic;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 容器注册器

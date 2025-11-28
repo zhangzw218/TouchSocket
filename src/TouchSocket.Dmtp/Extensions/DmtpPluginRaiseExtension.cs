@@ -10,9 +10,9 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using TouchSocket.Dmtp;
+using TouchV4Socket.Dmtp;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 [PluginRaise(typeof(IDmtpConnectingPlugin))]
 [PluginRaise(typeof(IDmtpConnectedPlugin))]

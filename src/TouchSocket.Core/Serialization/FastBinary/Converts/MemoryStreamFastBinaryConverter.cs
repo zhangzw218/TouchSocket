@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 internal class MemoryStreamFastBinaryConverter : FastBinaryConverter<MemoryStream>
 {

@@ -13,14 +13,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 动态方法调用器。
 /// </summary>
 public class Method
 {
-    private const string GeneratorTypeNamespace = "TouchSocket.Core.__Internals";
+    private const string GeneratorTypeNamespace = "TouchV4Socket.Core.__Internals";
     private readonly IDynamicMethodInfo m_dynamicMethodInfo;
     private readonly MethodInfo m_info;
 

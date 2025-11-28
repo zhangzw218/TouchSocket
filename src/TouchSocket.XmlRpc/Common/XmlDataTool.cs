@@ -12,9 +12,9 @@
 
 using System.Collections;
 using System.Xml;
-using TouchSocket.Http;
+using TouchV4Socket.Http;
 
-namespace TouchSocket.XmlRpc;
+namespace TouchV4Socket.XmlRpc;
 
 internal static class XmlDataTool
 {

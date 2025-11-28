@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.FileTransfer;
+namespace TouchV4Socket.Dmtp.FileTransfer;
 
 /// <summary>
 /// Dmtp文件传输配置选项
@@ -24,7 +24,7 @@ public class DmtpFileTransferOption : DmtpFeatureOption
     /// <summary>
     /// 文件资源控制器
     /// </summary>
-    public IFileResourceController FileResourceController { get; set; } = TouchSocket.Dmtp.FileTransfer.FileResourceController.Default;
+    public IFileResourceController FileResourceController { get; set; } = TouchV4Socket.Dmtp.FileTransfer.FileResourceController.Default;
 
     /// <summary>
     /// 小文件最大长度

@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.XmlRpc;
+namespace TouchV4Socket.XmlRpc;
 
 /// <summary>
 /// XmlRpcDispatchProxy

@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TouchSocket.SocketIo
+namespace TouchV4Socket.SocketIo
 {
     internal sealed class SocketIoCore : ISocketIoCore
     {

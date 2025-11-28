@@ -12,7 +12,7 @@
 
 using System;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
 /*GeneratedCode*/

@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
-/// 定义包含<see cref="TouchSocket.Dmtp.IDmtpActor"/>成员的接口对象。
+/// 定义包含<see cref="TouchV4Socket.Dmtp.IDmtpActor"/>成员的接口对象。
 /// </summary>
 public interface IDmtpActorObject : IResolverObject
 {

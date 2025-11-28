@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 //internal sealed class FastSerializeSyntaxReceiver : ISyntaxReceiver
 //{

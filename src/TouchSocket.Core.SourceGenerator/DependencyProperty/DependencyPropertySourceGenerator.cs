@@ -17,14 +17,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
-using TouchSocket.Core;
+using TouchV4Socket.Core;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [Generator]
 public class DependencyPropertyGenerator : IIncrementalGenerator
 {
-    public const string GeneratorPropertyAttributeString = "TouchSocket.Core.GeneratorPropertyAttribute";
+    public const string GeneratorPropertyAttributeString = "TouchV4Socket.Core.GeneratorPropertyAttribute";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -346,7 +346,7 @@ public class DependencyPropertyGenerator : IIncrementalGenerator
 
 using System;
 
-namespace TouchSocket.Core
+namespace TouchV4Socket.Core
 {
     /// <summary>
     /// 标识源生成依赖属性。

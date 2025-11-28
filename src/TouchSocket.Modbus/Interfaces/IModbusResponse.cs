@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 /// <summary>
 /// Modbus响应

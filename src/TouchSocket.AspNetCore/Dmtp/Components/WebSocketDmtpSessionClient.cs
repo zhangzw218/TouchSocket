@@ -13,11 +13,11 @@
 using Microsoft.AspNetCore.Http;
 using System.Buffers;
 using System.Net.WebSockets;
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Resources;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp.AspNetCore;
+namespace TouchV4Socket.Dmtp.AspNetCore;
 
 /// <summary>
 /// WebSocket Dmtp会话客户端。

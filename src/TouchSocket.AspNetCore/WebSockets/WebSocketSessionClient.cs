@@ -15,10 +15,10 @@
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
-//using TouchSocket.Core;
-//using TouchSocket.Sockets;
+//using TouchV4Socket.Core;
+//using TouchV4Socket.Sockets;
 
-//namespace TouchSocket.Http.WebSockets.AspNetCore;
+//namespace TouchV4Socket.Http.WebSockets.AspNetCore;
 //public class WebSocketSessionClient : ResolverConfigObject, IWebSocketSessionClient
 //{
 //    private TouchSocketConfig m_config;

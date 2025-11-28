@@ -11,10 +11,10 @@
 //------------------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
-using TouchSocket.Core.AspNetCore;
-using TouchSocket.Hosting;
-using TouchSocket.Hosting.Sockets.HostService;
-using TouchSocket.Sockets;
+using TouchV4Socket.Core.AspNetCore;
+using TouchV4Socket.Hosting;
+using TouchV4Socket.Hosting.Sockets.HostService;
+using TouchV4Socket.Sockets;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

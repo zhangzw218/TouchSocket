@@ -12,9 +12,9 @@
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 internal static partial class ThrowHelper
 {

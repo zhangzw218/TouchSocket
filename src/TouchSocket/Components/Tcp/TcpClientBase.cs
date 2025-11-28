@@ -12,9 +12,9 @@
 
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// TcpClientBase 抽象基类，封装了TCP客户端的核心功能，包括连接、断开、数据收发、适配器设置、事件触发等。

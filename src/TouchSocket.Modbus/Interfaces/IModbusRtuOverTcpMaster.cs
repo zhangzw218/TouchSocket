@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 /// <summary>
 /// 基于Tcp协议，且使用Rtu数据格式的Modbus主站接口

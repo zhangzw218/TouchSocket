@@ -10,9 +10,9 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using TouchSocket.Http;
+using TouchV4Socket.Http;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 [PluginRaise(typeof(IHttpPlugin))]
 internal static partial class HttpPluginRaiseExtension

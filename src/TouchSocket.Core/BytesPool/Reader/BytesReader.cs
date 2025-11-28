@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个基于字节序列的高性能字节读取器，提供对<see cref="ReadOnlySequence{T}"/>的读取操作。

@@ -12,7 +12,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 为<see cref="Span{T}"/>和<see cref="ReadOnlySpan{T}"/>提供扩展方法的静态类，用于读写各种类型的数据。

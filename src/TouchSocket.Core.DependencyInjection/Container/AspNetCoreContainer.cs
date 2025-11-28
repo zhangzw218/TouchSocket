@@ -12,7 +12,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TouchSocket.Core.AspNetCore;
+namespace TouchV4Socket.Core.AspNetCore;
 
 /// <summary>
 /// AspNetCoreContainer 类实现了 IRegistrator、IResolver 和 IKeyedServiceProvider 接口，

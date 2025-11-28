@@ -13,7 +13,7 @@
 using System.IO.Ports;
 using System.Threading.Tasks.Sources;
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 
 /// <summary>
 /// Serial核心

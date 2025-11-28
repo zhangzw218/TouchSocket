@@ -13,7 +13,7 @@
 using System.Diagnostics;
 using System.Net;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 多线程数据适配器测试器，用于在多线程环境下测试 <see cref="UdpDataHandlingAdapter"/> 的性能和正确性。

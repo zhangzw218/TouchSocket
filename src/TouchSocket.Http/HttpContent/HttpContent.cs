@@ -12,7 +12,7 @@
 
 using System.IO.Pipelines;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 表示HTTP响应的内容部分，是一个抽象类

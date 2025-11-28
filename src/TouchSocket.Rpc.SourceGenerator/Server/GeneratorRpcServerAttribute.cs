@@ -18,7 +18,7 @@
 
 using System;
 
-namespace TouchSocket.Rpc
+namespace TouchV4Socket.Rpc
 {
     /// <summary>
     /// 标识将通过源生成器生成Rpc服务的调用委托。

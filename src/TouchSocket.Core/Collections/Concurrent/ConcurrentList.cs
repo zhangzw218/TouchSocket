@@ -12,7 +12,7 @@
 
 using System.Collections;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 线程安全的<see cref="List{T}"/>，其基本操作和<see cref="List{T}"/>一致。

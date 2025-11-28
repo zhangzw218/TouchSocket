@@ -12,7 +12,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// TouchSocketSerializerConverter 类用于管理和使用多个 ISerializerFormatter 转换器。

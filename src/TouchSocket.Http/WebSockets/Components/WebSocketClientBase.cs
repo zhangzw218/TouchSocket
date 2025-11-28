@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Net.WebSockets;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// WebSocket用户终端。

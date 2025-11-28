@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.Dmtp.Rpc;
+namespace TouchV4Socket.Dmtp.Rpc;
 
 /// <summary>
 /// DmtpRpcDispatchProxy

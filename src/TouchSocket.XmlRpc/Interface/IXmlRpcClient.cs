@@ -10,11 +10,11 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.Rpc;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http;
+using TouchV4Socket.Rpc;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.XmlRpc;
+namespace TouchV4Socket.XmlRpc;
 
 /// <summary>
 /// IWebApiClient

@@ -16,7 +16,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace TouchSocket.Sockets;
+//namespace TouchV4Socket.Sockets;
 //public sealed class CloseException:Exception
 //{
 //    public CloseException(string msg):base(msg)

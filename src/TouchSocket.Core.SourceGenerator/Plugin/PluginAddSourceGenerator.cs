@@ -18,9 +18,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using TouchSocket.SourceGenerator;
+using TouchV4Socket.SourceGenerator;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [Generator]
 public class PluginAddSourceGenerator : IIncrementalGenerator
@@ -74,9 +74,9 @@ public class PluginAddSourceGenerator : IIncrementalGenerator
 
     internal sealed class PluginAddCodeBuilder : CodeBuilder
     {
-        private const string IPluginManagerString = "TouchSocket.Core.IPluginManager";
-        private const string PluginBaseString = "TouchSocket.Core.PluginBase";
-        private const string PluginEventArgsString = "TouchSocket.Core.PluginEventArgs";
+        private const string IPluginManagerString = "TouchV4Socket.Core.IPluginManager";
+        private const string PluginBaseString = "TouchV4Socket.Core.PluginBase";
+        private const string PluginEventArgsString = "TouchV4Socket.Core.PluginEventArgs";
         private readonly INamedTypeSymbol m_pluginClass;
 
         public PluginAddCodeBuilder(INamedTypeSymbol pluginClass)

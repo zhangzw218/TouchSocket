@@ -13,7 +13,7 @@
 using System.Diagnostics;
 using System.IO.Pipelines;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 ///单线程状况的流式数据处理适配器测试

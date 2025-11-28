@@ -13,9 +13,9 @@
 //using System;
 //using System.Threading;
 //using System.Threading.Tasks;
-//using TouchSocket.Core;
+//using TouchV4Socket.Core;
 
-//namespace TouchSocket.Dmtp;
+//namespace TouchV4Socket.Dmtp;
 
 //public sealed class DmtpAdapterSlim : DataHandlingAdapterSlim<DmtpMessage>
 //{

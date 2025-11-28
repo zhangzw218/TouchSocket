@@ -12,7 +12,7 @@
 
 using Microsoft.AspNetCore.Http;
 
-namespace TouchSocket.Dmtp.AspNetCore;
+namespace TouchV4Socket.Dmtp.AspNetCore;
 
 /// <summary>
 /// WebSocketDmtpMiddleware中间件

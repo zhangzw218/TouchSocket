@@ -15,18 +15,18 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal sealed class WebApiClientCodeBuilder : RpcClientCodeBuilder
 {
-    public const string FromBodyAttribute = "TouchSocket.WebApi.FromBodyAttribute";
-    public const string FromFormAttribute = "TouchSocket.WebApi.FromFormAttribute";
-    public const string FromHeaderAttribute = "TouchSocket.WebApi.FromHeaderAttribute";
-    public const string FromQueryAttribute = "TouchSocket.WebApi.FromQueryAttribute";
-    public const string RouterAttribute = "TouchSocket.WebApi.RouterAttribute";
-    public const string WebApiAttribute = "TouchSocket.WebApi.WebApiAttribute";
+    public const string FromBodyAttribute = "TouchV4Socket.WebApi.FromBodyAttribute";
+    public const string FromFormAttribute = "TouchV4Socket.WebApi.FromFormAttribute";
+    public const string FromHeaderAttribute = "TouchV4Socket.WebApi.FromHeaderAttribute";
+    public const string FromQueryAttribute = "TouchV4Socket.WebApi.FromQueryAttribute";
+    public const string RouterAttribute = "TouchV4Socket.WebApi.RouterAttribute";
+    public const string WebApiAttribute = "TouchV4Socket.WebApi.WebApiAttribute";
 
     public WebApiClientCodeBuilder(INamedTypeSymbol rpcApi) : base(rpcApi, WebApiAttribute)
     {
@@ -40,12 +40,12 @@ internal sealed class WebApiClientCodeBuilder : RpcClientCodeBuilder
         {
             yield return "using System;";
             yield return "using System.Diagnostics;";
-            yield return "using TouchSocket.Core;";
-            yield return "using TouchSocket.Sockets;";
-            yield return "using TouchSocket.Rpc;";
+            yield return "using TouchV4Socket.Core;";
+            yield return "using TouchV4Socket.Sockets;";
+            yield return "using TouchV4Socket.Rpc;";
             yield return "using System.Threading.Tasks;";
-            yield return "using TouchSocket.Http;";
-            yield return "using TouchSocket.WebApi;";
+            yield return "using TouchV4Socket.Http;";
+            yield return "using TouchV4Socket.WebApi;";
             yield return "using System.Collections.Generic;";
         }
     }
@@ -55,7 +55,7 @@ internal sealed class WebApiClientCodeBuilder : RpcClientCodeBuilder
         var strings = new List<string>();
         strings.AddRange(base.GetGenericConstraintTypes(method, namedArguments));
 
-        strings.Add("TouchSocket.WebApi.IWebApiClientBase");
+        strings.Add("TouchV4Socket.WebApi.IWebApiClientBase");
         return strings.ToArray();
     }
 

@@ -11,9 +11,9 @@
 // ------------------------------------------------------------------------------
 
 //using System;
-//using TouchSocket.Core;
+//using TouchV4Socket.Core;
 
-//namespace TouchSocket.Http;
+//namespace TouchV4Socket.Http;
 
 //internal class InternalBlockResult : DisposableObject, IBlockResult<byte>
 //{

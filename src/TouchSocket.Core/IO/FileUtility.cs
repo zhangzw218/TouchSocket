@@ -12,7 +12,7 @@
 
 using System.Security.Cryptography;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 文件操作

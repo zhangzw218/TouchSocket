@@ -12,7 +12,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TouchSocket.Core.AspNetCore;
+namespace TouchV4Socket.Core.AspNetCore;
 
 internal class ScopedResolver : IResolver, IKeyedServiceProvider
 {

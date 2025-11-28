@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// Tcp命令行插件。
@@ -23,7 +23,7 @@ namespace TouchSocket.Sockets;
 public abstract class TcpCommandLinePlugin : PluginBase, ITcpReceivedPlugin
 {
     private readonly ILog m_logger;
-    private readonly Dictionary<string, Method> m_pairs = new Dictionary<string, TouchSocket.Core.Method>();
+    private readonly Dictionary<string, Method> m_pairs = new Dictionary<string, TouchV4Socket.Core.Method>();
 
     /// <summary>
     /// Tcp命令行插件构造函数。

@@ -14,7 +14,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 internal class DiagnosticSuppressor : Microsoft.CodeAnalysis.Diagnostics.DiagnosticSuppressor
@@ -23,7 +23,7 @@ internal class DiagnosticSuppressor : Microsoft.CodeAnalysis.Diagnostics.Diagnos
         "SAppMessage001",
         "CA1822",
         "AppMessage方法，所以抑制");
-    public const string AppMessageAttribute = "TouchSocket.Core.AppMessageAttribute";
+    public const string AppMessageAttribute = "TouchV4Socket.Core.AppMessageAttribute";
 
     public override void ReportSuppressions(SuppressionAnalysisContext context)
     {

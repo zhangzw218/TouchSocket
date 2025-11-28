@@ -12,7 +12,7 @@
 
 using System.Collections.Concurrent;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 internal sealed class TcpCorePool : DisposableObject
 {

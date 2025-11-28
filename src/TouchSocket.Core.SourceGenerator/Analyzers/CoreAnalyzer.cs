@@ -21,12 +21,12 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TouchSocket.SourceGenerator;
+namespace TouchV4Socket.SourceGenerator;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 internal class CoreAnalyzer : DiagnosticAnalyzer
 {
-    public const string IPlugin = "TouchSocket.Core.IPlugin";
+    public const string IPlugin = "TouchV4Socket.Core.IPlugin";
 
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
     {
@@ -149,7 +149,7 @@ internal class CoreAnalyzer : DiagnosticAnalyzer
         }
     }
 
-    public const string AsyncToSyncWarningAttribute = "TouchSocket.Core.AsyncToSyncWarningAttribute";
+    public const string AsyncToSyncWarningAttribute = "TouchV4Socket.Core.AsyncToSyncWarningAttribute";
 
     private static bool IsTargetFrameworkValid(string targetFramework)
     {
@@ -258,7 +258,7 @@ internal class CoreAnalyzer : DiagnosticAnalyzer
                 return;
             }
 
-            if (!methodSymbol.Parameters[1].Type.IsInheritFrom("TouchSocket.Core.PluginEventArgs"))
+            if (!methodSymbol.Parameters[1].Type.IsInheritFrom("TouchV4Socket.Core.PluginEventArgs"))
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.m_rule_Plugin0001, methodSymbol.Locations[0]));
                 return;

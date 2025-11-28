@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.WebApi.Swagger;
+namespace TouchV4Socket.WebApi.Swagger;
 
 /// <summary>
 /// <inheritdoc/>

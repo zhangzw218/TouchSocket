@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------
 
 using System.Security.Cryptography.X509Certificates;
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 客户端Ssl验证

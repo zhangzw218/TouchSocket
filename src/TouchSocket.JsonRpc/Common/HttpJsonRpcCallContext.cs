@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.WebApi;
+using TouchV4Socket.Http;
+using TouchV4Socket.WebApi;
 
-namespace TouchSocket.JsonRpc;
+namespace TouchV4Socket.JsonRpc;
 
 
 internal sealed class HttpJsonRpcCallContext : JsonRpcCallContextBase, IHttpCallContext

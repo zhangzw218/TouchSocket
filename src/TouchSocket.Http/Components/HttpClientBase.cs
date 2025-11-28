@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Net;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// Http客户端基类

@@ -12,7 +12,7 @@
 
 using System;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 /// <summary>
 /// 代码生成标识

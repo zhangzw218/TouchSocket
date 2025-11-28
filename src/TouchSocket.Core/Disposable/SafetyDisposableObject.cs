@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 线程安全的释放模型。无论是<see cref="IDisposable"/>还是<see cref="GC"/>执行，都只会触发1次<see cref="SafetyDispose(bool)"/>方法。

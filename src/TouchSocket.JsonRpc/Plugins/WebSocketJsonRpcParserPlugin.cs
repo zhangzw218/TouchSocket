@@ -10,11 +10,11 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Rpc;
+using TouchV4Socket.Http;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.JsonRpc;
+namespace TouchV4Socket.JsonRpc;
 
 /// <summary>
 /// WebSocketJsonRpcParserPlugin

@@ -13,7 +13,7 @@
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个等待句柄池，用于管理具有等待功能的对象集合。

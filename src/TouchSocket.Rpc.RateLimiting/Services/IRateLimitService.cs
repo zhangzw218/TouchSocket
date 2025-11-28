@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Rpc.RateLimiting;
+namespace TouchV4Socket.Rpc.RateLimiting;
 
 /// <summary>
 /// Rpc速率限定服务接口

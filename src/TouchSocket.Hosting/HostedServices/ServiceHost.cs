@@ -12,10 +12,10 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using TouchSocket.Resources;
-using TouchSocket.Sockets;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Hosting.Sockets.HostService;
+namespace TouchV4Socket.Hosting.Sockets.HostService;
 
 internal class ServiceHost<TService> : SetupConfigObjectHostedService<TService> where TService : ISetupConfigObjectV4, IServiceBase
 {

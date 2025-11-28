@@ -13,7 +13,7 @@
 using System.Collections.Concurrent;
 using System.Runtime.ExceptionServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 周期包适配

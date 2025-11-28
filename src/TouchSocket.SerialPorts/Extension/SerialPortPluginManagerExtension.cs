@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 /// <summary>
 /// 提供扩展方法以支持串口插件管理功能。
 /// </summary>

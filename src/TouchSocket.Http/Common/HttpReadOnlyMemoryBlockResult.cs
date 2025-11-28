@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 表示只读内存块的结果，支持释放资源。

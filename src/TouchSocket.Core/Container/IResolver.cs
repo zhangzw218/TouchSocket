@@ -12,7 +12,7 @@
 
 using System;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// IResolver 接口定义了如何解析类型实例。

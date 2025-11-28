@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 internal sealed class InternalWaitingClient<TClient, TResult> : IWaitingClient<TClient, TResult>
     where TClient : IReceiverClient<TResult>, ISender, IRequestInfoSender

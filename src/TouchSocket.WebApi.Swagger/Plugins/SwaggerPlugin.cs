@@ -14,11 +14,11 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
-using TouchSocket.Http;
-using TouchSocket.Rpc;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http;
+using TouchV4Socket.Rpc;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.WebApi.Swagger;
+namespace TouchV4Socket.WebApi.Swagger;
 
 /// <summary>
 /// SwaggerPlugin

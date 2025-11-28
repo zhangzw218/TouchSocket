@@ -14,6 +14,6 @@
 
 	<ItemGroup>
 		<None Include="..\TouchSocket.SourceGenerator.SharedProject\tools\*.ps1" PackagePath="tools" Pack="true" Visible="false" />
-		<None Include="..\TouchSocket.XmlRpc.SourceGenerator\bin\$(Configuration)\netstandard2.0\TouchSocket.XmlRpc.SourceGenerator.dll" PackagePath="analyzers\dotnet\cs" Pack="true" Visible="false" />
+		<None Include="..\TouchSocket.XmlRpc.SourceGenerator\bin\$(Configuration)\netstandard2.0\TouchSocketV4.XmlRpc.SourceGenerator.dll" PackagePath="analyzers\dotnetv4\cs" Pack="true" Visible="false" />
 	</ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [Generator]
 public class PackageSourceGenerator : IIncrementalGenerator
@@ -34,7 +34,7 @@ public class PackageSourceGenerator : IIncrementalGenerator
 using System;
 using System.CodeDom.Compiler;
 
-namespace TouchSocket.Core
+namespace TouchV4Socket.Core
 {
     /// <summary>
     /// 标识源生成<see cref=""IPackage""/>的实现。
@@ -108,7 +108,7 @@ namespace TouchSocket.Core
 
         // 检查是否包含GeneratorPackageAttribute
         var hasAttribute = classSymbol?.GetAttributes()
-            .Any(ad => ad.AttributeClass?.ToDisplayString() == "TouchSocket.Core.GeneratorPackageAttribute");
+            .Any(ad => ad.AttributeClass?.ToDisplayString() == "TouchV4Socket.Core.GeneratorPackageAttribute");
 
         return hasAttribute == true ? classSymbol : null;
     }

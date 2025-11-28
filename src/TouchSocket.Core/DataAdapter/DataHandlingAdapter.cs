@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 数据处理适配器

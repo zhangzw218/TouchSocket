@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 /// <summary>
 /// 提供对当前 RPC 调用上下文的访问。
 /// </summary>

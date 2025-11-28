@@ -12,10 +12,10 @@
 
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
-using TouchSocket.Sockets;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 internal static partial class ThrowHelper
 {

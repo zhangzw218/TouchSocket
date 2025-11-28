@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 用户自定义数据处理适配器，使用该适配器时，接收方收到的数据中，<see cref="ByteBlockV4"/>将为<see langword="null"/>，

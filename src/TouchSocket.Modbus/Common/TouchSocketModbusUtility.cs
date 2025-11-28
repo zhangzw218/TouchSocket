@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Buffers;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 /// <summary>
 /// TouchSocketModbusUtility

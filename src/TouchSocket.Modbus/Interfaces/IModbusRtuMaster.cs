@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.SerialPorts;
-using TouchSocket.Sockets;
+using TouchV4Socket.SerialPorts;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 /// <summary>
 /// 基于串口的Modbus主站接口

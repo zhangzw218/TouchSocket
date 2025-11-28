@@ -12,7 +12,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 为引用类型字节读取器提供扩展方法的静态类。

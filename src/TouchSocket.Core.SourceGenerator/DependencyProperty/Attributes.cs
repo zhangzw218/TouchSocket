@@ -18,7 +18,7 @@
 
 using System;
 
-namespace TouchSocket.Core
+namespace TouchV4Socket.Core
 {
     /// <summary>
     /// 标识源生成依赖属性。

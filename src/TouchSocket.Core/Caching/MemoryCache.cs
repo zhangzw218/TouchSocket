@@ -13,7 +13,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 一个简单的内存缓存

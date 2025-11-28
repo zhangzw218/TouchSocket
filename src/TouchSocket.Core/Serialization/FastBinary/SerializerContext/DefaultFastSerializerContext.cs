@@ -13,7 +13,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 internal sealed class DefaultFastSerializerContext : FastSerializerContext
 {

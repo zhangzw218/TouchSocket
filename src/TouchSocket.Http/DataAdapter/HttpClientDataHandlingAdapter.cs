@@ -12,9 +12,9 @@
 
 //using System;
 //using System.Threading.Tasks;
-//using TouchSocket.Core;
+//using TouchV4Socket.Core;
 
-//namespace TouchSocket.Http;
+//namespace TouchV4Socket.Http;
 
 ///// <summary>
 ///// Http客户端数据处理适配器

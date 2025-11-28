@@ -12,10 +12,10 @@
 
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using TouchSocket.Resources;
-using TouchSocket.Rpc;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.Dmtp.Rpc;
+namespace TouchV4Socket.Dmtp.Rpc;
 
 /// <summary>
 /// DmtpRpcActor 类，继承自 ConcurrentDictionary，并实现 IDmtpRpcActor 接口。

@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 /// <summary>
 /// 包含RFC 2616中定义的HTTP 1.1状态码值
 /// </summary>

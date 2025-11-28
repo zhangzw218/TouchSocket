@@ -14,7 +14,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 位访问器：用于对非托管类型 <typeparamref name="T"/> 的位进行读取与设置。

@@ -13,11 +13,11 @@
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal sealed class JsonRpcClientCodeBuilder : RpcClientCodeBuilder
 {
-    public const string JsonRpcAttribute = "TouchSocket.JsonRpc.JsonRpcAttribute";
+    public const string JsonRpcAttribute = "TouchV4Socket.JsonRpc.JsonRpcAttribute";
 
     public JsonRpcClientCodeBuilder(INamedTypeSymbol rpcApi) : base(rpcApi, JsonRpcAttribute)
     {
@@ -36,7 +36,7 @@ internal sealed class JsonRpcClientCodeBuilder : RpcClientCodeBuilder
         var strings = new List<string>();
         strings.AddRange(base.GetGenericConstraintTypes(method, namedArguments));
 
-        strings.Add("TouchSocket.JsonRpc.IJsonRpcClient");
+        strings.Add("TouchV4Socket.JsonRpc.IJsonRpcClient");
         return strings.ToArray();
     }
 }

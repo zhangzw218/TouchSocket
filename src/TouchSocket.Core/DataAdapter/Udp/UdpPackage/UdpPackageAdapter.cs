@@ -13,7 +13,7 @@
 using System.Collections.Concurrent;
 using System.Net;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// UDP数据包的适配器

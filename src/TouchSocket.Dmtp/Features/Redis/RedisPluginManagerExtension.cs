@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.Redis;
+namespace TouchV4Socket.Dmtp.Redis;
 
 /// <summary>
 /// <see cref="IPluginManager"/>的扩展方法，用于使用Redis插件。

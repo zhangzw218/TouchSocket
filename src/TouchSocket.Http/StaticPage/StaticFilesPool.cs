@@ -12,7 +12,7 @@
 
 using System.Web;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 静态文件缓存池

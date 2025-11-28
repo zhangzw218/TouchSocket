@@ -12,9 +12,9 @@
 
 using System.IO.Pipelines;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 internal abstract class BaseTransport : SafetyDisposableObject, ITransport
 {

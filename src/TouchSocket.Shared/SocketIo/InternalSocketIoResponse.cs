@@ -12,7 +12,7 @@
 
 using System;
 
-namespace TouchSocket.SocketIo
+namespace TouchV4Socket.SocketIo
 {
     internal class InternalSocketIoResponse : ISocketIoResponse
     {

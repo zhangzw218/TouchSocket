@@ -13,9 +13,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.SourceGenerator;
+namespace TouchV4Socket.SourceGenerator;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 internal class RpcDiagnosticSuppressor : DiagnosticSuppressor

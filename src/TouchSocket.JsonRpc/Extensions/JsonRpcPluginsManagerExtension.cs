@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.JsonRpc;
-using TouchSocket.Rpc;
+using TouchV4Socket.JsonRpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// JsonRpc插件管理器扩展

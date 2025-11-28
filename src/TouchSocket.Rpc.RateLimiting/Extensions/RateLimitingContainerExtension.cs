@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Rpc.RateLimiting;
+namespace TouchV4Socket.Rpc.RateLimiting;
 
 /// <summary>
 /// 提供扩展方法以方便注册限流策略

@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Reflection;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 internal class WebApiParameterInfo
 {

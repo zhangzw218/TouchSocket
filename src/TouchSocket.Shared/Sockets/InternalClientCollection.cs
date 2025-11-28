@@ -14,7 +14,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 [DebuggerDisplay("Count={Count}")]
 internal class InternalClientCollection<TClient> : IClientCollection<TClient> where TClient : IIdClient

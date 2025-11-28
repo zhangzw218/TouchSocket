@@ -13,7 +13,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 internal class MemberGetter
 {

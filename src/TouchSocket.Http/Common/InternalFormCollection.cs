@@ -12,7 +12,7 @@
 
 using System.Collections.Specialized;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 性能还没有优化，后续会优化2025.7.20

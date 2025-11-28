@@ -15,7 +15,7 @@
 //using System.Data.SqlTypes;
 //using System.Threading.Tasks;
 
-//namespace TouchSocket.Core;
+//namespace TouchV4Socket.Core;
 
 ///// <summary>
 ///// CacheDataHandlingAdapter

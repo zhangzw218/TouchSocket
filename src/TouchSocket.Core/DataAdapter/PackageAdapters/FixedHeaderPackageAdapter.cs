@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.ComponentModel;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 固定包头适配器。

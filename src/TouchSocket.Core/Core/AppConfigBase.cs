@@ -13,9 +13,9 @@
 //using System;
 //using System.Collections.Generic;
 //using System.IO;
-//using TouchSocket.Resources;
+//using TouchV4Socket.Resources;
 
-//namespace TouchSocket.Core
+//namespace TouchV4Socket.Core
 //{
 //    /// <summary>
 //    /// 运行配置类

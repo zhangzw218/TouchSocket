@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using Microsoft.Extensions.DependencyInjection;
-using TouchSocket.Core.AspNetCore;
+using TouchV4Socket.Core.AspNetCore;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// AspNetCoreConfigExtension

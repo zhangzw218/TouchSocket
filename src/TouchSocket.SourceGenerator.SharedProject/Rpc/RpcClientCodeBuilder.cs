@@ -17,9 +17,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal enum TaskType
 {
@@ -64,9 +64,9 @@ internal abstract class RpcClientCodeBuilder : CodeBuilder
         {
             yield return "using System;";
             yield return "using System.Diagnostics;";
-            yield return "using TouchSocket.Core;";
-            yield return "using TouchSocket.Sockets;";
-            yield return "using TouchSocket.Rpc;";
+            yield return "using TouchV4Socket.Core;";
+            yield return "using TouchV4Socket.Sockets;";
+            yield return "using TouchV4Socket.Rpc;";
             yield return "using System.Threading.Tasks;";
         }
     }
@@ -506,7 +506,7 @@ internal abstract class RpcClientCodeBuilder : CodeBuilder
         }
         else
         {
-            return new string[] { "TouchSocket.Rpc.IRpcClient" };
+            return new string[] { "TouchV4Socket.Rpc.IRpcClient" };
         }
     }
 
@@ -586,7 +586,7 @@ internal abstract class RpcClientCodeBuilder : CodeBuilder
 
     protected virtual string GetNamespace()
     {
-        var defaultNamespace = $"TouchSocket.Rpc.{this.RpcAttributeName}.Generators";
+        var defaultNamespace = $"TouchV4Socket.Rpc.{this.RpcAttributeName}.Generators";
         if (!this.m_rpcApiNamedArguments.TryGetValue("Namespace", out var typedConstant))
         {
             return defaultNamespace;

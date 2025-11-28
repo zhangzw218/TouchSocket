@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using TouchSocket.Http;
+using TouchV4Socket.Http;
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "使用该序列化时，会和源生成配合使用")]
 [UnconditionalSuppressMessage("AOT", "IL3050:", Justification = "使用该序列化时，会和源生成配合使用")]

@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 /// <summary>
 /// 表示一个单例模式的RPC服务器接口。
 /// </summary>
