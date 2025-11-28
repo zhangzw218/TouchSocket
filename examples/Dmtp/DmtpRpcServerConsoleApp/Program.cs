@@ -28,6 +28,11 @@ internal class Program
 
         try
         {
+            var clientIdA1 = Guid.NewGuid().ToString();
+            var serA1 = FastBinaryFormatter.SerializeToBytes(clientIdA1);
+            var clientIdB1 = FastBinaryFormatter.Deserialize<string>(serA1);
+
+
             var clientIdA = Guid.NewGuid().ToString();
             var nodeIdA = Guid.NewGuid().ToString();
             var ser = FastBinaryFormatter.SerializeToBytes((nodeIdA, clientIdA));
@@ -42,7 +47,7 @@ internal class Program
         }
         catch(Exception ex)
         {
-            ConsoleLogger.Default.Error($"序列化测试 抛出异常");
+            ConsoleLogger.Default.Error($"序列化测试 抛出异常 \r\n{ex}");
         }
 
 
