@@ -37,7 +37,7 @@ public class EnableRateLimitingAttribute : RpcActionFilterAttribute
     }
 
     /// <inheritdoc/>
-    public override async Task<InvokeResult> ExecutingAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult)
+    public override async Task<InvokeResult> ExecutingAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult)
     {
         var rateLimitService = callContext.Resolver.Resolve<IRateLimitService>() ?? throw new Exception($"没有发现{typeof(IRateLimitService)}已注册的注册服务。");
 
@@ -57,7 +57,7 @@ public class EnableRateLimitingAttribute : RpcActionFilterAttribute
     }
 
     /// <inheritdoc/>
-    public override Task<InvokeResult> ExecutedAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult, Exception exception)
+    public override Task<InvokeResult> ExecutedAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult, Exception exception)
     {
         this.m_rateLimitLease.SafeDispose();
         return Task.FromResult(invokeResult);

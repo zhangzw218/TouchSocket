@@ -16,12 +16,12 @@ using System.Diagnostics;
 namespace TouchV4Socket.Rpc;
 
 [DebuggerDisplay("CallContext = {CallContext}")]
-internal class RpcCallContextAccessor : IRpcCallContextAccessor
+internal class RpcCallContextAccessor : IRpcCallContextAccessorV4
 {
     private static readonly AsyncLocal<RpcCallContextHolder> s_rpcCallContextCurrent = new AsyncLocal<RpcCallContextHolder>();
 
     /// <inheritdoc/>
-    public ICallContext CallContext
+    public ICallContextV4 CallContext
     {
         get
         {
@@ -44,6 +44,6 @@ internal class RpcCallContextAccessor : IRpcCallContextAccessor
 
     private sealed class RpcCallContextHolder
     {
-        public ICallContext Context;
+        public ICallContextV4 Context;
     }
 }

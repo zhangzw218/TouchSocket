@@ -23,7 +23,7 @@ internal sealed class TokenBucketLimiterPolicy : RateLimiterPolicy<MethodInfo>
     {
         this.m_options = options;
     }
-    protected override MethodInfo GetPartitionKey(ICallContext callContext)
+    protected override MethodInfo GetPartitionKey(ICallContextV4 callContext)
     {
         return callContext.RpcMethod.Info;
     }

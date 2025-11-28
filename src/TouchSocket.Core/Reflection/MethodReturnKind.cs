@@ -16,7 +16,7 @@ namespace TouchV4Socket.Core;
 /// <summary>
 /// 表示方法的返回类型。
 /// </summary>
-public enum MethodReturnKind
+public enum MethodV4ReturnKind
 {
     /// <summary>
     /// 方法没有返回值。

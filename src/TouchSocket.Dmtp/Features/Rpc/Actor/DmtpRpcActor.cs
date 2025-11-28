@@ -257,7 +257,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
         try
         {
             DmtpRpcResponsePackage rpcResponsePackage;
-            if (rpcRequestPackage.Feedback == FeedbackType.WaitSend)
+            if (rpcRequestPackage.Feedback == FeedbackTypeV4.WaitSend)
             {
                 //立即返回
 
@@ -283,7 +283,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
             }
             else
             {
-                if (rpcRequestPackage.Feedback == FeedbackType.WaitInvoke)
+                if (rpcRequestPackage.Feedback == FeedbackTypeV4.WaitInvoke)
                 {
                     this.m_callContextDic.AddOrUpdate(rpcRequestPackage.Sign, callContext);
                 }
@@ -291,7 +291,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
             invokeResult = await this.m_rpcServerProvider.ExecuteAsync(callContext, invokeResult).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
 
-            if (rpcRequestPackage.Feedback != FeedbackType.WaitInvoke)
+            if (rpcRequestPackage.Feedback != FeedbackTypeV4.WaitInvoke)
             {
                 //调用方不关心结果
                 return;
@@ -384,9 +384,9 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
     #region Rpc
 
     /// <inheritdoc/>
-    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
+    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOptionV4 invokeOption, params object[] parameters)
     {
-        invokeOption ??= InvokeOption.WaitInvoke;
+        invokeOption ??= InvokeOptionV4.WaitInvoke;
 
         var cancellationToken = invokeOption.Token;
         CancellationTokenSource cts = null;
@@ -417,16 +417,16 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
             switch (invokeOption.FeedbackType)
             {
-                case FeedbackType.OnlySend:
+                case FeedbackTypeV4.OnlySend:
                     {
                         return returnType?.GetDefault();
                     }
-                case FeedbackType.WaitSend:
+                case FeedbackTypeV4.WaitSend:
                     {
                         ThrowExceptionIfNotSetRunning(await waitData.WaitAsync(cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext));
                         return returnType?.GetDefault();
                     }
-                case FeedbackType.WaitInvoke:
+                case FeedbackTypeV4.WaitInvoke:
                     {
                         var waitDataStatus = await waitData.WaitAsync(cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
                         if (waitDataStatus == WaitDataStatus.Canceled)
@@ -450,7 +450,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
     }
 
     /// <inheritdoc/>
-    public async Task<object> InvokeAsync(string targetId, string invokeKey, [DynamicallyAccessedMembers(AOT.RpcInvoke)] Type returnType, InvokeOption invokeOption, params object[] parameters)
+    public async Task<object> InvokeAsync(string targetId, string invokeKey, [DynamicallyAccessedMembers(AOT.RpcInvoke)] Type returnType, InvokeOptionV4 invokeOption, params object[] parameters)
     {
         if (string.IsNullOrEmpty(targetId))
         {
@@ -462,7 +462,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
             return await actor.InvokeAsync(invokeKey, returnType, invokeOption, parameters);
         }
 
-        invokeOption ??= InvokeOption.WaitInvoke;
+        invokeOption ??= InvokeOptionV4.WaitInvoke;
 
         var cancellationToken = invokeOption.Token;
         CancellationTokenSource cts = null;
@@ -482,7 +482,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
         if (invokeOption == default)
         {
-            invokeOption = InvokeOption.WaitInvoke;
+            invokeOption = InvokeOptionV4.WaitInvoke;
         }
 
         try
@@ -501,16 +501,16 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
             switch (invokeOption.FeedbackType)
             {
-                case FeedbackType.OnlySend:
+                case FeedbackTypeV4.OnlySend:
                     {
                         return returnType?.GetDefault();
                     }
-                case FeedbackType.WaitSend:
+                case FeedbackTypeV4.WaitSend:
                     {
                         ThrowExceptionIfNotSetRunning(await waitData.WaitAsync(cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext));
                         return returnType?.GetDefault();
                     }
-                case FeedbackType.WaitInvoke:
+                case FeedbackTypeV4.WaitInvoke:
                     {
                         var waitDataStatus = await waitData.WaitAsync(cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
                         if (waitDataStatus == WaitDataStatus.Canceled)

@@ -22,13 +22,13 @@ public static partial class RpcContainerExtension
     /// <summary>
     /// 将指定类型的RPC调用上下文访问器注册为单例。
     /// </summary>
-    /// <typeparam name="TRpcCallContextAccessor">实现 <see cref="IRpcCallContextAccessor"/> 的类型。</typeparam>
+    /// <typeparam name="TRpcCallContextAccessor">实现 <see cref="IRpcCallContextAccessorV4"/> 的类型。</typeparam>
     /// <param name="registrator">用于注册依赖项的 <see cref="IRegistrator"/> 实例。</param>
     /// <returns>返回 <see cref="IRegistrator"/> 实例以支持链式调用。</returns>
     public static IRegistrator AddRpcCallContextAccessor<[DynamicallyAccessedMembers(AOT.Container)] TRpcCallContextAccessor>(this IRegistrator registrator)
-       where TRpcCallContextAccessor : class, IRpcCallContextAccessor
+       where TRpcCallContextAccessor : class, IRpcCallContextAccessorV4
     {
-        registrator.RegisterSingleton<IRpcCallContextAccessor, TRpcCallContextAccessor>();
+        registrator.RegisterSingleton<IRpcCallContextAccessorV4, TRpcCallContextAccessor>();
         return registrator;
     }
 

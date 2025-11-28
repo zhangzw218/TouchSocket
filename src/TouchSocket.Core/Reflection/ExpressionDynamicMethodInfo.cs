@@ -51,7 +51,7 @@ internal class ExpressionDynamicMethodInfo : DynamicMethodInfoBase
 
         switch (this.ReturnKind)
         {
-            case MethodReturnKind.Void:
+            case MethodV4ReturnKind.Void:
                 {
                     var action = Expression.Lambda<Action<object, object[]>>(body, instance, parameters).Compile();
                     return (_instance, _parameters) =>

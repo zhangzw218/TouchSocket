@@ -19,7 +19,7 @@ namespace TouchV4Socket.Dmtp.Rpc;
 /// </summary>
 [DynamicMethod]
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-public sealed class DmtpRpcAttribute : RpcAttribute
+public sealed class DmtpRpcV4Attribute : RpcAttribute
 {
     /// <summary>
     ///  适用于DmtpRpc的标记.
@@ -27,7 +27,7 @@ public sealed class DmtpRpcAttribute : RpcAttribute
     /// </summary>
     /// <param name="methodInvoke">指示是否仅通过方法名进行调用的布尔值。</param>
     [Obsolete("由于构造函数直接设置参数在源生成时效果不一致，所以取消该方式，如果想要设置参数，请使用属性直接设置，例如：MethodInvoke=true", true)]
-    public DmtpRpcAttribute(bool methodInvoke)
+    public DmtpRpcV4Attribute(bool methodInvoke)
     {
         this.MethodInvoke = methodInvoke;
     }
@@ -35,7 +35,7 @@ public sealed class DmtpRpcAttribute : RpcAttribute
     /// <summary>
     /// 适用于DmtpRpc的标记
     /// </summary>
-    public DmtpRpcAttribute()
+    public DmtpRpcV4Attribute()
     {
     }
 
@@ -44,7 +44,7 @@ public sealed class DmtpRpcAttribute : RpcAttribute
     /// </summary>
     /// <param name="invokeKey">用于指定DmtpRpc调用的关键字</param>
     [Obsolete("由于构造函数直接设置参数在源生成时效果不一致，所以取消该方式，如果想要设置参数，请使用属性直接设置，例如：MethodInvoke=true", true)]
-    public DmtpRpcAttribute(string invokeKey)
+    public DmtpRpcV4Attribute(string invokeKey)
     {
         this.InvokeKey = invokeKey;
     }

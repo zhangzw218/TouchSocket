@@ -17,7 +17,7 @@ namespace TouchV4Socket.Dmtp.Rpc;
 internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
 {
     private DmtpRpcCallContext m_callContext;
-    private FeedbackType m_feedback;
+    private FeedbackTypeV4 m_feedback;
 
     private string m_invokeKey;
     private Metadata m_metadata;
@@ -32,17 +32,17 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
 
     }
 
-    public DmtpRpcRequestPackage(string invokeKey, InvokeOption option, object[] parameters, Type returnType, ISerializationSelectorV4 selector)
+    public DmtpRpcRequestPackage(string invokeKey, InvokeOptionV4 option, object[] parameters, Type returnType, ISerializationSelectorV4 selector)
     {
         this.m_invokeKey = invokeKey;
 
-        if (option is DmtpInvokeOption dmtpInvokeOption)
+        if (option is DmtpInvokeOptionV4 dmtpInvokeOption)
         {
             this.m_feedback = dmtpInvokeOption.FeedbackType;
             this.m_serializationType = dmtpInvokeOption.SerializationType;
             this.m_metadata = dmtpInvokeOption.Metadata;
         }
-        else if (option is InvokeOption invokeOption)
+        else if (option is InvokeOptionV4 invokeOption)
         {
             this.m_feedback = invokeOption.FeedbackType;
             this.m_serializationType = SerializationTypeV4.FastBinary;
@@ -57,7 +57,7 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
     /// <summary>
     /// 反馈类型
     /// </summary>
-    public FeedbackType Feedback => this.m_feedback;
+    public FeedbackTypeV4 Feedback => this.m_feedback;
 
     /// <summary>
     /// 函数名
@@ -177,7 +177,7 @@ internal class DmtpRpcRequestPackage : WaitRouterPackage, IDmtpRpcRequestPackage
         base.UnpackageRouter(ref reader);
         this.m_serializationType = (SerializationTypeV4)ReaderExtension.ReadValue<TReader, byte>(ref reader);
         this.m_invokeKey = ReaderExtension.ReadString(ref reader, FixedHeaderType.Byte);
-        this.m_feedback = (FeedbackType)ReaderExtension.ReadValue<TReader, byte>(ref reader);
+        this.m_feedback = (FeedbackTypeV4)ReaderExtension.ReadValue<TReader, byte>(ref reader);
         if (!ReaderExtension.ReadIsNull(ref reader))
         {
             var package = new Metadata();

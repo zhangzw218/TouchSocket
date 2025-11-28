@@ -25,7 +25,7 @@ namespace TouchV4Socket;
 //        foreach (var syntax in this.m_syntaxList)
 //        {
 //            var namedTypeSymbol = compilation.GetSemanticModel(syntax.SyntaxTree).GetDeclaredSymbol(syntax);
-//            if (!namedTypeSymbol.HasAttributes(FastSerializeGenerator.FastSerializableAttributeString, out var atts))
+//            if (!namedTypeSymbol.HasAttributes(FastSerializeGenerator.FastV4SerializableAttributeString, out var atts))
 //            {
 //                continue;
 //            }

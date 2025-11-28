@@ -39,7 +39,7 @@ public interface IDmtpRpcRequestPackage : IReadonlyRouterPackage
     /// 反馈类型指示了调用方期望的反馈方式，如无反馈、单向反馈等。
     /// </summary>
     /// <value>反馈类型</value>
-    FeedbackType Feedback { get; }
+    FeedbackTypeV4 Feedback { get; }
 
     /// <summary>
     /// 获取调用键。

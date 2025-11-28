@@ -24,7 +24,7 @@ internal sealed class FixedWindowRateLimiterPolicy : RateLimiterPolicy<MethodInf
         this.m_options = options;
     }
 
-    protected override MethodInfo GetPartitionKey(ICallContext callContext)
+    protected override MethodInfo GetPartitionKey(ICallContextV4 callContext)
     {
         return callContext.RpcMethod.Info;
     }

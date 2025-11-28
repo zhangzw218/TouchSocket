@@ -25,9 +25,9 @@ internal sealed class InternalRpcServerProvider : IRpcServerProvider
         this.m_rpcStore = rpcStore;
     }
 
-    public async Task<InvokeResult> ExecuteAsync(ICallContext callContext, InvokeResult invokeResult)
+    public async Task<InvokeResult> ExecuteAsync(ICallContextV4 callContext, InvokeResult invokeResult)
     {
-        var rpcCallContextAccessor = callContext.Resolver.Resolve<IRpcCallContextAccessor>();
+        var rpcCallContextAccessor = callContext.Resolver.Resolve<IRpcCallContextAccessorV4>();
         if (rpcCallContextAccessor is not null)
         {
             rpcCallContextAccessor.CallContext = callContext;
@@ -96,16 +96,16 @@ internal sealed class InternalRpcServerProvider : IRpcServerProvider
         return this.m_rpcStore.GetAllMethods();
     }
 
-    private object GetRpcServer(ICallContext callContext)
+    private object GetRpcServer(ICallContextV4 callContext)
     {
         try
         {
             var rpcServer = callContext.Resolver.Resolve(callContext.RpcMethod.ServerFromType);
-            if (rpcServer is ITransientRpcServer transientRpcServer)
+            if (rpcServer is ITransientRpcServerV4 transientRpcServer)
             {
                 transientRpcServer.CallContext = callContext;
             }
-            else if (rpcServer is IScopedRpcServer scopedRpcServer)
+            else if (rpcServer is IScopedRpcServerV4 scopedRpcServer)
             {
                 scopedRpcServer.CallContext = callContext;
             }

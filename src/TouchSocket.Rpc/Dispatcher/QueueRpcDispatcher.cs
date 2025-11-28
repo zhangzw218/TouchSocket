@@ -16,10 +16,10 @@ namespace TouchV4Socket.Rpc;
 /// 队列RPC调度器类，用于管理和调度RPC调用请求。
 /// </summary>
 /// <typeparam name="TRpcActor">RPC行为者的类型，必须是类类型。</typeparam>
-/// <typeparam name="TCallContext">调用上下文的类型，必须是类类型并且实现<see cref="ICallContext"/>接口。</typeparam>
+/// <typeparam name="TCallContext">调用上下文的类型，必须是类类型并且实现<see cref="ICallContextV4"/>接口。</typeparam>
 public class QueueRpcDispatcher<TRpcActor, TCallContext> : DisposableObject, IRpcDispatcher<TRpcActor, TCallContext>
     where TRpcActor : class
-    where TCallContext : class, ICallContext
+    where TCallContext : class, ICallContextV4
 {
     private readonly CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
 

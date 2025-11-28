@@ -18,7 +18,7 @@ namespace TouchV4Socket.WebApi;
 /// <summary>
 /// IHttpCallContext
 /// </summary>
-public interface IHttpCallContext : ICallContext
+public interface IHttpCallContext : ICallContextV4
 {
     /// <summary>
     /// Http上下文

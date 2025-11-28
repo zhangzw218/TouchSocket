@@ -20,7 +20,7 @@ namespace TouchV4Socket.Dmtp.Rpc;
 /// </summary>
 /// <typeparam name="TClient"></typeparam>
 [RequiresUnreferencedCode("动态代理不支持AOT环境")]
-public abstract class DmtpRpcDispatchProxy<TClient> : RpcDispatchProxy<TClient, DmtpRpcAttribute> where TClient : IDmtpRpcActor
+public abstract class DmtpRpcDispatchProxy<TClient> : RpcDispatchProxy<TClient, DmtpRpcV4Attribute> where TClient : IDmtpRpcActor
 {
 
 }

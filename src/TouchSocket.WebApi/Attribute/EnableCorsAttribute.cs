@@ -36,7 +36,7 @@ public sealed class EnableCorsAttribute : RpcActionFilterAttribute
     public string PolicyName { get; set; }
 
     /// <inheritdoc/>
-    public override Task<InvokeResult> ExecutedAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult, Exception exception)
+    public override Task<InvokeResult> ExecutedAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult, Exception exception)
     {
         if (callContext is IHttpCallContext httpCallContext && httpCallContext.HttpContext != default)
         {

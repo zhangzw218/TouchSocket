@@ -19,6 +19,6 @@ namespace TouchV4Socket.Dmtp;
 /// 它扩展了ITcpSession、ITcpListenableClient、IResolverObject、IDmtpActorObject和ISessionClient接口，
 /// 提供了一种机制，使得客户端能够参与基于TCP的Dmtp会话，包括监听、解析和会话管理功能。
 /// </summary>
-public interface ITcpDmtpSessionClient : ITcpSession, ITcpListenableClient, IResolverObject, IDmtpActorObject, ISessionClient
+public interface ITcpDmtpSessionClient : ITcpSession, ITcpListenableClient, IResolverObjectV4, IDmtpActorObject, ISessionClient
 {
 }

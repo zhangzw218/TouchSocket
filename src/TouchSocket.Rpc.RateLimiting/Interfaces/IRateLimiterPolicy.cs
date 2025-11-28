@@ -25,5 +25,5 @@ public interface IRateLimiterPolicy
     /// </summary>
     /// <param name="callContext">调用上下文，包含关于请求的信息</param>
     /// <returns>返回一个限流器实例</returns>
-    RateLimiter GetRateLimiter(ICallContext callContext);
+    RateLimiter GetRateLimiter(ICallContextV4 callContext);
 }

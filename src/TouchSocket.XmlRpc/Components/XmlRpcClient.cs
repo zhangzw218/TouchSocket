@@ -37,9 +37,9 @@ public class XmlRpcClient : HttpClientBase, IXmlRpcClient
     }
 
     /// <inheritdoc/>
-    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
+    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOptionV4 invokeOption, params object[] parameters)
     {
-        invokeOption ??= InvokeOption.WaitInvoke;
+        invokeOption ??= InvokeOptionV4.WaitInvoke;
 
         using (var byteBlock = new ByteBlockV4(1024 * 64))
         {
@@ -49,7 +49,7 @@ public class XmlRpcClient : HttpClientBase, IXmlRpcClient
             {
                 var response = responseResult.Response;
 
-                if (invokeOption.FeedbackType != FeedbackType.WaitInvoke)
+                if (invokeOption.FeedbackType != FeedbackTypeV4.WaitInvoke)
                 {
                     return default;
                 }

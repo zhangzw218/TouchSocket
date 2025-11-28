@@ -46,12 +46,12 @@ public abstract class RpcDispatchProxy<TClient, TAttribute> : DispatchProxy wher
         var rpcMethod = value.RpcMethod;
         var invokeKey = value.InvokeKey;
 
-        InvokeOption invokeOption;
+        InvokeOptionV4 invokeOption;
 
         object[] ps;
         if (value.InvokeOption)
         {
-            invokeOption = (InvokeOption)args.Last();
+            invokeOption = (InvokeOptionV4)args.Last();
             var pslist = new List<object>();
 
             for (var i = 0; i < args.Length; i++)
@@ -76,12 +76,12 @@ public abstract class RpcDispatchProxy<TClient, TAttribute> : DispatchProxy wher
 
         switch (rpcMethod.ReturnKind)
         {
-            case MethodReturnKind.Awaitable:
+            case MethodV4ReturnKind.Awaitable:
                 {
                     result = this.GetClient().InvokeAsync(invokeKey, rpcMethod.RealReturnType, invokeOption, ps);
                     break;
                 }
-            case MethodReturnKind.AwaitableObject:
+            case MethodV4ReturnKind.AwaitableObject:
                 {
                     result = this.GetClient().InvokeAsync(invokeKey, rpcMethod.RealReturnType, invokeOption, ps).GetFalseAwaitResult();
                     result = value.GenericMethod.Invoke(default, result);
@@ -107,7 +107,7 @@ public abstract class RpcDispatchProxy<TClient, TAttribute> : DispatchProxy wher
         var rpcMethod = new RpcMethod(info);
         var invokeKey = attribute.GetInvokeKey(rpcMethod);
         var invokeOption = false;
-        if (info.GetParameters().Length > 0 && typeof(InvokeOption).IsAssignableFrom(info.GetParameters().Last().ParameterType))
+        if (info.GetParameters().Length > 0 && typeof(InvokeOptionV4).IsAssignableFrom(info.GetParameters().Last().ParameterType))
         {
             invokeOption = true;
         }
@@ -116,7 +116,7 @@ public abstract class RpcDispatchProxy<TClient, TAttribute> : DispatchProxy wher
             InvokeKey = invokeKey,
             RpcMethod = rpcMethod,
             InvokeOption = invokeOption,
-            GenericMethod = rpcMethod.ReturnKind == MethodReturnKind.AwaitableObject ? new Method(this.m_fromResultMethod.MakeGenericMethod(rpcMethod.RealReturnType)) : default
+            GenericMethod = rpcMethod.ReturnKind == MethodV4ReturnKind.AwaitableObject ? new Method(this.m_fromResultMethod.MakeGenericMethod(rpcMethod.RealReturnType)) : default
         };
     }
 

@@ -134,10 +134,10 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
     /// <param name="invokeOption">调用选项。</param>
     /// <param name="parameters">参数。</param>
     /// <returns>任务对象。</returns>
-    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
+    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOptionV4 invokeOption, params object[] parameters)
     {
         var waitData = this.m_waitHandle.GetWaitDataAsync(out var sign);
-        invokeOption ??= InvokeOption.WaitInvoke;
+        invokeOption ??= InvokeOptionV4.WaitInvoke;
 
         parameters ??= [];
 
@@ -159,7 +159,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
         {
             Method = invokeKey,
             ParamsStrings = strs,
-            Id = invokeOption.FeedbackType == FeedbackType.WaitInvoke ? sign : 0
+            Id = invokeOption.FeedbackType == FeedbackTypeV4.WaitInvoke ? sign : 0
         };
 
         try
@@ -178,12 +178,12 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
 
             switch (invokeOption.FeedbackType)
             {
-                case FeedbackType.OnlySend:
-                case FeedbackType.WaitSend:
+                case FeedbackTypeV4.OnlySend:
+                case FeedbackTypeV4.WaitSend:
                     {
                         return default;
                     }
-                case FeedbackType.WaitInvoke:
+                case FeedbackTypeV4.WaitInvoke:
                 default:
                     {
                         switch (await waitData.WaitAsync(cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext))

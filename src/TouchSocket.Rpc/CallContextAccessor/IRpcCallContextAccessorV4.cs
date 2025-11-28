@@ -14,10 +14,10 @@ namespace TouchV4Socket.Rpc;
 /// <summary>
 /// 提供对当前 RPC 调用上下文的访问。
 /// </summary>
-public interface IRpcCallContextAccessor
+public interface IRpcCallContextAccessorV4
 {
     /// <summary>
     /// 获取或设置当前的调用上下文。
     /// </summary>
-    ICallContext CallContext { get; set; }
+    ICallContextV4 CallContext { get; set; }
 }

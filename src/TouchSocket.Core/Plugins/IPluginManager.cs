@@ -17,7 +17,7 @@ namespace TouchV4Socket.Core;
 /// <summary>
 /// 插件管理器接口
 /// </summary>
-public interface IPluginManager : IDisposableObject, IResolverObject
+public interface IPluginManager : IDisposableObject, IResolverObjectV4
 {
     /// <summary>
     /// 标识该插件管理器是否可用。

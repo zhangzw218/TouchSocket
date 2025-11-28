@@ -69,7 +69,7 @@ public sealed class RpcMethod : Method
 
         this.PrivateGetFilters();
 
-        if (typeof(ITransientRpcServer).IsAssignableFrom(this.ServerToType) || typeof(IScopedRpcServer).IsAssignableFrom(this.ServerToType))
+        if (typeof(ITransientRpcServerV4).IsAssignableFrom(this.ServerToType) || typeof(IScopedRpcServerV4).IsAssignableFrom(this.ServerToType))
         {
             this.HasCallContext = true;
         }

@@ -16,52 +16,52 @@ using System.Reflection;
 namespace TouchV4Socket.Core;
 
 [RequiresUnreferencedCode("此方法可能会使用反射构建访问器，与剪裁不兼容。")]
-internal abstract class DynamicMethodInfoBase : IDynamicMethodInfo
+internal abstract class DynamicMethodInfoBase : IDynamicV4MethodInfo
 {
 
     public DynamicMethodInfoBase(MethodInfo method)
     {
         if (method.ReturnType == typeof(void))
         {
-            this.ReturnKind = MethodReturnKind.Void;
+            this.ReturnKind = MethodV4ReturnKind.Void;
         }
         else if (IsTypeAwaitable(method.ReturnType, out var returnType))
         {
             if (returnType is null)
             {
-                this.ReturnKind = MethodReturnKind.Awaitable;
+                this.ReturnKind = MethodV4ReturnKind.Awaitable;
             }
             else
             {
                 this.RealReturnType = returnType;
-                this.ReturnKind = MethodReturnKind.AwaitableObject;
+                this.ReturnKind = MethodV4ReturnKind.AwaitableObject;
             }
         }
         else if (method.ReturnType == typeof(Task) || method.ReturnType == typeof(ValueTask))
         {
-            this.ReturnKind = MethodReturnKind.Awaitable;
+            this.ReturnKind = MethodV4ReturnKind.Awaitable;
         }
         else if (method.ReturnType.IsGenericType && (method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>) || method.ReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>)))
         {
             this.RealReturnType = method.ReturnType.GetGenericArguments().First();
-            this.ReturnKind = MethodReturnKind.AwaitableObject;
+            this.ReturnKind = MethodV4ReturnKind.AwaitableObject;
         }
         else
         {
             this.RealReturnType = method.ReturnType;
-            this.ReturnKind = MethodReturnKind.Object;
+            this.ReturnKind = MethodV4ReturnKind.Object;
         }
     }
     public Type RealReturnType { get; set; }
 
-    public MethodReturnKind ReturnKind { get; set; }
+    public MethodV4ReturnKind ReturnKind { get; set; }
 
     public async Task<object> GetResultAsync(object result)
     {
         if (result is Task task)
         {
             await task.ConfigureAwait(EasyTask.ContinueOnCapturedContext);
-            return this.ReturnKind == MethodReturnKind.AwaitableObject
+            return this.ReturnKind == MethodV4ReturnKind.AwaitableObject
                 ? MemberAccessor.StaticGetValue(task, nameof(Task<object>.Result))
                 : null;
         }

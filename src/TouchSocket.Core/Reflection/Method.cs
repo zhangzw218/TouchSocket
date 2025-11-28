@@ -21,7 +21,7 @@ namespace TouchV4Socket.Core;
 public class Method
 {
     private const string GeneratorTypeNamespace = "TouchV4Socket.Core.__Internals";
-    private readonly IDynamicMethodInfo m_dynamicMethodInfo;
+    private readonly IDynamicV4MethodInfo m_dynamicMethodInfo;
     private readonly MethodInfo m_info;
 
     /// <summary>
@@ -29,7 +29,7 @@ public class Method
     /// </summary>
     /// <param name="method">关于要表示的方法的元数据信息。不可能 <see langword="null"/>.</param>
     /// <param name="dynamicMethodInfo">与该方法相关联的动态方法信息。不可能 <see langword="null"/>.</param>
-    public Method(MethodInfo method, IDynamicMethodInfo dynamicMethodInfo)
+    public Method(MethodInfo method, IDynamicV4MethodInfo dynamicMethodInfo)
     {
         ThrowHelper.ThrowIfNull(dynamicMethodInfo, nameof(dynamicMethodInfo));
         ThrowHelper.ThrowIfNull(method, nameof(method));
@@ -86,7 +86,7 @@ public class Method
     /// <summary>
     /// 获取一个值，该值指示该方法的返回类型是否支持等待。
     /// </summary>
-    public bool IsAwaitable => this.ReturnKind == MethodReturnKind.Awaitable || this.ReturnKind == MethodReturnKind.AwaitableObject;
+    public bool IsAwaitable => this.ReturnKind == MethodV4ReturnKind.Awaitable || this.ReturnKind == MethodV4ReturnKind.AwaitableObject;
 
     /// <summary>
     /// 获取方法名。
@@ -103,7 +103,7 @@ public class Method
     /// <summary>
     /// 返回值的Task类型。
     /// </summary>
-    public MethodReturnKind ReturnKind => this.m_dynamicMethodInfo.ReturnKind;
+    public MethodV4ReturnKind ReturnKind => this.m_dynamicMethodInfo.ReturnKind;
 
     #region Invoke
 
@@ -140,20 +140,20 @@ public class Method
     {
         switch (this.ReturnKind)
         {
-            case MethodReturnKind.Void:
+            case MethodV4ReturnKind.Void:
                 this.Invoke(instance, parameters);
                 return default;
 
-            case MethodReturnKind.Object:
+            case MethodV4ReturnKind.Object:
                 return this.Invoke(instance, parameters);
 
-            case MethodReturnKind.Awaitable:
+            case MethodV4ReturnKind.Awaitable:
                 {
                     var rawResult = this.Invoke(instance, parameters);
                     await this.m_dynamicMethodInfo.GetResultAsync(rawResult).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
                     return default;
                 }
-            case MethodReturnKind.AwaitableObject:
+            case MethodV4ReturnKind.AwaitableObject:
                 {
                     var rawResult = this.Invoke(instance, parameters);
                     return (await this.m_dynamicMethodInfo.GetResultAsync(rawResult).ConfigureAwait(EasyTask.ContinueOnCapturedContext));
@@ -172,7 +172,7 @@ public class Method
     /// <returns>动态方法信息接口。</returns>
     [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "源生成器生成的代码在AOT环境中是安全的")]
     [UnconditionalSuppressMessage("Trimming", "IL2075:'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.", Justification = "源生成器确保相关成员在编译时存在")]
-    private IDynamicMethodInfo CreateDynamicMethodInfoFromSG()
+    private IDynamicV4MethodInfo CreateDynamicMethodInfoFromSG()
     {
         var typeName = $"{GeneratorTypeNamespace}.__{StringExtension.MakeIdentifier(this.Info.DeclaringType.FullName)}MethodExtension";
 
@@ -184,6 +184,6 @@ public class Method
 
         var methodName = $"{this.Info.GetDeterminantName()}ClassProperty";
         var property = type.GetProperty(methodName, BindingFlags.Public | BindingFlags.Static);
-        return property == null ? default : (IDynamicMethodInfo)property.GetValue(null);
+        return property == null ? default : (IDynamicV4MethodInfo)property.GetValue(null);
     }
 }

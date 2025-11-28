@@ -15,25 +15,25 @@ namespace TouchV4Socket.Rpc;
 /// <summary>
 /// ScopedRpcServer
 /// </summary>
-public abstract class ScopedRpcServer<TCallContext> : IScopedRpcServer where TCallContext : ICallContext
+public abstract class ScopedRpcServerV4<TCallContext> : IScopedRpcServerV4 where TCallContext : ICallContextV4
 {
-    ICallContext IScopedRpcServer.CallContext { get; set; }
+    ICallContextV4 IScopedRpcServerV4.CallContext { get; set; }
 
     /// <summary>
     /// 调用上下文。
     /// </summary>
-    protected TCallContext CallContext => (((IScopedRpcServer)this).CallContext is TCallContext transient) ? transient : default;
+    protected TCallContext CallContext => (((IScopedRpcServerV4)this).CallContext is TCallContext transient) ? transient : default;
 }
 
 /// <summary>
 /// ScopedRpcServer
 /// </summary>
-public abstract class ScopedRpcServer : IScopedRpcServer
+public abstract class ScopedRpcServerV4 : IScopedRpcServerV4
 {
-    ICallContext IScopedRpcServer.CallContext { get; set; }
+    ICallContextV4 IScopedRpcServerV4.CallContext { get; set; }
 
     /// <summary>
     /// 调用上下文。
     /// </summary>
-    protected ICallContext CallContext => ((IScopedRpcServer)this).CallContext;
+    protected ICallContextV4 CallContext => ((IScopedRpcServerV4)this).CallContext;
 }

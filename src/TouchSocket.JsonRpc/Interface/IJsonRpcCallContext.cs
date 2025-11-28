@@ -17,7 +17,7 @@ namespace TouchV4Socket.JsonRpc;
 /// <summary>
 /// IJsonRpcCallContext
 /// </summary>
-public interface IJsonRpcCallContext : ICallContext
+public interface IJsonRpcCallContext : ICallContextV4
 {
     ///// <summary>
     ///// JsonRpc数据包

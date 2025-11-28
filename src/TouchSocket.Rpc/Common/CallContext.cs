@@ -15,7 +15,7 @@ namespace TouchV4Socket.Rpc;
 /// <summary>
 /// Rpc调用上下文的基本实现
 /// </summary>
-public abstract class CallContext : DependencyObject, ICallContext
+public abstract class CallContext : DependencyObject, ICallContextV4
 {
     private readonly Lock m_locker = new Lock();
     private bool m_canceled;

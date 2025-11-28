@@ -10,15 +10,25 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchV4Socket.Core;
+namespace TouchV4Socket.Rpc;
 
 /// <summary>
-/// IResolverObject接口定义了一个解析对象的标准，该对象包含一个解析器属性。
+/// 反馈类型
 /// </summary>
-public interface IResolverObject
+public enum FeedbackTypeV4 : byte
 {
     /// <summary>
-    /// 获取解析器实例。
+    /// 仅发送
     /// </summary>
-    IResolver Resolver { get; }
+    OnlySend,
+
+    /// <summary>
+    /// 等待，直到发送抵达
+    /// </summary>
+    WaitSend,
+
+    /// <summary>
+    /// 等待，直到调用完成
+    /// </summary>
+    WaitInvoke
 }

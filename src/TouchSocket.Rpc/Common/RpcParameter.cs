@@ -26,7 +26,7 @@ public class RpcParameter
     {
         this.ParameterInfo = parameterInfo;
         this.Type = parameterInfo.ParameterType.GetRefOutType();
-        this.IsCallContext = typeof(ICallContext).IsAssignableFrom(this.Type);
+        this.IsCallContext = typeof(ICallContextV4).IsAssignableFrom(this.Type);
         this.IsFromServices = parameterInfo.IsDefined(typeof(FromServicesAttribute));
     }
 

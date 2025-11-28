@@ -54,7 +54,7 @@ public class WebApiClient : HttpClientBase, IWebApiClient
     #region Rpc调用
 
     /// <inheritdoc/>
-    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
+    public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOptionV4 invokeOption, params object[] parameters)
     {
         if (parameters.Length != 1 || parameters[0] is not WebApiRequest webApiRequest)
         {
@@ -90,7 +90,7 @@ public class WebApiClient : HttpClientBase, IWebApiClient
             request.SetFormUrlEncodedContent(webApiRequest.Forms);
         }
 
-        invokeOption ??= InvokeOption.WaitInvoke;
+        invokeOption ??= InvokeOptionV4.WaitInvoke;
 
         await this.PluginManager.RaiseAsync(typeof(IWebApiRequestPlugin), this.Resolver, this, new WebApiEventArgs(request, default));
 
@@ -99,7 +99,7 @@ public class WebApiClient : HttpClientBase, IWebApiClient
             var response = responseResult.Response;
             await this.PluginManager.RaiseAsync(typeof(IWebApiResponsePlugin), this.Resolver, this, new WebApiEventArgs(request, response));
 
-            if (invokeOption.FeedbackType != FeedbackType.WaitInvoke)
+            if (invokeOption.FeedbackType != FeedbackTypeV4.WaitInvoke)
             {
                 return default;
             }

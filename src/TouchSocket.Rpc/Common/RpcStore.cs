@@ -206,11 +206,11 @@ public sealed class RpcStore
             }
         }
 
-        if (typeof(ITransientRpcServer).IsAssignableFrom(serverFromType))
+        if (typeof(ITransientRpcServerV4).IsAssignableFrom(serverFromType))
         {
             this.m_registrator.RegisterTransient(serverFromType, serverToType);
         }
-        else if (typeof(IScopedRpcServer).IsAssignableFrom(serverFromType))
+        else if (typeof(IScopedRpcServerV4).IsAssignableFrom(serverFromType))
         {
             this.m_registrator.Register(new DependencyDescriptor(serverFromType, serverToType, Lifetime.Scoped));
         }

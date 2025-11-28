@@ -23,7 +23,7 @@ public interface IRpcServerProvider
     /// <param name="callContext">调用上下文，包含本次调用的相关上下文信息</param>
     /// <param name="invokeResult"></param>
     /// <returns>返回一个任务，结果是InvokeResult类型，包含Rpc调用的结果信息</returns>
-    Task<InvokeResult> ExecuteAsync(ICallContext callContext, InvokeResult invokeResult);
+    Task<InvokeResult> ExecuteAsync(ICallContextV4 callContext, InvokeResult invokeResult);
 
     /// <summary>
     /// 获取所有Method

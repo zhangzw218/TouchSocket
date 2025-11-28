@@ -88,7 +88,7 @@ public class DmtpRpcFeature : PluginBase, IDmtpFeature, IDmtpConnectingPlugin, I
     {
         foreach (var rpcMethod in rpcMethods)
         {
-            if (rpcMethod.GetAttribute<DmtpRpcAttribute>() is DmtpRpcAttribute attribute)
+            if (rpcMethod.GetAttribute<DmtpRpcV4Attribute>() is DmtpRpcV4Attribute attribute)
             {
                 this.ActionMap.Add(attribute.GetInvokeKey(rpcMethod), rpcMethod);
             }

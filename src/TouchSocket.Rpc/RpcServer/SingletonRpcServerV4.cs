@@ -15,6 +15,6 @@ namespace TouchV4Socket.Rpc;
 /// <summary>
 /// Rpc范围类
 /// </summary>
-public abstract class SingletonRpcServer : IRpcServer
+public abstract class SingletonRpcServerV4 : IRpcServer
 {
 }

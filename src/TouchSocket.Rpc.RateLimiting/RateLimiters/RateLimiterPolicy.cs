@@ -64,7 +64,7 @@ public abstract class RateLimiterPolicy<TPartitionKey> : IRateLimiterPolicy
     /// </summary>
     /// <param name="callContext">调用上下文对象，用于确定限流器的分区键</param>
     /// <returns>返回一个限流器实例</returns>
-    public RateLimiter GetRateLimiter(ICallContext callContext)
+    public RateLimiter GetRateLimiter(ICallContextV4 callContext)
     {
         // 根据调用上下文获取分区键，用于区分不同的限流场景
         var partitionKey = this.GetPartitionKey(callContext);
@@ -86,7 +86,7 @@ public abstract class RateLimiterPolicy<TPartitionKey> : IRateLimiterPolicy
     /// </summary>
     /// <param name="callContext">调用上下文对象，可能包含获取分区键所需的信息</param>
     /// <returns>返回一个泛型分区键，具体类型由子类实现决定</returns>
-    protected abstract TPartitionKey GetPartitionKey(ICallContext callContext);
+    protected abstract TPartitionKey GetPartitionKey(ICallContextV4 callContext);
 
     /// <summary>
     /// 创建一个新的限流器

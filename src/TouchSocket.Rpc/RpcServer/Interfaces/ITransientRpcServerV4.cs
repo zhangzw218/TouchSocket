@@ -13,12 +13,12 @@
 namespace TouchV4Socket.Rpc;
 
 /// <summary>
-/// 定义了一个接口，用于在特定范围内管理RPC（远程过程调用）服务器的调用上下文
+/// Rpc服务接口
 /// </summary>
-public interface IScopedRpcServer : IRpcServer
+public interface ITransientRpcServerV4 : IRpcServer
 {
     /// <summary>
     /// 调用上下文
     /// </summary>
-    ICallContext CallContext { get; set; }
+    ICallContextV4 CallContext { get; set; }
 }

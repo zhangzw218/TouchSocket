@@ -59,13 +59,13 @@ internal class MethodInvokeClassCodeBuilder : MethodCodeBuilder
     {
         var isTypeAwaitable = this.IsTypeAwaitable(method.ReturnType, out var returnType);
 
-        codeBuilder.AppendLine($"class {this.GetMethodName(method)}Class : IDynamicMethodInfo");
+        codeBuilder.AppendLine($"class {this.GetMethodName(method)}Class : IDynamicV4MethodInfo");
         using (this.CreateCodeSpace(codeBuilder))
         {
             if (method.ReturnType.IsVoid())
             {
                 codeBuilder.AppendLine("public Type RealReturnType => default;");
-                codeBuilder.AppendLine("public MethodReturnKind ReturnKind => MethodReturnKind.Void;");
+                codeBuilder.AppendLine("public MethodV4ReturnKind ReturnKind => MethodV4ReturnKind.Void;");
 
                 this.BuildMethod(codeBuilder, method);
 
@@ -81,7 +81,7 @@ internal class MethodInvokeClassCodeBuilder : MethodCodeBuilder
                 if (returnType == null)
                 {
                     codeBuilder.AppendLine("public Type RealReturnType => default;");
-                    codeBuilder.AppendLine("public MethodReturnKind ReturnKind => MethodReturnKind.Awaitable;");
+                    codeBuilder.AppendLine("public MethodV4ReturnKind ReturnKind => MethodV4ReturnKind.Awaitable;");
 
                     this.BuildMethod(codeBuilder, method);
 
@@ -112,7 +112,7 @@ internal class MethodInvokeClassCodeBuilder : MethodCodeBuilder
                 else
                 {
                     codeBuilder.AppendLine($"public Type RealReturnType =>typeof({returnType.GetTypeofString()}) ;");
-                    codeBuilder.AppendLine("public MethodReturnKind ReturnKind => MethodReturnKind.AwaitableObject;");
+                    codeBuilder.AppendLine("public MethodV4ReturnKind ReturnKind => MethodV4ReturnKind.AwaitableObject;");
 
                     this.BuildMethod(codeBuilder, method);
 
@@ -142,7 +142,7 @@ internal class MethodInvokeClassCodeBuilder : MethodCodeBuilder
             else
             {
                 codeBuilder.AppendLine($"public Type RealReturnType => typeof({method.ReturnType.GetTypeofString()});");
-                codeBuilder.AppendLine("public MethodReturnKind ReturnKind => MethodReturnKind.Object;");
+                codeBuilder.AppendLine("public MethodV4ReturnKind ReturnKind => MethodV4ReturnKind.Object;");
 
                 this.BuildMethod(codeBuilder, method);
                 codeBuilder.AppendLine("public Task<object> GetResultAsync(object o)");
@@ -296,7 +296,7 @@ internal class MethodInvokeClassCodeBuilder : MethodCodeBuilder
 
     private void BuildMethodFunc(StringBuilder codeBuilder, IMethodSymbol method)
     {
-        codeBuilder.AppendLine($"public static IDynamicMethodInfo {this.GetMethodName(method)}ClassProperty => new {this.GetMethodName(method)}Class();");
+        codeBuilder.AppendLine($"public static IDynamicV4MethodInfo {this.GetMethodName(method)}ClassProperty => new {this.GetMethodName(method)}Class();");
     }
 
     private bool IsTypeAwaitable(ITypeSymbol typeSymbol, out ITypeSymbol returnType)

@@ -25,9 +25,9 @@ namespace TouchV4Socket.Core
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     /*GeneratedCode*/
-    internal class FastSerializableAttribute : Attribute
+    internal class FastV4SerializableAttribute : Attribute
     {
-        public FastSerializableAttribute(Type type, TypeMode typeMode)
+        public FastV4SerializableAttribute(Type type, TypeMode typeMode)
         {
             this.Type = type;
             this.TypeMode = typeMode;
@@ -35,7 +35,7 @@ namespace TouchV4Socket.Core
 
         public Type Type { get; }
 
-        public FastSerializableAttribute(Type type) : this(type, TypeMode.Self)
+        public FastV4SerializableAttribute(Type type) : this(type, TypeMode.Self)
         {
 
         }

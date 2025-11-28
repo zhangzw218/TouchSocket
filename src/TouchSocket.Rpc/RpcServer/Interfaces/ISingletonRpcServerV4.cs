@@ -14,6 +14,6 @@ namespace TouchV4Socket.Rpc;
 /// <summary>
 /// 表示一个单例模式的RPC服务器接口。
 /// </summary>
-public interface ISingletonRpcServer : IRpcServer
+public interface ISingletonRpcServerV4 : IRpcServer
 {
 }

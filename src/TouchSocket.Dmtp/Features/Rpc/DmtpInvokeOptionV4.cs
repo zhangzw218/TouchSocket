@@ -10,25 +10,39 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchV4Socket.Rpc;
+using TouchV4Socket.Rpc;
+
+namespace TouchV4Socket.Dmtp.Rpc;
 
 /// <summary>
-/// 反馈类型
+/// Rpc调用设置
 /// </summary>
-public enum FeedbackType : byte
+public class DmtpInvokeOptionV4 : InvokeOptionV4
 {
     /// <summary>
-    /// 仅发送
+    /// 构造函数：初始化DmtpInvokeOption对象
     /// </summary>
-    OnlySend,
+    public DmtpInvokeOptionV4() : base()
+    {
+    }
+
 
     /// <summary>
-    /// 等待，直到发送抵达
+    /// 初始化 DmtpInvokeOption 类的新实例，并设置超时时间。
     /// </summary>
-    WaitSend,
+    /// <param name="millisecondsTimeout">执行操作的超时时间，以毫秒为单位。</param>
+    public DmtpInvokeOptionV4(int millisecondsTimeout) : base(millisecondsTimeout)
+    {
+
+    }
 
     /// <summary>
-    /// 等待，直到调用完成
+    /// DmtpRpc序列化类型
     /// </summary>
-    WaitInvoke
+    public SerializationTypeV4 SerializationType { get; init; } = SerializationTypeV4.FastBinary;
+
+    /// <summary>
+    /// 元数据
+    /// </summary>
+    public Metadata Metadata { get; init; }
 }

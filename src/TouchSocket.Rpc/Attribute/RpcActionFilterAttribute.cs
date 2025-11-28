@@ -23,13 +23,13 @@ public abstract class RpcActionFilterAttribute : Attribute, IRpcActionFilter
     public virtual Type[] MutexAccessTypes => new Type[] { };
 
     /// <inheritdoc/>
-    public virtual Task<InvokeResult> ExecutedAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult, Exception exception)
+    public virtual Task<InvokeResult> ExecutedAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult, Exception exception)
     {
         return Task.FromResult(invokeResult);
     }
 
     /// <inheritdoc/>
-    public virtual Task<InvokeResult> ExecutingAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult)
+    public virtual Task<InvokeResult> ExecutingAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult)
     {
         return Task.FromResult(invokeResult);
     }

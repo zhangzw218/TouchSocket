@@ -24,15 +24,15 @@ namespace TouchV4Socket;
 [Generator]
 public class FastSerializeGenerator : IIncrementalGenerator
 {
-    public const string FastSerializableAttributeString = "TouchV4Socket.Core.FastSerializableAttribute";
+    public const string FastV4SerializableAttributeString = "TouchV4Socket.Core.FastV4SerializableAttribute";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // 注册FastSerializableAttribute
+        // 注册FastV4SerializableAttribute
         context.RegisterPostInitializationOutput(ctx =>
-            ctx.AddSource("FastSerializableAttribute.g.cs", SourceText.From(fastSerializableAttribute, Encoding.UTF8)));
+            ctx.AddSource("FastV4SerializableAttribute.g.cs", SourceText.From(FastV4SerializableAttribute, Encoding.UTF8)));
 
-        // 筛选包含FastSerializableAttribute的类
+        // 筛选包含FastV4SerializableAttribute的类
         var provider = context.SyntaxProvider
             .CreateSyntaxProvider(
                 predicate: static (s, _) => s is TypeDeclarationSyntax tds
@@ -51,7 +51,7 @@ public class FastSerializeGenerator : IIncrementalGenerator
 
         foreach (var namedTypeSymbol in symbols.Distinct(SymbolEqualityComparer.Default).Cast<INamedTypeSymbol>())
         {
-            if (!namedTypeSymbol.HasAttributes(FastSerializableAttributeString, out var atts))
+            if (!namedTypeSymbol.HasAttributes(FastV4SerializableAttributeString, out var atts))
                 continue;
 
             var pairs = ProcessAttributes(namedTypeSymbol, atts, context);
@@ -192,8 +192,8 @@ public class FastSerializeGenerator : IIncrementalGenerator
         return context.SemanticModel.GetDeclaredSymbol(typeSyntax) as INamedTypeSymbol;
     }
 
-    // 保持原有fastSerializableAttribute字符串
-    private const string fastSerializableAttribute = @"
+    // 保持原有FastV4SerializableAttribute字符串
+    private const string FastV4SerializableAttribute = @"
 /*
 此代码由SourceGenerator工具直接生成，非必要请不要修改此处代码
 */
@@ -209,9 +209,9 @@ namespace TouchV4Socket.Core
     /// </summary>
     [AttributeUsage(AttributeTargets.Class,AllowMultiple =true)]
     /*GeneratedCode*/
-    internal class FastSerializableAttribute : Attribute
+    internal class FastV4SerializableAttribute : Attribute
     {
-        public FastSerializableAttribute(Type type, TypeMode typeMode)
+        public FastV4SerializableAttribute(Type type, TypeMode typeMode)
         {
             this.Type = type;
             this.TypeMode = typeMode;
@@ -219,7 +219,7 @@ namespace TouchV4Socket.Core
 
         public Type Type { get; }
 
-        public FastSerializableAttribute(Type type) : this(type, TypeMode.Self)
+        public FastV4SerializableAttribute(Type type) : this(type, TypeMode.Self)
         {
 
         }

@@ -10,30 +10,15 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchV4Socket.Rpc;
+namespace TouchV4Socket.Core;
 
 /// <summary>
-/// TransientRpcServer
+/// IResolverObject接口定义了一个解析对象的标准，该对象包含一个解析器属性。
 /// </summary>
-public abstract class TransientRpcServer<TCallContext> : ITransientRpcServer where TCallContext : ICallContext
+public interface IResolverObjectV4
 {
-    ICallContext ITransientRpcServer.CallContext { get; set; }
-
     /// <summary>
-    /// 调用上下文。
+    /// 获取解析器实例。
     /// </summary>
-    protected TCallContext CallContext => (((ITransientRpcServer)this).CallContext is TCallContext Transient) ? Transient : default;
-}
-
-/// <summary>
-/// TransientRpcServer
-/// </summary>
-public abstract class TransientRpcServer : ITransientRpcServer
-{
-    ICallContext ITransientRpcServer.CallContext { get; set; }
-
-    /// <summary>
-    /// 调用上下文。
-    /// </summary>
-    protected ICallContext CallContext => ((ITransientRpcServer)this).CallContext;
+    IResolver Resolver { get; }
 }

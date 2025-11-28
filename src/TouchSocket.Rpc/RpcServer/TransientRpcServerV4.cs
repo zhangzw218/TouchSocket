@@ -13,39 +13,27 @@
 namespace TouchV4Socket.Rpc;
 
 /// <summary>
-/// Rpc调用上下文
+/// TransientRpcServer
 /// </summary>
-public interface ICallContext : IResolverObject, IDependencyObject
+public abstract class TransientRpcServerV4<TCallContext> : ITransientRpcServerV4 where TCallContext : ICallContextV4
 {
-    /// <summary>
-    /// 调用此服务的主体。
-    /// <para>
-    /// <list type="bullet">
-    /// <item>当该服务在ITcpService及派生中调用时，该值一般为ISessionClient对象。</item>
-    /// <item>当该服务在ITcpClient及派生中调用时，该值一般为ITcpClient对象。</item>
-    /// </list>
-    /// </para>
-    /// </summary>
-    object Caller { get; }
+    ICallContextV4 ITransientRpcServerV4.CallContext { get; set; }
 
     /// <summary>
-    /// 本次调用的<see cref="RpcMethod"/>
+    /// 调用上下文。
     /// </summary>
-    RpcMethod RpcMethod { get; }
+    protected TCallContext CallContext => (((ITransientRpcServerV4)this).CallContext is TCallContext Transient) ? Transient : default;
+}
+
+/// <summary>
+/// TransientRpcServer
+/// </summary>
+public abstract class TransientRpcServerV4 : ITransientRpcServerV4
+{
+    ICallContextV4 ITransientRpcServerV4.CallContext { get; set; }
 
     /// <summary>
-    /// 可取消的调用令箭
+    /// 调用上下文。
     /// </summary>
-    CancellationToken Token { get; }
-
-    /// <summary>
-    /// 执行取消<see cref="ICallContext.Token"/>。
-    /// </summary>
-    /// <returns></returns>
-    void Cancel();
-
-    /// <summary>
-    /// 调用参数
-    /// </summary>
-    object[] Parameters { get; }
+    protected ICallContextV4 CallContext => ((ITransientRpcServerV4)this).CallContext;
 }

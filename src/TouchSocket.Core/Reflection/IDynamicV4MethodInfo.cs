@@ -15,7 +15,7 @@ namespace TouchV4Socket.Core;
 /// <summary>
 /// 表示动态方法的信息。
 /// </summary>
-public interface IDynamicMethodInfo
+public interface IDynamicV4MethodInfo
 {
     /// <summary>
     /// 真实返回值类型。
@@ -27,7 +27,7 @@ public interface IDynamicMethodInfo
     /// <summary>
     /// 返回值的 Task 类型。
     /// </summary>
-    MethodReturnKind ReturnKind { get; }
+    MethodV4ReturnKind ReturnKind { get; }
 
     /// <summary>
     /// 异步获取方法的结果。

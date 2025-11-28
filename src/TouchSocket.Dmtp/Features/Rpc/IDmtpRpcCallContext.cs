@@ -17,7 +17,7 @@ namespace TouchV4Socket.Dmtp.Rpc;
 /// <summary>
 /// IDmtpRpcCallContext
 /// </summary>
-public interface IDmtpRpcCallContext : ICallContext
+public interface IDmtpRpcCallContext : ICallContextV4
 {
     /// <summary>
     /// 序列化类型

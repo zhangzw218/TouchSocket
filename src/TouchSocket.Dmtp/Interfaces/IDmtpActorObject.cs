@@ -15,7 +15,7 @@ namespace TouchV4Socket.Dmtp;
 /// <summary>
 /// 定义包含<see cref="TouchV4Socket.Dmtp.IDmtpActor"/>成员的接口对象。
 /// </summary>
-public interface IDmtpActorObject : IResolverObject
+public interface IDmtpActorObject : IResolverObjectV4
 {
     /// <summary>
     /// 提供Dmtp协议的最基础功能件

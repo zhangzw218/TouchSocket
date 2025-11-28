@@ -34,7 +34,7 @@ public interface IRpcActionFilter
     /// <param name="invokeResult">Rpc调用的结果，可以通过此参数修改Rpc的最终结果</param>
     /// <param name="exception">在Rpc调用期间发生的任何异常</param>
     /// <returns>返回一个<see cref="Task{InvokeResult}"/>，该任务表示Rpc调用的最终结果</returns>
-    Task<InvokeResult> ExecutedAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult, Exception exception);
+    Task<InvokeResult> ExecutedAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult, Exception exception);
 
     /// <summary>
     /// 在执行Rpc之前。
@@ -45,5 +45,5 @@ public interface IRpcActionFilter
     /// <param name="parameters">Rpc调用的参数，以对象数组的形式提供</param>
     /// <param name="invokeResult">Rpc调用的结果，包含调用状态和结果数据</param>
     /// <returns>返回一个<see cref="Task"/>，该任务完成后将返回Rpc调用的结果<see cref="InvokeResult"/></returns>
-    Task<InvokeResult> ExecutingAsync(ICallContext callContext, object[] parameters, InvokeResult invokeResult);
+    Task<InvokeResult> ExecutingAsync(ICallContextV4 callContext, object[] parameters, InvokeResult invokeResult);
 }

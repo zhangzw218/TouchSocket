@@ -15,6 +15,6 @@ namespace TouchV4Socket.Core;
 /// <summary>
 /// 具有<see cref="IResolver"/>相关成员的配置对象接口
 /// </summary>
-public interface IResolverConfigObject : IConfigObject, IPluginObject, IResolverObject
+public interface IResolverConfigObject : IConfigObject, IPluginObject, IResolverObjectV4
 {
 }

@@ -644,6 +644,10 @@ internal abstract class CodeBuilder
     {
         get
         {
+            yield return "#if TouchSocketV4CoreAliases";
+            yield return "extern alias TouchSocketV4Core;";
+            yield return "using TouchSocketV4Core::TouchV4Socket.Core;";
+            yield return "#endif";
             yield return "using System;";
             yield return "using System.Diagnostics;";
             yield return "using TouchV4Socket.Core;";
@@ -693,7 +697,7 @@ internal abstract class CodeBuilder
     {
         var codeBuilder = new StringBuilder();
         codeBuilder.AppendLine("/*");
-        codeBuilder.AppendLine("此代码由工具直接生成，非必要请不要修改此处代码");
+        codeBuilder.AppendLine("此代码由工具直接生成，非必要请不要修改此处代码zzw");
         codeBuilder.AppendLine("*/");
         codeBuilder.AppendLine("#pragma warning disable");
 

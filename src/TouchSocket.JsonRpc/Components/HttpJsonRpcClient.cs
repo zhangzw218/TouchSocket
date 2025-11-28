@@ -86,7 +86,7 @@ public class HttpJsonRpcClient : HttpClientBase, IHttpJsonRpcClient
     /// <param name="invokeOption">调用选项。</param>
     /// <param name="parameters">参数。</param>
     /// <returns>表示异步操作的任务，包含调用结果。</returns>
-    public Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
+    public Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOptionV4 invokeOption, params object[] parameters)
     {
         return this.m_jsonRpcActor.InvokeAsync(invokeKey, returnType, invokeOption, parameters);
     }
