@@ -30,7 +30,7 @@ public readonly struct Result<T>
     /// <summary>
     /// 结果代码，用于表示操作的状态。
     /// </summary>
-    private readonly ResultCode m_resultCode;
+    private readonly ResultV4Code m_resultCode;
 
     /// <summary>
     /// 结果值。
@@ -43,7 +43,7 @@ public readonly struct Result<T>
     /// <param name="value">操作的返回值。</param>
     /// <param name="resultCode">结果代码，表示操作的状态。</param>
     /// <param name="message">结果消息，提供操作的描述信息。</param>
-    public Result(T value, ResultCode resultCode, string message)
+    public Result(T value, ResultV4Code resultCode, string message)
     {
         this.m_value = value;
         this.m_resultCode = resultCode;
@@ -55,35 +55,35 @@ public readonly struct Result<T>
     /// </summary>
     /// <param name="code">结果代码，表示操作的状态。</param>
     /// <param name="message">结果消息，提供操作的描述信息。</param>
-    public Result(ResultCode code, string message) : this(default, code, message) { }
+    public Result(ResultV4Code code, string message) : this(default, code, message) { }
 
     /// <summary>
     /// 初始化<see cref="Result{T}"/>结构，使用结果代码的描述作为消息。
     /// </summary>
     /// <param name="code">结果代码，表示操作的状态。</param>
-    public Result(ResultCode code) : this(default, code, code.GetDescription()) { }
+    public Result(ResultV4Code code) : this(default, code, code.GetDescription()) { }
 
     /// <summary>
     /// 初始化<see cref="Result{T}"/>结构，将异常信息作为结果消息。
     /// </summary>
     /// <param name="exception">发生的异常。</param>
-    public Result(Exception exception) : this(default, ResultCode.Exception, exception.Message) { }
+    public Result(Exception exception) : this(default, ResultV4Code.Exception, exception.Message) { }
 
     /// <summary>
     /// 初始化<see cref="Result{T}"/>结构，使用成功作为结果代码和消息。
     /// </summary>
     /// <param name="value">操作的返回值。</param>
-    public Result(T value) : this(value, ResultCode.Success, ResultCode.Success.GetDescription()) { }
+    public Result(T value) : this(value, ResultV4Code.Success, ResultV4Code.Success.GetDescription()) { }
 
     /// <inheritdoc/>
     [MemberNotNullWhen(true, nameof(Value))]
-    public bool IsSuccess => this.ResultCode == ResultCode.Success;
+    public bool IsSuccess => this.ResultCode == ResultV4Code.Success;
 
     /// <inheritdoc/>
     public string Message => this.m_message;
 
     /// <inheritdoc/>
-    public ResultCode ResultCode => this.m_resultCode;
+    public ResultV4Code ResultCode => this.m_resultCode;
 
     /// <summary>
     /// 获取结果值。
@@ -97,7 +97,7 @@ public readonly struct Result<T>
     /// <returns>一个新的<see cref="Result{T}"/>实例，值为提供的值，结果代码和消息为成功。</returns>
     public static implicit operator Result<T>(T value)
     {
-        return value is null ? new Result<T>(ResultCode.Failure, "value is null.") : new Result<T>(value);
+        return value is null ? new Result<T>(ResultV4Code.Failure, "value is null.") : new Result<T>(value);
     }
 
     /// <summary>

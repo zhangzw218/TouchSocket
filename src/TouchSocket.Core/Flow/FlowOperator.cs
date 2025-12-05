@@ -53,7 +53,7 @@ public abstract class FlowOperator
     /// <summary>
     /// 由<see cref="Result"/>的结果，判断是否已结束操作。
     /// </summary>
-    public virtual bool IsEnd => this.Result.ResultCode != ResultCode.Default;
+    public virtual bool IsEnd => this.Result.ResultCode != ResultV4Code.Default;
 
     /// <summary>
     /// 数据源的全部长度。

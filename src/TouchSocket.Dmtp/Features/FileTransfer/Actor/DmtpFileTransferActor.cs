@@ -589,7 +589,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
     #region Id传输
 
     /// <inheritdoc/>
-    public async Task<FinishedResult> FinishedFileResourceInfoAsync(string targetId, FileResourceInfo fileResourceInfo, ResultCode code, Metadata metadata, CancellationToken cancellationToken)
+    public async Task<FinishedResult> FinishedFileResourceInfoAsync(string targetId, FileResourceInfo fileResourceInfo, ResultV4Code code, Metadata metadata, CancellationToken cancellationToken)
     {
         return string.IsNullOrEmpty(targetId)
             ? await this.PrivateFinishedFileResourceInfoAsync(targetId, fileResourceInfo, code, metadata, cancellationToken)
@@ -643,7 +643,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
     #region 传输
 
     /// <inheritdoc/>
-    public Task<FinishedResult> FinishedFileResourceInfoAsync(FileResourceInfo fileResourceInfo, ResultCode code, Metadata metadata, CancellationToken cancellationToken)
+    public Task<FinishedResult> FinishedFileResourceInfoAsync(FileResourceInfo fileResourceInfo, ResultV4Code code, Metadata metadata, CancellationToken cancellationToken)
     {
         return this.PrivateFinishedFileResourceInfoAsync(default, fileResourceInfo, code, metadata, cancellationToken);
     }
@@ -674,7 +674,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
 
     #region Private
 
-    private async Task<FinishedResult> PrivateFinishedFileResourceInfoAsync(string targetId, FileResourceInfo fileResourceInfo, ResultCode code, Metadata metadata, CancellationToken cancellationToken)
+    private async Task<FinishedResult> PrivateFinishedFileResourceInfoAsync(string targetId, FileResourceInfo fileResourceInfo, ResultV4Code code, Metadata metadata, CancellationToken cancellationToken)
     {
         var waitFinishedPackage = new WaitFinishedPackage()
         {
@@ -705,19 +705,19 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                         {
                             case TouchSocketDmtpStatus.Success:
                                 {
-                                    return new FinishedResult(ResultCode.Success, waitFile.ResourceHandle);
+                                    return new FinishedResult(ResultV4Code.Success, waitFile.ResourceHandle);
                                 }
                             case TouchSocketDmtpStatus.ResourceHandleNotFind:
                                 {
-                                    return new FinishedResult(ResultCode.Error, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFile.ResourceHandle), waitFile.ResourceHandle);
+                                    return new FinishedResult(ResultV4Code.Error, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFile.ResourceHandle), waitFile.ResourceHandle);
                                 }
                             case TouchSocketDmtpStatus.HasUnFinished:
                                 {
-                                    return new FinishedResult(ResultCode.Failure, TouchSocketDmtpStatus.HasUnFinished.GetDescription(), waitFile.ResourceHandle);
+                                    return new FinishedResult(ResultV4Code.Failure, TouchSocketDmtpStatus.HasUnFinished.GetDescription(), waitFile.ResourceHandle);
                                 }
                             default:
                                 {
-                                    return new FinishedResult(ResultCode.Error, waitFile.Message, waitFile.ResourceHandle);
+                                    return new FinishedResult(ResultV4Code.Error, waitFile.Message, waitFile.ResourceHandle);
                                 }
                         }
                     }
@@ -840,36 +840,36 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                         {
                             case TouchSocketDmtpStatus.Success:
                                 {
-                                    return new FileSectionResult(ResultCode.Success, waitFile.Value, fileSection);
+                                    return new FileSectionResult(ResultV4Code.Success, waitFile.Value, fileSection);
                                 }
                             case TouchSocketDmtpStatus.ResourceHandleNotFind:
                                 {
-                                    return new FileSectionResult(ResultCode.Error, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFile.FileSection.ResourceHandle), default, fileSection);
+                                    return new FileSectionResult(ResultV4Code.Error, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFile.FileSection.ResourceHandle), default, fileSection);
                                 }
                             case TouchSocketDmtpStatus.ClientNotFind:
                                 {
-                                    return new FileSectionResult(ResultCode.Error, TouchSocketDmtpStatus.ClientNotFind.GetDescription(targetId), default, fileSection);
+                                    return new FileSectionResult(ResultV4Code.Error, TouchSocketDmtpStatus.ClientNotFind.GetDescription(targetId), default, fileSection);
                                 }
                             case TouchSocketDmtpStatus.LengthErrorWhenRead:
                                 {
-                                    return new FileSectionResult(ResultCode.Error, TouchSocketDmtpStatus.LengthErrorWhenRead.GetDescription(), default, fileSection);
+                                    return new FileSectionResult(ResultV4Code.Error, TouchSocketDmtpStatus.LengthErrorWhenRead.GetDescription(), default, fileSection);
                                 }
                             default:
-                                return new FileSectionResult(ResultCode.Exception, waitFile.Message, default, fileSection);
+                                return new FileSectionResult(ResultV4Code.Exception, waitFile.Message, default, fileSection);
                         }
                     }
                 case WaitDataStatus.Overtime:
                     {
-                        return new FileSectionResult(ResultCode.Overtime, default, fileSection);
+                        return new FileSectionResult(ResultV4Code.Overtime, default, fileSection);
                     }
                 case WaitDataStatus.Canceled:
                     {
-                        return new FileSectionResult(ResultCode.Canceled, default, fileSection);
+                        return new FileSectionResult(ResultV4Code.Canceled, default, fileSection);
                     }
                 case WaitDataStatus.Disposed:
                 default:
                     {
-                        return new FileSectionResult(ResultCode.Failure, default, fileSection);
+                        return new FileSectionResult(ResultV4Code.Failure, default, fileSection);
                     }
             }
         }
@@ -922,14 +922,14 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                                 }
                             case TouchSocketDmtpStatus.RemoteRefuse:
                                 {
-                                    return new Result(ResultCode.Error, waitFile.Status.ToStatus().GetDescription(waitFile.Message));
+                                    return new Result(ResultV4Code.Error, waitFile.Status.ToStatus().GetDescription(waitFile.Message));
                                 }
                             case TouchSocketDmtpStatus.ClientNotFind:
                                 {
-                                    return new Result(ResultCode.Error, waitFile.Status.ToStatus().GetDescription(targetId));
+                                    return new Result(ResultV4Code.Error, waitFile.Status.ToStatus().GetDescription(targetId));
                                 }
                             default:
-                                return new Result(ResultCode.Error, waitFile.Message);
+                                return new Result(ResultV4Code.Error, waitFile.Message);
                         }
                     }
                 case WaitDataStatus.Overtime:
@@ -997,11 +997,11 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                             case TouchSocketDmtpStatus.ResourceHandleNotFind:
                                 {
                                     fileSection.Status = FileSectionStatus.Fail;
-                                    return new Result(ResultCode.Error, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFile.FileSection.ResourceHandle));
+                                    return new Result(ResultV4Code.Error, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFile.FileSection.ResourceHandle));
                                 }
                             default:
                                 fileSection.Status = FileSectionStatus.Fail;
-                                return new Result(ResultCode.Error, waitFile.Message);
+                                return new Result(ResultV4Code.Error, waitFile.Message);
                         }
                     }
                 case WaitDataStatus.Overtime:
@@ -1067,7 +1067,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                         else
                         {
                             waitFinishedPackage.Status = TouchSocketDmtpStatus.ResourceHandleNotFind.ToValue();
-                            resultThis = new Result(ResultCode.Failure, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFinishedPackage.ResourceHandle));
+                            resultThis = new Result(ResultV4Code.Failure, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFinishedPackage.ResourceHandle));
                         }
                     }
                     else
@@ -1096,20 +1096,20 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                             {
                                 waitFinishedPackage.Status = TouchSocketDmtpStatus.HasUnFinished.ToValue();
 
-                                resultThis = new Result(ResultCode.Failure, TouchSocketDmtpStatus.HasUnFinished.GetDescription(sections.Length));
+                                resultThis = new Result(ResultV4Code.Failure, TouchSocketDmtpStatus.HasUnFinished.GetDescription(sections.Length));
                             }
                         }
                         else
                         {
                             waitFinishedPackage.Status = TouchSocketDmtpStatus.ResourceHandleNotFind.ToValue();
-                            resultThis = new Result(ResultCode.Failure, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFinishedPackage.ResourceHandle));
+                            resultThis = new Result(ResultV4Code.Failure, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFinishedPackage.ResourceHandle));
                         }
                     }
                 }
                 else
                 {
                     waitFinishedPackage.Status = TouchSocketDmtpStatus.ResourceHandleNotFind.ToValue();
-                    resultThis = new Result(ResultCode.Failure, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFinishedPackage.ResourceHandle));
+                    resultThis = new Result(ResultV4Code.Failure, TouchSocketDmtpStatus.ResourceHandleNotFind.GetDescription(waitFinishedPackage.ResourceHandle));
                 }
             }
             catch (Exception ex)
@@ -1118,7 +1118,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                 waitFinishedPackage.Message = ex.Message;
             }
 
-            var args = new FileTransferredEventArgs(transferType, waitFinishedPackage?.Metadata, resourceInfo?.FileInfo, waitFinishedPackage.Code == ResultCode.Canceled ? Result.Canceled : resultThis)
+            var args = new FileTransferredEventArgs(transferType, waitFinishedPackage?.Metadata, resourceInfo?.FileInfo, waitFinishedPackage.Code == ResultV4Code.Canceled ? Result.Canceled : resultThis)
             {
                 ResourcePath = resourcePath,
                 SavePath = savePath
@@ -1456,7 +1456,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                                 }
                             case TouchSocketDmtpStatus.FileNotExists:
                                 {
-                                    return new PullSmallFileResult(ResultCode.Error, TouchSocketDmtpStatus.FileNotExists.GetDescription(waitFile.Path));
+                                    return new PullSmallFileResult(ResultV4Code.Error, TouchSocketDmtpStatus.FileNotExists.GetDescription(waitFile.Path));
                                 }
                             case TouchSocketDmtpStatus.RemoteRefuse:
                             case TouchSocketDmtpStatus.LengthErrorWhenRead:
@@ -1464,22 +1464,22 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                             case TouchSocketDmtpStatus.ClientNotFind:
                             default:
                                 {
-                                    return new PullSmallFileResult(ResultCode.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(waitFile.Message));
+                                    return new PullSmallFileResult(ResultV4Code.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(waitFile.Message));
                                 }
                         }
                     }
                 case WaitDataStatus.Overtime:
                     {
-                        return new PullSmallFileResult(ResultCode.Overtime);
+                        return new PullSmallFileResult(ResultV4Code.Overtime);
                     }
                 case WaitDataStatus.Canceled:
                     {
-                        return new PullSmallFileResult(ResultCode.Canceled);
+                        return new PullSmallFileResult(ResultV4Code.Canceled);
                     }
                 case WaitDataStatus.Disposed:
                 default:
                     {
-                        return new PullSmallFileResult(ResultCode.Error, TouchSocketDmtpStatus.UnknownError.GetDescription());
+                        return new PullSmallFileResult(ResultV4Code.Error, TouchSocketDmtpStatus.UnknownError.GetDescription());
                     }
             }
         }
@@ -1493,11 +1493,11 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
     {
         if (!File.Exists(fileInfo.FullName))
         {
-            return new Result(ResultCode.Error, TouchSocketDmtpStatus.FileNotExists.GetDescription(fileInfo.FullName));
+            return new Result(ResultV4Code.Error, TouchSocketDmtpStatus.FileNotExists.GetDescription(fileInfo.FullName));
         }
         if (fileInfo.Length > this.MaxSmallFileLength)
         {
-            return new Result(ResultCode.Error, TouchSocketDmtpStatus.FileLengthTooLong.GetDescription());
+            return new Result(ResultV4Code.Error, TouchSocketDmtpStatus.FileLengthTooLong.GetDescription());
         }
         var waitSmallFilePackage = new WaitSmallFilePackage()
         {
@@ -1517,7 +1517,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
             var r = this.FileController.ReadAllBytes(fileInfo, buffer);
             if (r <= 0)
             {
-                return new Result(ResultCode.Error, TouchSocketDmtpStatus.LengthErrorWhenRead.GetDescription());
+                return new Result(ResultV4Code.Error, TouchSocketDmtpStatus.LengthErrorWhenRead.GetDescription());
             }
             waitSmallFilePackage.Data = buffer;
             waitSmallFilePackage.Len = r;
@@ -1541,14 +1541,14 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                                 }
                             case TouchSocketDmtpStatus.RemoteRefuse:
                                 {
-                                    return new Result(ResultCode.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(waitFile.Message));
+                                    return new Result(ResultV4Code.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(waitFile.Message));
                                 }
                             case TouchSocketDmtpStatus.ClientNotFind:
                                 {
-                                    return new Result(ResultCode.Error, TouchSocketDmtpStatus.ClientNotFind.GetDescription());
+                                    return new Result(ResultV4Code.Error, TouchSocketDmtpStatus.ClientNotFind.GetDescription());
                                 }
                             default:
-                                return new Result(ResultCode.Exception, waitFile.Message);
+                                return new Result(ResultV4Code.Exception, waitFile.Message);
                         }
                     }
                 case WaitDataStatus.Overtime:
@@ -1605,7 +1605,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                         if (fileInfo.Length > this.MaxSmallFileLength)
                         {
                             waitSmallFilePackage.Status = TouchSocketDmtpStatus.FileLengthTooLong.ToValue();
-                            resultThis = new Result(ResultCode.Error, TouchSocketDmtpStatus.FileLengthTooLong.GetDescription());
+                            resultThis = new Result(ResultV4Code.Error, TouchSocketDmtpStatus.FileLengthTooLong.GetDescription());
                         }
                         else
                         {
@@ -1620,21 +1620,21 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                             else
                             {
                                 waitSmallFilePackage.Status = TouchSocketDmtpStatus.LengthErrorWhenRead.ToValue();
-                                resultThis = new Result(ResultCode.Error, TouchSocketDmtpStatus.LengthErrorWhenRead.GetDescription());
+                                resultThis = new Result(ResultV4Code.Error, TouchSocketDmtpStatus.LengthErrorWhenRead.GetDescription());
                             }
                         }
                     }
                     else
                     {
                         waitSmallFilePackage.Status = TouchSocketDmtpStatus.FileNotExists.ToValue();
-                        resultThis = new Result(ResultCode.Error, TouchSocketDmtpStatus.FileNotExists.GetDescription(fullPath));
+                        resultThis = new Result(ResultV4Code.Error, TouchSocketDmtpStatus.FileNotExists.GetDescription(fullPath));
                     }
                 }
                 else
                 {
                     waitSmallFilePackage.Status = TouchSocketDmtpStatus.RemoteRefuse.ToValue();
                     waitSmallFilePackage.Message = args.Message;
-                    resultThis = new Result(ResultCode.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(args.Message));
+                    resultThis = new Result(ResultV4Code.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(args.Message));
                 }
             }
             catch (Exception ex)
@@ -1698,7 +1698,7 @@ internal sealed class DmtpFileTransferActor : DisposableObject, IDmtpFileTransfe
                 {
                     waitSmallFilePackage.Status = TouchSocketDmtpStatus.RemoteRefuse.ToValue();
                     waitSmallFilePackage.Message = args.Message;
-                    resultThis = new Result(ResultCode.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(args.Message));
+                    resultThis = new Result(ResultV4Code.Error, TouchSocketDmtpStatus.RemoteRefuse.GetDescription(args.Message));
                 }
             }
             catch (Exception ex)

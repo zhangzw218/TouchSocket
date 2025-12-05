@@ -277,16 +277,16 @@ public static class DmtpActorExtension
     /// </summary>
     /// <param name="channelStatus">当前频道状态</param>
     /// <returns>对应的ResultCode枚举值</returns>
-    public static ResultCode ToResultCode(this ChannelStatus channelStatus)
+    public static ResultV4Code ToResultCode(this ChannelStatus channelStatus)
     {
         // 根据频道状态channelStatus的值，转换为相应的ResultCode
         return channelStatus switch
         {
-            ChannelStatus.Default => ResultCode.Default,
-            ChannelStatus.HoldOn => ResultCode.Default,
-            ChannelStatus.Cancel => ResultCode.Canceled,
-            ChannelStatus.Completed => ResultCode.Success,
-            _ => ResultCode.Error,
+            ChannelStatus.Default => ResultV4Code.Default,
+            ChannelStatus.HoldOn => ResultV4Code.Default,
+            ChannelStatus.Cancel => ResultV4Code.Canceled,
+            ChannelStatus.Completed => ResultV4Code.Success,
+            _ => ResultV4Code.Error,
         };
     }
 }

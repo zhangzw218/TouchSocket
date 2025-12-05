@@ -24,39 +24,39 @@ public record struct Result
     /// <summary>
     /// 成功
     /// </summary>
-    public static readonly Result Success = new Result(ResultCode.Success, TouchSocketCoreResource.OperationSuccessful);
+    public static readonly Result Success = new Result(ResultV4Code.Success, TouchSocketCoreResource.OperationSuccessful);
 
     /// <summary>
     /// 初始状态
     /// </summary>
-    public static readonly Result Default = new Result(ResultCode.Default, TouchSocketCoreResource.Default);
+    public static readonly Result Default = new Result(ResultV4Code.Default, TouchSocketCoreResource.Default);
 
     /// <summary>
     /// 操作对象已被释放
     /// </summary>
-    public static readonly Result Disposed = new Result(ResultCode.Disposed, TouchSocketCoreResource.ObjectDisposed);
+    public static readonly Result Disposed = new Result(ResultV4Code.Disposed, TouchSocketCoreResource.ObjectDisposed);
 
     /// <summary>
     /// 未知失败
     /// </summary>
-    public static readonly Result UnknownFail = new Result(ResultCode.Failure, TouchSocketCoreResource.UnknownError);
+    public static readonly Result UnknownFail = new Result(ResultV4Code.Failure, TouchSocketCoreResource.UnknownError);
 
     /// <summary>
     /// 超时
     /// </summary>
-    public static readonly Result Overtime = new Result(ResultCode.Overtime, TouchSocketCoreResource.OperationOvertime);
+    public static readonly Result Overtime = new Result(ResultV4Code.Overtime, TouchSocketCoreResource.OperationOvertime);
 
     /// <summary>
     /// 取消
     /// </summary>
-    public static readonly Result Canceled = new Result(ResultCode.Canceled, TouchSocketCoreResource.OperationCanceled);
+    public static readonly Result Canceled = new Result(ResultV4Code.Canceled, TouchSocketCoreResource.OperationCanceled);
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="resultCode">结果代码，表示操作的结果</param>
     /// <param name="message">消息，提供操作结果的详细描述</param>
-    public Result(ResultCode resultCode, string message)
+    public Result(ResultV4Code resultCode, string message)
     {
         this.ResultCode = resultCode;
         this.Message = message;
@@ -70,12 +70,12 @@ public record struct Result
     {
         if (typeof(OperationCanceledException) == exception.GetType())
         {
-            this.ResultCode = ResultCode.Canceled;
+            this.ResultCode = ResultV4Code.Canceled;
             this.Message = exception.Message;
         }
         else
         {
-            this.ResultCode = ResultCode.Exception; // 设置结果代码为异常
+            this.ResultCode = ResultV4Code.Exception; // 设置结果代码为异常
             this.Message = exception.Message; // 设置结果消息为异常的详细信息
         }
     }
@@ -84,49 +84,49 @@ public record struct Result
     /// 构造函数
     /// </summary>
     /// <param name="resultCode">结果代码，用于指定结果的状态</param>
-    public Result(ResultCode resultCode)
+    public Result(ResultV4Code resultCode)
     {
         this.ResultCode = resultCode; // 设置结果代码
         this.Message = resultCode.GetDescription(); // 根据结果代码设置相应的描述信息
     }
 
     /// <inheritdoc/>
-    public ResultCode ResultCode { get; private set; }
+    public ResultV4Code ResultCode { get; private set; }
 
     /// <inheritdoc/>
     public string Message { get; private set; }
 
     /// <inheritdoc/>
-    public readonly bool IsSuccess => this.ResultCode == ResultCode.Success;
+    public readonly bool IsSuccess => this.ResultCode == ResultV4Code.Success;
 
     /// <summary>
-    /// 创建来自<see cref="ResultCode.Canceled"/>的<see cref="Result"/>
+    /// 创建来自<see cref="ResultV4Code.Canceled"/>的<see cref="Result"/>
     /// </summary>
     /// <param name="msg">关联的消息</param>
     /// <returns>创建的Result对象</returns>
     public static Result FromCanceled(string msg)
     {
-        return new Result(ResultCode.Canceled, msg);
+        return new Result(ResultV4Code.Canceled, msg);
     }
 
     /// <summary>
-    /// 创建来自<see cref="ResultCode.Error"/>的<see cref="Result"/>
+    /// 创建来自<see cref="ResultV4Code.Error"/>的<see cref="Result"/>
     /// </summary>
     /// <param name="msg">关联的消息</param>
     /// <returns>创建的Result对象</returns>
     public static Result FromError(string msg)
     {
-        return new Result(ResultCode.Error, msg);
+        return new Result(ResultV4Code.Error, msg);
     }
 
     /// <summary>
-    /// 创建来自<see cref="ResultCode.Exception"/>的<see cref="Result"/>
+    /// 创建来自<see cref="ResultV4Code.Exception"/>的<see cref="Result"/>
     /// </summary>
     /// <param name="msg">关联的消息</param>
     /// <returns>创建的Result对象</returns>
     public static Result FromException(string msg)
     {
-        return new Result(ResultCode.Exception, msg);
+        return new Result(ResultV4Code.Exception, msg);
     }
 
     /// <summary>
@@ -141,33 +141,33 @@ public record struct Result
     }
 
     /// <summary>
-    /// 创建来自<see cref="ResultCode.Failure"/>的<see cref="Result"/>
+    /// 创建来自<see cref="ResultV4Code.Failure"/>的<see cref="Result"/>
     /// </summary>
     /// <param name="msg">关联的消息</param>
     /// <returns>创建的Result对象</returns>
     public static Result FromFail(string msg)
     {
-        return new Result(ResultCode.Failure, msg);
+        return new Result(ResultV4Code.Failure, msg);
     }
 
     /// <summary>
-    /// 创建来自<see cref="ResultCode.Overtime"/>的<see cref="Result"/>
+    /// 创建来自<see cref="ResultV4Code.Overtime"/>的<see cref="Result"/>
     /// </summary>
     /// <param name="msg">关联的消息</param>
     /// <returns>创建的Result对象</returns>
     public static Result FromOvertime(string msg)
     {
-        return new Result(ResultCode.Overtime, msg);
+        return new Result(ResultV4Code.Overtime, msg);
     }
 
     /// <summary>
-    /// 创建来自<see cref="ResultCode.Success"/>的<see cref="Result"/>
+    /// 创建来自<see cref="ResultV4Code.Success"/>的<see cref="Result"/>
     /// </summary>
     /// <param name="msg">关联的消息</param>
     /// <returns>创建的Result对象</returns>
     public static Result FromSuccess(string msg)
     {
-        return new Result(ResultCode.Success, msg);
+        return new Result(ResultV4Code.Success, msg);
     }
 
     /// <inheritdoc/>

@@ -176,7 +176,7 @@ public sealed class TimeoutTokenSource : DisposableObject
     /// </remarks>
     public Result CheckCancellationResult(Result result)
     {
-        if (result.ResultCode == ResultCode.Canceled)
+        if (result.ResultCode == ResultV4Code.Canceled)
         {
             if (this.m_timeoutCts.Token.IsCancellationRequested && !this.m_originalToken.IsCancellationRequested)
             {

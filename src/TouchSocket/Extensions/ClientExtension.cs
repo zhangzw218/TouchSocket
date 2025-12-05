@@ -261,12 +261,12 @@ public static class ClientExtension
         try
         {
             await client.ConnectAsync(millisecondsTimeout).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
-            return new Result(ResultCode.Success);
+            return new Result(ResultV4Code.Success);
         }
         // 捕获连接过程中可能抛出的任何异常
         catch (Exception ex)
         {
-            return new Result(ResultCode.Exception, ex.Message);
+            return new Result(ResultV4Code.Exception, ex.Message);
         }
     }
 
@@ -283,12 +283,12 @@ public static class ClientExtension
         {
             // 尝试连接操作，如果超时或发生其他异常，将捕获异常并返回相应的结果。
             await client.ConnectAsync(millisecondsTimeout).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
-            return new Result(ResultCode.Success);
+            return new Result(ResultV4Code.Success);
         }
         catch (Exception ex)
         {
             // 当连接过程中抛出异常时，返回包含异常信息的结果对象。
-            return new Result(ResultCode.Exception, ex.Message);
+            return new Result(ResultV4Code.Exception, ex.Message);
         }
     }
 
@@ -345,12 +345,12 @@ public static class ClientExtension
             // 使用异步方法进行连接，并直接等待结果。这里使用了GetFalseAwaitResult方法来避免捕获到异常。
             client.ConnectAsync(millisecondsTimeout).GetFalseAwaitResult();
             // 连接成功，返回一个新的Result对象，表示成功。
-            return new Result(ResultCode.Success);
+            return new Result(ResultV4Code.Success);
         }
         catch (Exception ex)
         {
             // 捕获到异常，返回一个新的Result对象，包含异常信息。
-            return new Result(ResultCode.Exception, ex.Message);
+            return new Result(ResultV4Code.Exception, ex.Message);
         }
     }
 
@@ -372,12 +372,12 @@ public static class ClientExtension
             // 使用异步方法进行连接，但以同步方式等待结果。这里使用自定义扩展方法<see cref="GetFalseAwaitResult()"/>来模拟同步执行。
             client.ConnectAsync(millisecondsTimeout).GetFalseAwaitResult();
             // 连接成功，返回成功结果。
-            return new Result(ResultCode.Success);
+            return new Result(ResultV4Code.Success);
         }
         catch (Exception ex)
         {
             // 捕获到异常，返回包含异常信息的结果。
-            return new Result(ResultCode.Exception, ex.Message);
+            return new Result(ResultV4Code.Exception, ex.Message);
         }
     }
 

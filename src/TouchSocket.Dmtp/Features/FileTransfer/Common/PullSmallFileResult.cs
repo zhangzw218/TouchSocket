@@ -22,7 +22,7 @@ public class PullSmallFileResult : ResultBase
     /// </summary>
     /// <param name="resultCode">结果代码，表示操作的执行结果。</param>
     /// <param name="message">伴随结果的详细信息或错误消息。</param>
-    public PullSmallFileResult(ResultCode resultCode, string message) : base(resultCode, message)
+    public PullSmallFileResult(ResultV4Code resultCode, string message) : base(resultCode, message)
     {
     }
 
@@ -31,7 +31,7 @@ public class PullSmallFileResult : ResultBase
     /// 该构造函数用于创建一个表示文件拉取结果的实例，特别针对小型文件。
     /// </summary>
     /// <param name="bytes">byte数组，包含被拉取文件的内容。</param>
-    public PullSmallFileResult(byte[] bytes) : base(ResultCode.Success)
+    public PullSmallFileResult(byte[] bytes) : base(ResultV4Code.Success)
     {
         this.Value = bytes;
     }
@@ -40,7 +40,7 @@ public class PullSmallFileResult : ResultBase
     /// 此构造函数用于为PullSmallFileResult对象设置初始的状态码。
     /// </summary>
     /// <param name="resultCode">结果码，用于指示文件拉取操作的结果。</param>
-    public PullSmallFileResult(ResultCode resultCode) : base(resultCode)
+    public PullSmallFileResult(ResultV4Code resultCode) : base(resultCode)
     {
     }
 

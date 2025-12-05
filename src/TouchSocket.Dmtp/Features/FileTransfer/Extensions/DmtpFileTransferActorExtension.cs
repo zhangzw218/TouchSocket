@@ -84,7 +84,7 @@ public static class DmtpFileTransferActorExtension
     {
         if (fileOperator is null)
         {
-            return fileOperator.SetResult(new Result(ResultCode.Error, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(fileOperator))));
+            return fileOperator.SetResult(new Result(ResultV4Code.Error, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(fileOperator))));
         }
         if (fileOperator.IsEnd)
         {
@@ -162,7 +162,7 @@ public static class DmtpFileTransferActorExtension
                              else
                              {
                                  failResult = new Result(result.ResultCode, result.Message);
-                                 if (result.ResultCode == ResultCode.Canceled)
+                                 if (result.ResultCode == ResultV4Code.Canceled)
                                  {
                                      return;
                                  }
@@ -184,14 +184,14 @@ public static class DmtpFileTransferActorExtension
             {
                 if (actor.DmtpActor.Online)
                 {
-                    await actor.FinishedFileResourceInfoAsync(targetId, resourceInfo, ResultCode.Canceled, fileOperator.Metadata, fileOperator.Token).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                    await actor.FinishedFileResourceInfoAsync(targetId, resourceInfo, ResultV4Code.Canceled, fileOperator.Metadata, fileOperator.Token).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
                 }
                 return fileOperator.SetResult(Result.Canceled);
             }
             var result1 = locator.TryFinished();
             if (actor.DmtpActor.Online)
             {
-                await actor.FinishedFileResourceInfoAsync(targetId, resourceInfo, ResultCode.Success, fileOperator.Metadata, fileOperator.Token).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                await actor.FinishedFileResourceInfoAsync(targetId, resourceInfo, ResultV4Code.Success, fileOperator.Metadata, fileOperator.Token).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
             }
 
             return result1.IsSuccess ? fileOperator.SetResult(Result.Success) : fileOperator.SetResult(failResult);
@@ -227,7 +227,7 @@ public static class DmtpFileTransferActorExtension
     {
         if (fileOperator is null)
         {
-            return fileOperator.SetResult(new Result(ResultCode.Error, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(fileOperator))));
+            return fileOperator.SetResult(new Result(ResultV4Code.Error, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(fileOperator))));
         }
         if (fileOperator.IsEnd)
         {
@@ -287,7 +287,7 @@ public static class DmtpFileTransferActorExtension
                         else
                         {
                             failResult = new Result(result.ResultCode, result.Message);
-                            if (result.ResultCode == ResultCode.Canceled)
+                            if (result.ResultCode == ResultV4Code.Canceled)
                             {
                                 return;
                             }
@@ -307,12 +307,12 @@ public static class DmtpFileTransferActorExtension
 
             if (fileOperator.Token.IsCancellationRequested)
             {
-                await actor.FinishedFileResourceInfoAsync(targetId, fileOperator.ResourceInfo, ResultCode.Canceled, fileOperator.Metadata, fileOperator.Token);
+                await actor.FinishedFileResourceInfoAsync(targetId, fileOperator.ResourceInfo, ResultV4Code.Canceled, fileOperator.Metadata, fileOperator.Token);
                 return fileOperator.SetResult(Result.Canceled);
             }
             else
             {
-                var res = await actor.FinishedFileResourceInfoAsync(targetId, fileOperator.ResourceInfo, ResultCode.Success, fileOperator.Metadata, fileOperator.Token);
+                var res = await actor.FinishedFileResourceInfoAsync(targetId, fileOperator.ResourceInfo, ResultV4Code.Success, fileOperator.Metadata, fileOperator.Token);
                 return fileOperator.SetResult(new Result(res.ResultCode, res.Message));
             }
         }

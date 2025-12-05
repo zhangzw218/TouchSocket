@@ -14,7 +14,7 @@ namespace TouchV4Socket.Dmtp.FileTransfer;
 
 internal class WaitFinishedPackage : WaitRouterPackage
 {
-    public ResultCode Code { get; set; }
+    public ResultV4Code Code { get; set; }
     public Metadata Metadata { get; set; }
     public int ResourceHandle { get; set; }
 
@@ -47,6 +47,6 @@ internal class WaitFinishedPackage : WaitRouterPackage
             this.Metadata = new Metadata();
             this.Metadata.Unpackage(ref reader);
         }
-        this.Code = (ResultCode)ReaderExtension.ReadValue<TReader, byte>(ref reader);
+        this.Code = (ResultV4Code)ReaderExtension.ReadValue<TReader, byte>(ref reader);
     }
 }

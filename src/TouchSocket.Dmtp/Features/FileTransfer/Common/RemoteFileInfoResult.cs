@@ -23,7 +23,7 @@ public struct RemoteFileInfoResult
     /// <param name="fileInfo">远程文件信息</param>
     /// <param name="resultCode">操作结果代码</param>
     /// <param name="message">结果描述信息</param>
-    public RemoteFileInfoResult(RemoteFileInfo fileInfo, ResultCode resultCode, string message)
+    public RemoteFileInfoResult(RemoteFileInfo fileInfo, ResultV4Code resultCode, string message)
     {
         this.FileInfo = fileInfo;
         this.ResultCode = resultCode;
@@ -36,11 +36,11 @@ public struct RemoteFileInfoResult
     public RemoteFileInfo FileInfo { get; private set; }
 
     /// <inheritdoc/>
-    public ResultCode ResultCode { get; private set; }
+    public ResultV4Code ResultCode { get; private set; }
 
     /// <inheritdoc/>
     public string Message { get; private set; }
 
     /// <inheritdoc/>
-    public bool IsSuccess => this.ResultCode == ResultCode.Success;
+    public bool IsSuccess => this.ResultCode == ResultV4Code.Success;
 }

@@ -23,7 +23,7 @@ public class FileSectionResult : ResultBase, IDisposable
     /// <param name="resultCode">结果代码，表示操作的执行情况。</param>
     /// <param name="value">字节块数据，表示处理的结果值。</param>
     /// <param name="fileSection">文件段信息，表示操作涉及的文件段。</param>
-    public FileSectionResult(ResultCode resultCode, ByteBlockV4 value, FileSection fileSection) : base(resultCode)
+    public FileSectionResult(ResultV4Code resultCode, ByteBlockV4 value, FileSection fileSection) : base(resultCode)
     {
         this.Value = value;
         this.FileSection = fileSection;
@@ -36,7 +36,7 @@ public class FileSectionResult : ResultBase, IDisposable
     /// <param name="message">错误消息，提供操作失败的详细信息。</param>
     /// <param name="value">字节块数据，表示处理的结果值。</param>
     /// <param name="fileSection">文件段信息，表示操作涉及的文件段。</param>
-    public FileSectionResult(ResultCode resultCode, string message, ByteBlockV4 value, FileSection fileSection) : base(resultCode, message)
+    public FileSectionResult(ResultV4Code resultCode, string message, ByteBlockV4 value, FileSection fileSection) : base(resultCode, message)
     {
         this.Value = value;
         this.FileSection = fileSection;

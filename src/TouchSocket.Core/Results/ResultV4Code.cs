@@ -15,7 +15,7 @@ namespace TouchV4Socket.Core;
 /// <summary>
 /// 结果类型
 /// </summary>
-public enum ResultCode : byte
+public enum ResultV4Code : byte
 {
     /// <summary>
     /// 默认，表示没有特定的结果状态

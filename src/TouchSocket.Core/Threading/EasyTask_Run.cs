@@ -84,7 +84,7 @@ public static partial class EasyTask
     {
         if (func is null)
         {
-            return new Result<TResult>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
+            return new Result<TResult>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
         }
 
         try
@@ -109,12 +109,12 @@ public static partial class EasyTask
     {
         if (func is null)
         {
-            return new Result<TResult>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
+            return new Result<TResult>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
         }
 
         if (ct.IsCancellationRequested)
         {
-            return new Result<TResult>(ResultCode.Canceled, Result.Canceled.Message);
+            return new Result<TResult>(ResultV4Code.Canceled, Result.Canceled.Message);
         }
 
         try
@@ -124,7 +124,7 @@ public static partial class EasyTask
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
-            return new Result<TResult>(ResultCode.Canceled, Result.Canceled.Message);
+            return new Result<TResult>(ResultV4Code.Canceled, Result.Canceled.Message);
         }
         catch (Exception ex)
         {
@@ -204,7 +204,7 @@ public static partial class EasyTask
     {
         if (func is null)
         {
-            return new Result<TResult>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
+            return new Result<TResult>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
         }
 
         try
@@ -231,12 +231,12 @@ public static partial class EasyTask
     {
         if (func is null)
         {
-            return new Result<TResult>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
+            return new Result<TResult>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
         }
 
         if (ct.IsCancellationRequested)
         {
-            return new Result<TResult>(ResultCode.Canceled, Result.Canceled.Message);
+            return new Result<TResult>(ResultV4Code.Canceled, Result.Canceled.Message);
         }
 
         try
@@ -246,7 +246,7 @@ public static partial class EasyTask
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
-            return new Result<TResult>(ResultCode.Canceled, Result.Canceled.Message);
+            return new Result<TResult>(ResultV4Code.Canceled, Result.Canceled.Message);
         }
         catch (Exception ex)
         {
@@ -332,7 +332,7 @@ public static partial class EasyTask
     {
         if (func is null)
         {
-            return new Result<TResult>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
+            return new Result<TResult>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
         }
 
         try
@@ -361,12 +361,12 @@ public static partial class EasyTask
     {
         if (func is null)
         {
-            return new Result<TResult>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
+            return new Result<TResult>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(func)));
         }
 
         if (ct.IsCancellationRequested)
         {
-            return new Result<TResult>(ResultCode.Canceled, Result.Canceled.Message);
+            return new Result<TResult>(ResultV4Code.Canceled, Result.Canceled.Message);
         }
 
         try
@@ -376,7 +376,7 @@ public static partial class EasyTask
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
-            return new Result<TResult>(ResultCode.Canceled, Result.Canceled.Message);
+            return new Result<TResult>(ResultV4Code.Canceled, Result.Canceled.Message);
         }
         catch (Exception ex)
         {
@@ -419,7 +419,7 @@ public static partial class EasyTask
     {
         if (task is null)
         {
-            return new Result<T>(ResultCode.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(task)));
+            return new Result<T>(ResultV4Code.Failure, TouchSocketCoreResource.ArgumentIsNull.Format(nameof(task)));
         }
 
         try

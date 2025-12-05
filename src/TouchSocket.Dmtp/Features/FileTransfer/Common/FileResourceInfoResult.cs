@@ -39,7 +39,7 @@ public class FileResourceInfoResult : ResultBase
     /// </summary>
     /// <param name="message">错误消息</param>
     /// <param name="code">结果代码</param>
-    public FileResourceInfoResult(string message, ResultCode code = ResultCode.Error) : base(code, message)
+    public FileResourceInfoResult(string message, ResultV4Code code = ResultV4Code.Error) : base(code, message)
     {
     }
 

@@ -22,7 +22,7 @@ public class ResultBase
     /// </summary>
     /// <param name="resultCode">结果代码，表示操作的结果。</param>
     /// <param name="message">消息，提供有关操作结果的详细信息。</param>
-    public ResultBase(ResultCode resultCode, string message)
+    public ResultBase(ResultV4Code resultCode, string message)
     {
         this.ResultCode = resultCode;
         this.Message = message;
@@ -32,7 +32,7 @@ public class ResultBase
     /// 初始化 ResultBase 类的新实例。
     /// </summary>
     /// <param name="resultCode">结果代码，表示操作的结果。</param>
-    public ResultBase(ResultCode resultCode)
+    public ResultBase(ResultV4Code resultCode)
     {
         // 将传入的结果代码赋值给类的 ResultCode 属性。
         this.ResultCode = resultCode;
@@ -62,11 +62,11 @@ public class ResultBase
     }
 
     /// <inheritdoc/>
-    public bool IsSuccess => this.ResultCode == ResultCode.Success;
+    public bool IsSuccess => this.ResultCode == ResultV4Code.Success;
 
     /// <inheritdoc/>
     public string Message { get; protected set; }
 
     /// <inheritdoc/>
-    public ResultCode ResultCode { get; protected set; }
+    public ResultV4Code ResultCode { get; protected set; }
 }

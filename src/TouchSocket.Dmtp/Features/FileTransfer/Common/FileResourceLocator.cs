@@ -144,19 +144,19 @@ public class FileResourceLocator : DisposableObject
             // 检查文件访问权限，确保是读权限。
             if (this.FileAccess != FileAccess.Read)
             {
-                return new FileSectionResult(ResultCode.Error, "该定位器是只写的。", default, fileSection);
+                return new FileSectionResult(ResultV4Code.Error, "该定位器是只写的。", default, fileSection);
             }
             // 检查文件块索引是否超出范围。
             if (fileSection.Index >= this.FileResourceInfo.FileSections.Length)
             {
-                return new FileSectionResult(ResultCode.Error, "实际数据块索引超出，可能写入的文件已经发生变化。", default, fileSection);
+                return new FileSectionResult(ResultV4Code.Error, "实际数据块索引超出，可能写入的文件已经发生变化。", default, fileSection);
             }
             // 获取指定索引的旧文件块信息，以验证文件块的一致性。
             var oldFileSection = this.FileResourceInfo.FileSections[fileSection.Index];
             // 验证传入的文件块与现有的文件块是否一致。
             if (oldFileSection != fileSection)
             {
-                return new FileSectionResult(ResultCode.Error, "数据块不一致。", default, fileSection);
+                return new FileSectionResult(ResultV4Code.Error, "数据块不一致。", default, fileSection);
             }
             // 创建一个与文件块长度相同的字节块，用于存储读取的数据。
             var bufferByteBlock = new ByteBlockV4(fileSection.Length);
@@ -165,20 +165,20 @@ public class FileResourceLocator : DisposableObject
             // 验证读取的长度是否与预期一致。
             if (r != fileSection.Length)
             {
-                return new FileSectionResult(ResultCode.Error, "读取长度不一致。", default, fileSection);
+                return new FileSectionResult(ResultV4Code.Error, "读取长度不一致。", default, fileSection);
             }
             else
             {
                 // 调整字节块的实际长度以匹配读取的长度。
                 bufferByteBlock.SetLength(r);
                 // 返回成功的结果，包含读取的字节块。
-                return new FileSectionResult(ResultCode.Success, bufferByteBlock, fileSection);
+                return new FileSectionResult(ResultV4Code.Success, bufferByteBlock, fileSection);
             }
         }
         catch (Exception ex)
         {
             // 捕获并处理任何异常，返回异常信息。
-            return new FileSectionResult(ResultCode.Exception, ex.Message, default, fileSection);
+            return new FileSectionResult(ResultV4Code.Exception, ex.Message, default, fileSection);
         }
     }
 
@@ -221,13 +221,13 @@ public class FileResourceLocator : DisposableObject
             // 检查是否有未完成的文件块
             if (this.GetUnfinishedFileSection().Length > 0)
             {
-                return new Result(ResultCode.Failure, "还有文件块没有完成。");
+                return new Result(ResultV4Code.Failure, "还有文件块没有完成。");
             }
 
             // 确保文件长度一致
             if (this.FileStorage.Length != this.FileResourceInfo.FileInfo.Length)
             {
-                return new Result(ResultCode.Failure, "文件长度不一致。");
+                return new Result(ResultV4Code.Failure, "文件长度不一致。");
             }
 
             this.FileStorage.Dispose();
@@ -266,14 +266,14 @@ public class FileResourceLocator : DisposableObject
         // 检查当前文件访问模式是否为写，确保操作的正确性
         if (this.FileAccess != FileAccess.Write)
         {
-            return new Result(ResultCode.Error, "该定位器是只读的。");
+            return new Result(ResultV4Code.Error, "该定位器是只读的。");
         }
 
         // 验证文件块索引是否超出文件资源信息的范围
         if (fileSection.Index >= this.FileResourceInfo.FileSections.Length)
         {
             fileSection.Status = FileSectionStatus.Fail;
-            return new Result(ResultCode.Error, "实际数据块索引超出，可能写入的文件已经发生变化。");
+            return new Result(ResultV4Code.Error, "实际数据块索引超出，可能写入的文件已经发生变化。");
         }
 
         // 获取对应索引处的源文件块信息
@@ -283,13 +283,13 @@ public class FileResourceLocator : DisposableObject
         if (value.Count != fileSection.Length)
         {
             fileSection.Status = FileSectionStatus.Fail;
-            return new Result(ResultCode.Error, "实际数据长度与期望长度不一致。");
+            return new Result(ResultV4Code.Error, "实际数据长度与期望长度不一致。");
         }
 
         // 比较传入的文件块信息与源文件块是否一致，确保数据的一致性
         if (!srcFileSection.Equals(fileSection))
         {
-            return new Result(ResultCode.Error, "数据块不一致。");
+            return new Result(ResultV4Code.Error, "数据块不一致。");
         }
 
         // 实际写入文件操作
@@ -319,7 +319,7 @@ public class FileResourceLocator : DisposableObject
         // 检查文件访问权限是否为写，如果是读-only，则返回错误结果
         if (this.FileAccess != FileAccess.Write)
         {
-            return new Result(ResultCode.Error, "该定位器是只读的。");
+            return new Result(ResultV4Code.Error, "该定位器是只读的。");
         }
         else
         {

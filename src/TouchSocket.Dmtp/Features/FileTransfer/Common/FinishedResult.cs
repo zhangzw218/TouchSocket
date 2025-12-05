@@ -23,7 +23,7 @@ public class FinishedResult : ResultBase
     /// <param name="resultCode">结果代码，表示失败的类型</param>
     /// <param name="message">错误消息，提供失败的详细信息</param>
     /// <param name="resourceHandle">资源句柄，标识与失败请求相关的资源</param>
-    public FinishedResult(ResultCode resultCode, string message, int resourceHandle) : base(resultCode, message)
+    public FinishedResult(ResultV4Code resultCode, string message, int resourceHandle) : base(resultCode, message)
     {
         this.ResourceHandle = resourceHandle;
     }
@@ -33,7 +33,7 @@ public class FinishedResult : ResultBase
     /// </summary>
     /// <param name="resultCode">结果代码，表示请求处理的结果</param>
     /// <param name="resourceHandle">资源句柄，用于标识处理的资源</param>
-    public FinishedResult(ResultCode resultCode, int resourceHandle) : base(resultCode)
+    public FinishedResult(ResultV4Code resultCode, int resourceHandle) : base(resultCode)
     {
         this.ResourceHandle = resourceHandle;
     }
