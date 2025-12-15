@@ -10,11 +10,17 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using DmtpRpcClientConsoleApp;
 using MemoryPack;
+using Newtonsoft.Json.Linq;
 using RpcProxy;
+using System.Data;
+using System.Net.Sockets;
+using System.Reflection;
 using TouchSocket.Core;
 using TouchSocket.Dmtp;
 using TouchSocket.Dmtp.Rpc;
+using TouchSocket.Resources;
 using TouchSocket.Rpc;
 using TouchSocket.Sockets;
 
@@ -110,12 +116,31 @@ internal class Program
     {
         var client = await GetTcpDmtpClient();
 
+        var i = 0;
+        while (true)
+        {
+            try
+            {
+                await RunInvokeTLoopAsync(client);
+                await Task.Delay(5000);
+            }
+            catch(Exception ex)
+            {
+                var result = await client.TryConnectAsync();
+
+                Console.WriteLine($"{DateTime.Now} {result.Message} {ex.Message}");
+            }
+        }
+    }
+
+    private static async Task RunInvokeTLoopAsync(TcpDmtpClient client)
+    {
         #region DmtpRpc直接调用
         //设置调用配置
         using var cts = new CancellationTokenSource(5000);//可取消令箭源，可用于取消Rpc的调用
         var invokeOption = new DmtpInvokeOption()//调用配置
         {
-            FeedbackType = FeedbackType.WaitInvoke,//调用反馈类型
+            FeedbackType = FeedbackType.WaitSend,//调用反馈类型
             SerializationType = SerializationType.FastBinary,//序列化类型
             Token = cts.Token//配置可取消令箭
         };
@@ -123,10 +148,9 @@ internal class Program
         var rpcActor = client.GetDmtpRpcActor();
 
         //调用Add方法
-        var sum = await rpcActor.InvokeTAsync<int>("Add", invokeOption, 10, 20);
-        client.Logger.Info($"调用Add方法成功，结果：{sum}");
+        await rpcActor.InvokeTAsync<int>("Add", invokeOption, 10, 20);
+        client.Logger.Info($"调用Add方法成功");
         #endregion
-
     }
 
     private static async Task RunInvokeWithProxy()
@@ -246,6 +270,15 @@ internal class Program
                  a.UseDmtpRpc(options =>
                  {
                      options.SetCreateDmtpRpcActor((actor, serverprovider, dispatcher) => new MyDmtpRpcActor(actor, serverprovider, dispatcher));
+                 });
+                 a.UseReconnection<TcpDmtpClient>(options =>
+                 {
+                     options.PollingInterval = TimeSpan.FromSeconds(5);
+                     options.UseDmtpCheckAction();
+                     options.UseCustom(async (client, cancellationToken) =>
+                     {
+                         await options.DefaultConnectAction().Invoke(client, cancellationToken);
+                     });
                  });
              })
              .SetRemoteIPHost("127.0.0.1:7789")
