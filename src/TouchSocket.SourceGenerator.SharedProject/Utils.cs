@@ -644,9 +644,14 @@ internal abstract class CodeBuilder
     {
         get
         {
+            yield return "#if TouchV4SocketCoreAliases";
+            yield return "extern alias TouchV4SocketCore;";
+            yield return "using TouchV4SocketCore::TouchV4Socket.Core;";
+            yield return "#else";
+            yield return "using TouchV4Socket.Core;";
+            yield return "#endif";
             yield return "using System;";
             yield return "using System.Diagnostics;";
-            yield return "using TouchV4Socket.Core;";
             yield return "using System.Threading;";
             yield return "using System.Collections.Generic;";
             yield return "using System.Threading.Tasks;";

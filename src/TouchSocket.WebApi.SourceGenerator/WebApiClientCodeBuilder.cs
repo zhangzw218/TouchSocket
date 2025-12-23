@@ -38,14 +38,29 @@ internal sealed class WebApiClientCodeBuilder : RpcClientCodeBuilder
     {
         get
         {
-            yield return "using System;";
-            yield return "using System.Diagnostics;";
+            yield return "#if TouchV4SocketCoreAliases";
+            yield return "extern alias TouchV4SocketCore;";
+            yield return "extern alias TouchV4Socket;";
+            yield return "extern alias TouchV4SocketSockets;";
+            yield return "extern alias TouchV4SocketRpc;";
+            yield return "extern alias TouchV4SocketHttp;";
+            yield return "extern alias TouchV4SocketWebApi;";
+            yield return "using TouchV4SocketCore::TouchV4Socket.Core;";
+            yield return "using TouchV4Socket::TouchV4Socket.Core;";
+            yield return "using TouchV4SocketSockets::TouchV4Socket.Sockets;";
+            yield return "using TouchV4SocketRpc::TouchV4Socket.Rpc;";
+            yield return "using TouchV4SocketHttp::TouchV4Socket.Http;";
+            yield return "using TouchV4SocketWebApi::TouchV4Socket.WebApi;";
+            yield return "#else";
             yield return "using TouchV4Socket.Core;";
             yield return "using TouchV4Socket.Sockets;";
             yield return "using TouchV4Socket.Rpc;";
-            yield return "using System.Threading.Tasks;";
             yield return "using TouchV4Socket.Http;";
             yield return "using TouchV4Socket.WebApi;";
+            yield return "#endif";
+            yield return "using System;";
+            yield return "using System.Diagnostics;";
+            yield return "using System.Threading.Tasks;";
             yield return "using System.Collections.Generic;";
         }
     }
