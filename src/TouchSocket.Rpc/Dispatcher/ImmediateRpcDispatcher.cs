@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 /// <summary>
 /// 立即执行RPC调度器类，用于同步执行RPC调用。

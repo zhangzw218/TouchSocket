@@ -12,7 +12,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 /// <summary>
 /// 提供用于创建 <see cref="ReadOnlySpan{T}"/> 和 <see cref="Span{T}"/> 的辅助方法。
 /// </summary>

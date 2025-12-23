@@ -12,7 +12,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 序列化转换器接口。

@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.IO.Pipelines;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 继承自HttpContent的类，用于将Stream数据转换为可发送的HTTP内容。

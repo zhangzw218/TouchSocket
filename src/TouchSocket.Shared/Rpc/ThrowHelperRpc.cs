@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Runtime.CompilerServices;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 internal static partial class ThrowHelper
 {

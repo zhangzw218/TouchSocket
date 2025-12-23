@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 /// <summary>
 /// 提供命名管道插件管理器的扩展方法。
 /// </summary>

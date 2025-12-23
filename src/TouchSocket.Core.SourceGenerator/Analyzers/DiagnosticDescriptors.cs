@@ -12,7 +12,7 @@
 
 using Microsoft.CodeAnalysis;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal static class DiagnosticDescriptors
 {

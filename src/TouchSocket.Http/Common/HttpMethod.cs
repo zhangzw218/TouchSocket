@@ -12,7 +12,7 @@
 
 using System.Diagnostics;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// HttpMethod

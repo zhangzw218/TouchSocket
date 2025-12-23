@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.IO.Compression;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 public static partial class HttpExtensions
 {

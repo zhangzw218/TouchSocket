@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个字段的封装。

@@ -12,7 +12,7 @@
 
 using System.IO.Pipes;
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 internal sealed class NamedPipeTransport : StreamTransport
 {

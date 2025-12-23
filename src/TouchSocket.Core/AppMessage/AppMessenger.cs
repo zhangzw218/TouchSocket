@@ -12,7 +12,7 @@
 
 using System.Collections.Concurrent;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 消息通知类。内部使用弱引用保存订阅者，避免强引用导致的内存泄漏。

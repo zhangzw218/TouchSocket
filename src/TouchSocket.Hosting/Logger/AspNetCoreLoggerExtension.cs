@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Hosting;
+using TouchV4Socket.Hosting;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 为 Registrator 提供扩展方法，使其能够注册 AspNetCoreLogger。

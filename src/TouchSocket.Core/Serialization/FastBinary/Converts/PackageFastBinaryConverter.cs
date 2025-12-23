@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 提供用于处理TPackage类型的快速二进制转换器。

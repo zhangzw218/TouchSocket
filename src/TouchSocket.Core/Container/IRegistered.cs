@@ -12,7 +12,7 @@
 
 using System;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// IRegistered 接口定义了用于检查类型是否已注册的方法

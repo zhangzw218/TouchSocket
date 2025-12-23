@@ -14,7 +14,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 internal class DiagnosticSuppressor : Microsoft.CodeAnalysis.Diagnostics.DiagnosticSuppressor

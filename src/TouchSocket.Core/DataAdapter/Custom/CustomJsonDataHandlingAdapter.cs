@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示 JSON 包的类型。

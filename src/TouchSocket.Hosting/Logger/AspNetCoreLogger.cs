@@ -13,7 +13,7 @@
 using Microsoft.Extensions.Logging;
 using LogLevel = TouchSocket.Core.LogLevel;
 
-namespace TouchSocket.Hosting;
+namespace TouchV4Socket.Hosting;
 
 internal class AspNetCoreLogger : LoggerBase
 {

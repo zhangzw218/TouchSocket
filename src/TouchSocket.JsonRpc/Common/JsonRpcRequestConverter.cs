@@ -13,7 +13,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace TouchSocket.JsonRpc;
+namespace TouchV4Socket.JsonRpc;
 
 internal class JsonRpcRequestConverter : JsonConverter
 {

@@ -12,7 +12,7 @@
 
 using System.IO.Pipelines;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 传输读取器接口，提供管道读取器和读取锁定器

@@ -18,9 +18,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using TouchSocket.SourceGenerator;
+using TouchV4Socket.SourceGenerator;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [Generator]
 public class PluginAddSourceGenerator : IIncrementalGenerator

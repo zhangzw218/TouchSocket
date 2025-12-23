@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.Net.WebSockets;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// WebSocket客户端扩展

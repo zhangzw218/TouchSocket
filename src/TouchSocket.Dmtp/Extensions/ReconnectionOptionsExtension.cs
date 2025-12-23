@@ -10,9 +10,9 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// 重连选项扩展类，提供DMTP协议特定的检活策略配置

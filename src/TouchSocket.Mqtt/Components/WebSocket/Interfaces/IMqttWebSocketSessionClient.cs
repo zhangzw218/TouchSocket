@@ -15,9 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TouchSocket.Http;
+using TouchV4Socket.Http;
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 public interface IMqttWebSocketSessionClient : IMqttSessionClient
 {

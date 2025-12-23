@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 /// <summary>
 /// 定义了一个接口，用于通过命名管道进行流式通信。

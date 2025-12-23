@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 /// <summary>
 /// 定义一个接口，用于处理Web API响应后的操作

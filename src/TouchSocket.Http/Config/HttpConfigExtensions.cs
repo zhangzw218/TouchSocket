@@ -12,7 +12,7 @@
 
 using System.Net;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// <see cref="TouchSocketConfig"/>的Http扩展配置。

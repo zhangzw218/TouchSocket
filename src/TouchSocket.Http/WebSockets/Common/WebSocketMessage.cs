@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// WebSocket消息结构体，实现了IDisposable接口，用于处理WebSocket消息的生命周期。

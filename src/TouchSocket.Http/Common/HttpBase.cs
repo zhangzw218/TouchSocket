@@ -14,9 +14,9 @@ using System.Buffers;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// Http基础头部

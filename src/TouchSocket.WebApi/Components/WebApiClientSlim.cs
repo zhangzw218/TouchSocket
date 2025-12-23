@@ -12,12 +12,12 @@
 
 
 using System.Net.Http;
-using TouchSocket.Rpc;
-using TouchSocket.Sockets;
+using TouchV4Socket.Rpc;
+using TouchV4Socket.Sockets;
 using HttpClient = System.Net.Http.HttpClient;
 using HttpMethod = System.Net.Http.HttpMethod;
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 /// <summary>
 /// 使用<see cref="HttpClient"/>为基础的WebApi客户端。

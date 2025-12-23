@@ -12,7 +12,7 @@
 
 using Autofac;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// AutofacContainer

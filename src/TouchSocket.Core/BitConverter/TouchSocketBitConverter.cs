@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 提供了与TouchSocket库相关的字节序列和对象之间的转换功能。

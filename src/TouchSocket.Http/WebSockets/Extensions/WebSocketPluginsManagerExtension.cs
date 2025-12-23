@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http.WebSockets;
+using TouchV4Socket.Http.WebSockets;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// WebSocketPluginManagerExtension

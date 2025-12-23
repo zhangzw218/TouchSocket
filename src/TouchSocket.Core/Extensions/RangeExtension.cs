@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 #if NET6_0_OR_GREATER
 /// <summary>

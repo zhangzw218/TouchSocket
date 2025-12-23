@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 public enum EndianType
 {

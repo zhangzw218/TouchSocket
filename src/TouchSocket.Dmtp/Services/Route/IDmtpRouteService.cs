@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// 用于路由的服务接口

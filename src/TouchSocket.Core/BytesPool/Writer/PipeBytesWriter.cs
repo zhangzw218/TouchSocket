@@ -12,7 +12,7 @@
 
 using System.IO.Pipelines;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个基于<see cref="PipeWriter"/>的字节写入器，提供对管道写入器的高性能包装。

@@ -13,7 +13,7 @@
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal sealed class XmlRpcClientCodeBuilder : RpcClientCodeBuilder
 {

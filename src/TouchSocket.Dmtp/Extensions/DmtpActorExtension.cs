@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// 适用于<see cref="IDmtpActor"/>的扩展。

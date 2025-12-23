@@ -10,11 +10,11 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 internal class MqttWebSocketSessionClient : RoomDependencyObject, IMqttWebSocketSessionClient
 {

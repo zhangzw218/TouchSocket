@@ -15,9 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 static partial class EasyTask
 {

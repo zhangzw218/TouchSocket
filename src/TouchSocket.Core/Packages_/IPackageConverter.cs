@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 /// <summary>
 /// 定义用于将数据包类型 <typeparamref name="T"/> 与字节流进行转换的接口。
 /// </summary>

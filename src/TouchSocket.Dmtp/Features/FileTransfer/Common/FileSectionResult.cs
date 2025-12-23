@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.FileTransfer;
+namespace TouchV4Socket.Dmtp.FileTransfer;
 
 /// <summary>
 /// 文件分段上传结果类，继承自ResultBase，实现IDisposable接口

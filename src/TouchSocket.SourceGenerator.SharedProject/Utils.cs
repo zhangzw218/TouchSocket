@@ -22,7 +22,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 public readonly struct CodeSpace : IDisposable
 {
@@ -646,7 +646,7 @@ internal abstract class CodeBuilder
         {
             yield return "using System;";
             yield return "using System.Diagnostics;";
-            yield return "using TouchSocket.Core;";
+            yield return "using TouchV4Socket.Core;";
             yield return "using System.Threading;";
             yield return "using System.Collections.Generic;";
             yield return "using System.Threading.Tasks;";

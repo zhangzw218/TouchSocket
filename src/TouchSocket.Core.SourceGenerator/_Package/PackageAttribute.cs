@@ -19,7 +19,7 @@
 using System;
 using System.CodeDom.Compiler;
 
-namespace TouchSocket.Core
+namespace TouchV4Socket.Core
 {
     /// <summary>
     /// 标识源生成<see cref="IPackage"/>的实现。

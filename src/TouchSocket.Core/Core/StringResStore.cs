@@ -13,7 +13,7 @@
 using System.Collections.Concurrent;
 using System.ComponentModel;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 字符串资源字典

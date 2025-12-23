@@ -12,9 +12,9 @@
 
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 /// <summary>
 /// 命名管道服务器辅助客户端类

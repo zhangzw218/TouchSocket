@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 /// <summary>
 /// 提供用于MQTT协议操作的扩展方法集合。

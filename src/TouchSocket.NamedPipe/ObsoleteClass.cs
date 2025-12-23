@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 /// <inheritdoc/>
 [Obsolete($"此接口由于表述不清，已被弃用，请使用{nameof(INamedPipeSession)}代替。", true)]

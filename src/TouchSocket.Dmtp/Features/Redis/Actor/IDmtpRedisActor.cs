@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.Redis;
+namespace TouchV4Socket.Dmtp.Redis;
 
 /// <summary>
 /// 具有远程键值存贮的操作端。

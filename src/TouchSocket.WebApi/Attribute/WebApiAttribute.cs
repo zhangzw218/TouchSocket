@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 /// <summary>
 /// 该自定义属性用于标记 Web API 方法。
@@ -28,8 +28,8 @@ public sealed class WebApiAttribute : RpcAttribute
     /// </summary>
     public WebApiAttribute()
     {
-        this.Namespaces.Add("using TouchSocket.Http;");
-        this.Namespaces.Add("using TouchSocket.WebApi;");
+        this.Namespaces.Add("using TouchV4Socket.Http;");
+        this.Namespaces.Add("using TouchV4Socket.WebApi;");
     }
 
     /// <summary>

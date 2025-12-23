@@ -12,7 +12,7 @@
 
 using System.Net;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 internal sealed class InternalUdpReceiver : SafetyDisposableObject, IReceiver<IUdpReceiverResult>
 {

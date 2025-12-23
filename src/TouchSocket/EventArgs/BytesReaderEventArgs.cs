@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 字节事件参数类，用于在插件之间传递字节块数据

@@ -12,7 +12,7 @@
 
 using System.IO.Compression;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// Http静态内容插件

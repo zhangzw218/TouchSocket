@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.Http.WebSockets;
+using TouchV4Socket.Http;
+using TouchV4Socket.Http.WebSockets;
 
-namespace TouchSocket.JsonRpc;
+namespace TouchV4Socket.JsonRpc;
 
 /// <summary>
 /// 基于WebSocket协议的JsonRpc配置选项

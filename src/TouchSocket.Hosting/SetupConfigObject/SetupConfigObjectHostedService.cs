@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using Microsoft.Extensions.Hosting;
-using TouchSocket.Core.AspNetCore;
+using TouchV4Socket.Core.AspNetCore;
 
-namespace TouchSocket.Hosting;
+namespace TouchV4Socket.Hosting;
 
 /// <summary>
 /// SetupObjectHostedService

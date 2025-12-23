@@ -15,9 +15,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal sealed class WebApiClientCodeBuilder : RpcClientCodeBuilder
 {
@@ -40,12 +40,12 @@ internal sealed class WebApiClientCodeBuilder : RpcClientCodeBuilder
         {
             yield return "using System;";
             yield return "using System.Diagnostics;";
-            yield return "using TouchSocket.Core;";
-            yield return "using TouchSocket.Sockets;";
-            yield return "using TouchSocket.Rpc;";
+            yield return "using TouchV4Socket.Core;";
+            yield return "using TouchV4Socket.Sockets;";
+            yield return "using TouchV4Socket.Rpc;";
             yield return "using System.Threading.Tasks;";
-            yield return "using TouchSocket.Http;";
-            yield return "using TouchSocket.WebApi;";
+            yield return "using TouchV4Socket.Http;";
+            yield return "using TouchV4Socket.WebApi;";
             yield return "using System.Collections.Generic;";
         }
     }

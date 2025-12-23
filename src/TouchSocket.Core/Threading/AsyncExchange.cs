@@ -13,7 +13,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks.Sources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 精简版线程安全单槽异步交接（单生产者 + 单消费者，不支持并发写队列）：

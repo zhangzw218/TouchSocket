@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 针对 <see cref="AppMessenger"/> 的扩展方法，提供基于特性和反射的注册/注销辅助方法。

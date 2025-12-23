@@ -11,9 +11,9 @@
 // ------------------------------------------------------------------------------
 
 using System.Net.WebSockets;
-using TouchSocket.Http;
+using TouchV4Socket.Http;
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 /// <summary>
 /// Mqtt WebSocket功能插件

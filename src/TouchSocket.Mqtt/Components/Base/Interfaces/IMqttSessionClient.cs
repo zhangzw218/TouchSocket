@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 /// <summary>
 /// 表示一个 Mqtt 会话客户端接口。

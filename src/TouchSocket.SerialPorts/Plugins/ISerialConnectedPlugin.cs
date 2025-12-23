@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 
 /// <summary>
 /// 定义一个接口，用于表示与串行端口连接的插件

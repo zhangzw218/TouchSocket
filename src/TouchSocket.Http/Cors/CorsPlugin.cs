@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 可以配置跨域的插件

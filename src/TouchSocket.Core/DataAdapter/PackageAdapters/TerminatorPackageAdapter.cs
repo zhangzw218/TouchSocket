@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 终止符数据包处理适配器，支持以指定终止符（字符或字节数组）结尾的数据包解析。

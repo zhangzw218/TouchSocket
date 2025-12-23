@@ -13,7 +13,7 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace TouchSocket.WebApi.Swagger;
+namespace TouchV4Socket.WebApi.Swagger;
 
 internal class OpenApiStringEnumConverter : StringEnumConverter
 {

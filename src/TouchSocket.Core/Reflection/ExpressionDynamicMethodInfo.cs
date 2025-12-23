@@ -14,7 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 [RequiresUnreferencedCode("此方法可能会使用反射构建访问器，与剪裁不兼容。")]
 internal class ExpressionDynamicMethodInfo : DynamicMethodInfoBase

@@ -12,9 +12,9 @@
 
 using Microsoft.CodeAnalysis;
 using System.Text;
-using TouchSocket.Core;
+using TouchV4Socket.Core;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal class DependencyPropertyCodeBuilder : TypeCodeBuilder<INamedTypeSymbol>
 {

@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// 定义了一个UdpDmtp接口，它继承自IServiceBase, IClient和IDmtpActorObject接口。

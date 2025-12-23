@@ -13,7 +13,7 @@
 using Microsoft.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [Generator]
 public class RpcClientSourceGenerator : IIncrementalGenerator
@@ -28,7 +28,7 @@ public class RpcClientSourceGenerator : IIncrementalGenerator
 
 using System;
 
-namespace TouchSocket.Rpc
+namespace TouchV4Socket.Rpc
 {
     /// <summary>
     /// 标识该接口将使用源生成自动生成调用的代理类

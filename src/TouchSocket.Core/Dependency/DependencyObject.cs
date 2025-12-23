@@ -13,7 +13,7 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 依赖项对象. 线程安全。

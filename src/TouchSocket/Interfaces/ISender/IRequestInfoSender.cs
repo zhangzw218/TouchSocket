@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 定义异步请求信息发送器的接口。

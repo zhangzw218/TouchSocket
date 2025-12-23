@@ -12,7 +12,7 @@
 
 using System.Net;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 表示UDP接收结果的接口，继承自通用的接收结果接口。

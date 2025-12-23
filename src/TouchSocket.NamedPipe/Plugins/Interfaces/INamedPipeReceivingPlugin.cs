@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 /// <summary>
 /// 定义了一个命名管道接收插件接口，用于在收到数据时执行特定操作。

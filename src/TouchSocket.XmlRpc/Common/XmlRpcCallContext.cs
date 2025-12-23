@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.Rpc;
+using TouchV4Socket.Http;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.XmlRpc;
+namespace TouchV4Socket.XmlRpc;
 
 internal sealed class XmlRpcCallContext : CallContext, IXmlRpcCallContext
 {

@@ -12,7 +12,7 @@
 
 using System.Diagnostics;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个异步自动重置事件，提供基于<see cref="Task"/>的异步等待机制。

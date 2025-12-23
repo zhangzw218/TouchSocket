@@ -12,7 +12,7 @@
 
 using System.Diagnostics;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 插件事件类

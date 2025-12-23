@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 /// <summary>
 /// 指示参数的值应从 HTTP 请求正文中绑定。

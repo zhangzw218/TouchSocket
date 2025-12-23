@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Net.WebSockets;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 internal sealed partial class InternalWebSocket : SafetyDisposableObject, IWebSocket
 {

@@ -12,7 +12,7 @@
 
 using System.IO.Pipelines;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 表示传输相关的配置选项。

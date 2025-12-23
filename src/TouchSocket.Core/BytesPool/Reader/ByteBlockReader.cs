@@ -14,7 +14,7 @@
 //using System.Buffers;
 //using System.Diagnostics;
 
-//namespace TouchSocket.Core;
+//namespace TouchV4Socket.Core;
 
 //[DebuggerDisplay("Length={Length},Position={Position}")]
 //public sealed class ByteBlockReader : IByteBlockReader

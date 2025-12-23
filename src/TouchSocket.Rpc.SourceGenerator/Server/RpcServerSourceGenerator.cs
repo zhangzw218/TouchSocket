@@ -18,7 +18,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 
 [Generator]
@@ -34,7 +34,7 @@ public class RpcServerSourceGenerator : IIncrementalGenerator
 
 using System;
 
-namespace TouchSocket.Rpc
+namespace TouchV4Socket.Rpc
 {
     /// <summary>
     /// 标识将通过源生成器生成Rpc服务的调用委托。
@@ -179,7 +179,7 @@ namespace TouchSocket.Rpc
 
 //using System;
 
-//namespace TouchSocket.Rpc
+//namespace TouchV4Socket.Rpc
 //{
 //    /// <summary>
 //    /// 标识将通过源生成器生成Rpc服务的调用委托。

@@ -16,7 +16,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace TouchSocket.Core
+//namespace TouchV4Socket.Core
 //{
 //    public static class TaskFactory
 //    {

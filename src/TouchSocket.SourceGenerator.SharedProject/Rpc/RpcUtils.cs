@@ -15,7 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 internal static class RpcUtils
 {

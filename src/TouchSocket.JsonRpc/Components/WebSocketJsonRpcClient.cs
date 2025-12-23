@@ -12,10 +12,10 @@
 
 using System.Buffers;
 using System.Net.WebSockets;
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Rpc;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket.JsonRpc;
+namespace TouchV4Socket.JsonRpc;
 
 /// <summary>
 /// 基于WebSocket协议的JsonRpc客户端。

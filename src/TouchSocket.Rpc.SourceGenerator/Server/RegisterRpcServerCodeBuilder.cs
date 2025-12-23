@@ -14,9 +14,9 @@ using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal class RegisterRpcServerCodeBuilder : CodeBuilder
 {
@@ -43,7 +43,7 @@ internal class RegisterRpcServerCodeBuilder : CodeBuilder
 
     protected override bool GeneratorCode(StringBuilder codeBuilder)
     {
-        codeBuilder.AppendLine($"namespace TouchSocket.Rpc");
+        codeBuilder.AppendLine($"namespace TouchV4Socket.Rpc");
         codeBuilder.AppendLine("{");
         codeBuilder.AppendLine("/// <summary>");
         codeBuilder.AppendLine($"/// {this.GetClassName()}");

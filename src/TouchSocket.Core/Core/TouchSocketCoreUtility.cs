@@ -13,7 +13,7 @@
 using System.Collections;
 using System.Text.RegularExpressions;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 常量

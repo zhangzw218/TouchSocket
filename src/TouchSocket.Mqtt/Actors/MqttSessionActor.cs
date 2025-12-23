@@ -12,7 +12,7 @@
 
 using System.Threading.Channels;
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 /// <summary>
 /// 表示一个 Mqtt 会话的 Actor。

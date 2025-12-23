@@ -13,7 +13,7 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 字节块流

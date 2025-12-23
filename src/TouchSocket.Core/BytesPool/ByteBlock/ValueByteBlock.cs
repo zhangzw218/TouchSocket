@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个值类型的字节块，提供高性能的字节缓冲区操作，避免堆分配开销。

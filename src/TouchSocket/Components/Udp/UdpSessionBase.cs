@@ -14,9 +14,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// UdpSessionBase 类是 UDP 会话的基础抽象类，继承自 ServiceBase 类，并实现了 IUdpSessionBase 接口。

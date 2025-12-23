@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Rpc;
-using TouchSocket.XmlRpc;
+using TouchV4Socket.Rpc;
+using TouchV4Socket.XmlRpc;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// XmlRpc插件管理器扩展

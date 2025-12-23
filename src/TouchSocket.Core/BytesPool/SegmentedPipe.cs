@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个分段管道,提供基于内存池的高效读写缓冲区管理

@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 区间数据包处理适配器，支持以任意字符、字节数组起始与结尾的数据包。

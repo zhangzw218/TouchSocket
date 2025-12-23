@@ -12,11 +12,11 @@
 
 using System.Diagnostics;
 using System.Net.WebSockets;
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Resources;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// http辅助类

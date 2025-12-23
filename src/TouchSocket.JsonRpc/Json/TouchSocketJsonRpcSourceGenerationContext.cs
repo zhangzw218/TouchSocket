@@ -12,7 +12,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace TouchSocket.JsonRpc;
+namespace TouchV4Socket.JsonRpc;
 
 /// <summary>
 /// TouchSocketJsonRpcSourceGenerationContext

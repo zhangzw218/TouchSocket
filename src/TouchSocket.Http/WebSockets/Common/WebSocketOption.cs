@@ -12,7 +12,7 @@
 
 using System;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// WebSocket配置

@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 public class MqttTcpService : TcpServiceBase<MqttTcpSessionClient>, IMqttTcpService
 {

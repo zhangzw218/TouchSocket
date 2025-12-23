@@ -13,9 +13,9 @@
 using System.Buffers;
 using System.IO.Pipelines;
 using System.Net.WebSockets;
-using TouchSocket.Http.WebSockets;
+using TouchV4Socket.Http.WebSockets;
 
-namespace TouchSocket.Mqtt;
+namespace TouchV4Socket.Mqtt;
 
 public class MqttWebSocketClient : SetupClientWebSocket, IMqttWebSocketClient
 {

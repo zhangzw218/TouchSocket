@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <inheritdoc/>
 [Obsolete($"此接口由于表述不清，已被弃用，请使用{nameof(IHttpSessionClient)}代替。", true)]

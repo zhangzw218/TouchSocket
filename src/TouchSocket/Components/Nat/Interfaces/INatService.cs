@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 定义了一个支持NAT（网络地址转换）服务的接口，用于扩展ITcpServiceBase服务以支持NAT穿透功能。

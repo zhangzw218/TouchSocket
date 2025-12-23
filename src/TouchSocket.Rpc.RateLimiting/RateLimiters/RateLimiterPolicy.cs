@@ -13,7 +13,7 @@
 using System.Collections.Concurrent;
 using System.Threading.RateLimiting;
 
-namespace TouchSocket.Rpc.RateLimiting;
+namespace TouchV4Socket.Rpc.RateLimiting;
 
 
 /// <summary>

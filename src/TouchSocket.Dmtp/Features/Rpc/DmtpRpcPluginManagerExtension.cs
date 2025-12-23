@@ -10,7 +10,7 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.Rpc;
+namespace TouchV4Socket.Dmtp.Rpc;
 
 /// <summary>
 /// <see cref="IPluginManager"/>的扩展方法，用于使用DmtpRpc插件。

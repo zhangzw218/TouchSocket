@@ -174,7 +174,7 @@
 		<Using Include="System.Threading.Tasks" />
 		<Using Include="System.Text" />
 		<Using Include="System.IO" />
-		<Using Include="TouchSocket.Core" />
+		<Using Include="TouchV4Socket.Core" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)'=='Debug' And '$(IsSourceGenerator)'!='True'">

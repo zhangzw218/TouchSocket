@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// 定义WebSocketDmtp客户端接口，继承多个客户端和配置相关接口

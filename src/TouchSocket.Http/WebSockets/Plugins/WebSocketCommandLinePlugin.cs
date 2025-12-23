@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// WS命令行插件。

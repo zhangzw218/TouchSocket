@@ -16,10 +16,10 @@
 //using System.Text;
 //using System.Threading;
 //using System.Threading.Tasks;
-//using TouchSocket.Core;
-//using TouchSocket.Sockets;
+//using TouchV4Socket.Core;
+//using TouchV4Socket.Sockets;
 
-//namespace TouchSocket.Http.WebSockets.AspNetCore;
+//namespace TouchV4Socket.Http.WebSockets.AspNetCore;
 //public class WebSocketService : ConnectableService<WebSocketSessionClient>
 //{
 //    #region 字段

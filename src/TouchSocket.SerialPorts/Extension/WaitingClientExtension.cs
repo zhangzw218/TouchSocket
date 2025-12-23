@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 
 /// <summary>
 /// 提供扩展方法以简化创建等待客户端的代码。

@@ -17,7 +17,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 [Generator]
 internal class PluginRaiseSourceGenerator : IIncrementalGenerator
@@ -29,7 +29,7 @@ internal class PluginRaiseSourceGenerator : IIncrementalGenerator
     private readonly string PluginRaiseAttributeString = @"
 using System;
 
-namespace TouchSocket.Core
+namespace TouchV4Socket.Core
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     /*GeneratedCode*/

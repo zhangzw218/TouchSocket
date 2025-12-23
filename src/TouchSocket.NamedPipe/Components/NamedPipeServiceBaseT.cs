@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.IO.Pipes;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 /// <summary>
 /// 命名管道服务基类

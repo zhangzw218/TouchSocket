@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示字节读取器的接口，提供对字节序列的读取、跳过和获取操作。

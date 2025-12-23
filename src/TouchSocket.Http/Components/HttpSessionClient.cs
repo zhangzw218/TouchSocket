@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http.WebSockets;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http.WebSockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// http辅助类

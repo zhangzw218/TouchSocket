@@ -11,9 +11,9 @@
 // ------------------------------------------------------------------------------
 
 using System.Diagnostics;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 internal class StreamTransport : BaseTransport
 {

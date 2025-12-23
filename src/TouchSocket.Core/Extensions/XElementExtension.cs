@@ -12,7 +12,7 @@
 
 using System.Xml.Linq;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 扩展XElement类，为其添加属性操作相关的方法。

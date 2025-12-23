@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Collections.Concurrent;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Dmtp.FileTransfer;
+namespace TouchV4Socket.Dmtp.FileTransfer;
 
 /// <summary>
 /// 定义一个静态类，用于扩展Dmtp文件传输的功能

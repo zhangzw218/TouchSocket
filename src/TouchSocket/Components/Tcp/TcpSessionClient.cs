@@ -12,7 +12,7 @@
 
 using System.Diagnostics;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 定义了一个抽象类TcpSessionClient，用于处理TCP会话客户端的连接和数据传输。

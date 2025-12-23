@@ -12,7 +12,7 @@
 
 using System.Reflection;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 internal sealed class InternalRpcServerProvider : IRpcServerProvider
 {

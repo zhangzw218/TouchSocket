@@ -11,10 +11,10 @@
 //------------------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Http;
-using TouchSocket.Resources;
-using TouchSocket.Sockets;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp.AspNetCore;
+namespace TouchV4Socket.Dmtp.AspNetCore;
 
 
 /// <summary>

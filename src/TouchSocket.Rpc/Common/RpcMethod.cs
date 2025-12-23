@@ -15,7 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 /// <summary>
 /// Rpc函数实例

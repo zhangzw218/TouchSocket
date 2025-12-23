@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.FileTransfer;
+namespace TouchV4Socket.Dmtp.FileTransfer;
 
 /// <summary>
 /// <see cref="IPluginManager"/>的扩展方法，用于使用DmtpFileTransfer插件。

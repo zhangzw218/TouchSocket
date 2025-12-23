@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 /// <summary>
 /// 代码生成器
@@ -162,9 +162,9 @@ public static class CodeGenerator
         codeString.AppendLine("*/");
         codeString.AppendLine("#pragma warning disable");
         codeString.AppendLine("using System;");
-        codeString.AppendLine("using TouchSocket.Core;");
-        codeString.AppendLine("using TouchSocket.Sockets;");
-        codeString.AppendLine("using TouchSocket.Rpc;");
+        codeString.AppendLine("using TouchV4Socket.Core;");
+        codeString.AppendLine("using TouchV4Socket.Sockets;");
+        codeString.AppendLine("using TouchV4Socket.Rpc;");
         codeString.AppendLine("using System.Collections.Generic;");
         codeString.AppendLine("using System.Diagnostics;");
         codeString.AppendLine("using System.Text;");

@@ -12,9 +12,9 @@
 
 using System.Collections.Concurrent;
 using System.Net;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// 定义了UDP数据传输协议（DMTP）的实现类。

@@ -10,9 +10,9 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// 提供用于为 <see cref="ReconnectionOption{TClient}"/> 配置 WebSocket 心跳检查的扩展方法。

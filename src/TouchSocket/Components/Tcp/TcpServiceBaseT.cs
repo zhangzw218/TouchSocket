@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Net.Sockets;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 提供基于TCP的服务基类，用于管理和操作TCP客户端会话。

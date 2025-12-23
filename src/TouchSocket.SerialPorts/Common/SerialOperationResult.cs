@@ -12,7 +12,7 @@
 
 using System.IO.Ports;
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 
 /// <summary>
 /// 串行操作结果的结构体。

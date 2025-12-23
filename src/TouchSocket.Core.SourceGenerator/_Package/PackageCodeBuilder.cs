@@ -14,9 +14,9 @@ using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TouchSocket.Core;
+using TouchV4Socket.Core;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal sealed class PackageCodeBuilder : CodeBuilder
 {

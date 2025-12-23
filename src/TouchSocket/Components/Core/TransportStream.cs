@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.IO.Pipelines;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 基于管道的流实现

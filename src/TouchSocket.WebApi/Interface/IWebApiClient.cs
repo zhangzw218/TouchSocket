@@ -10,10 +10,10 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
-using TouchSocket.Sockets;
+using TouchV4Socket.Http;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.WebApi;
+namespace TouchV4Socket.WebApi;
 
 /// <summary>
 /// 定义了一个用于Web API客户端操作的公共接口，该接口继承自多个基接口，以支持丰富的网络和会话功能

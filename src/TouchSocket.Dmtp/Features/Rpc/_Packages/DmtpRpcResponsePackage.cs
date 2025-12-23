@@ -10,11 +10,11 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Resources;
-using TouchSocket.Rpc;
-using TouchSocket.Sockets;
+using TouchV4Socket.Resources;
+using TouchV4Socket.Rpc;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp.Rpc;
+namespace TouchV4Socket.Dmtp.Rpc;
 
 internal class DmtpRpcResponsePackage : WaitRouterPackage
 {

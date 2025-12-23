@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 public abstract class SystemTextJsonSerializerFormatter<TSource, TState> : ISerializerFormatter<TSource, TState>
 {

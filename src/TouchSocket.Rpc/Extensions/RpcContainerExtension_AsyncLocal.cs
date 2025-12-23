@@ -12,7 +12,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 /// <summary>
 /// 提供扩展方法以注册和管理RPC调用上下文访问器。
 /// </summary>

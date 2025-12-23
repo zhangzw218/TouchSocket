@@ -37,7 +37,7 @@
 
 	<!--全局命名空间-->
 	<ItemGroup>
-		<Using Include="TouchSocket.Sockets" />
+		<Using Include="TouchV4Socket.Sockets" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------
 using System.Text.Json.Serialization;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(WaitVerify))]

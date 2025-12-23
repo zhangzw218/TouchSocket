@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Dmtp.Redis;
+namespace TouchV4Socket.Dmtp.Redis;
 
 /// <summary>
 /// 定义一个静态类，用于扩展DmtpRedisActor的功能

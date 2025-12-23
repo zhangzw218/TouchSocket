@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Dmtp.FileTransfer;
+namespace TouchV4Socket.Dmtp.FileTransfer;
 
 /// <summary>
 /// 能够基于Dmtp协议，提供文件传输的能力

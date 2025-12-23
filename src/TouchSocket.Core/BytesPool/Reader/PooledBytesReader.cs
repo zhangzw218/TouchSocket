@@ -13,7 +13,7 @@
 using System.Buffers;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个使用内存池的字节读取器。

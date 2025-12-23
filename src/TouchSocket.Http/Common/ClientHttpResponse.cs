@@ -12,9 +12,9 @@
 
 using System.Buffers;
 using System.IO.Pipelines;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 internal sealed class ClientHttpResponse : HttpResponse
 {

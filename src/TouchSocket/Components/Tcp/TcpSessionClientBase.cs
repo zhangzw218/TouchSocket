@@ -12,9 +12,9 @@
 
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 具有调试显示属性的抽象基类，用于TCP会话客户端。

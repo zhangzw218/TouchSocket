@@ -12,7 +12,7 @@
 
 using System.Security.Cryptography.X509Certificates;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 服务器Ssl设置

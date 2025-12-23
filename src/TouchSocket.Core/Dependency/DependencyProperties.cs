@@ -13,7 +13,7 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 依赖属性集合，继承自字典，用于存储依赖属性的键值对。

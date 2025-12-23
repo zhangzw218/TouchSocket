@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// Tcp命令行插件。

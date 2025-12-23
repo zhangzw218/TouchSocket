@@ -12,7 +12,7 @@
 
 using System.IO.Pipelines;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 /// <summary>
 /// 只读内存级别的Http内容。

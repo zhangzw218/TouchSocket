@@ -13,7 +13,7 @@
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 定义一个类 JsonMemoryToClassSerializerFormatter，用于将只读内存中的字节序列反序列化为指定的状态类。

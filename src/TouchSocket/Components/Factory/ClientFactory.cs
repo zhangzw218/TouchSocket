@@ -12,7 +12,7 @@
 
 using System.Collections.Concurrent;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 客户端工厂的基类，用于创建特定类型的客户端对象。

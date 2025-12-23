@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Resources;
+namespace TouchV4Socket.Resources;
 
 /// <summary>
 /// TouchSocketJsonRpc资源枚举

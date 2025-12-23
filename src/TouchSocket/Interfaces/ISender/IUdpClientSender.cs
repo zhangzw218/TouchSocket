@@ -12,7 +12,7 @@
 
 using System.Net;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 具有Udp终结点的发送

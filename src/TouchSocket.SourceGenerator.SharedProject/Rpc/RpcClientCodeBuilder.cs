@@ -17,9 +17,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TouchSocket.Rpc;
+using TouchV4Socket.Rpc;
 
-namespace TouchSocket;
+namespace TouchV4Socket;
 
 internal enum TaskType
 {
@@ -64,9 +64,9 @@ internal abstract class RpcClientCodeBuilder : CodeBuilder
         {
             yield return "using System;";
             yield return "using System.Diagnostics;";
-            yield return "using TouchSocket.Core;";
-            yield return "using TouchSocket.Sockets;";
-            yield return "using TouchSocket.Rpc;";
+            yield return "using TouchV4Socket.Core;";
+            yield return "using TouchV4Socket.Sockets;";
+            yield return "using TouchV4Socket.Rpc;";
             yield return "using System.Threading.Tasks;";
         }
     }

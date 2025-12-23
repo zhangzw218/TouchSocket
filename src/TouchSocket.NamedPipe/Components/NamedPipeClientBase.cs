@@ -13,9 +13,9 @@
 using System.IO.Pipes;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.NamedPipe;
+namespace TouchV4Socket.NamedPipe;
 
 /// <summary>
 /// 命名管道客户端客户端基类

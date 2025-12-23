@@ -12,7 +12,7 @@
 
 //using System.ComponentModel;
 
-//namespace TouchSocket.Hosting.Resources
+//namespace TouchV4Socket.Hosting.Resources
 //{
 //    /// <summary>
 //    /// TouchSocket资源枚举

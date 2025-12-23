@@ -21,7 +21,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TouchSocket.SourceGenerator;
+namespace TouchV4Socket.SourceGenerator;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 internal class CoreAnalyzer : DiagnosticAnalyzer

@@ -10,9 +10,9 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchSocket.Http;
+using TouchV4Socket.Http;
 
-namespace TouchSocket.Dmtp;
+namespace TouchV4Socket.Dmtp;
 
 /// <summary>
 /// HttpDmtpService 类，继承自<see cref="HttpDmtpService{TClient}"/>，实现<see cref="IHttpDmtpService"/>接口。

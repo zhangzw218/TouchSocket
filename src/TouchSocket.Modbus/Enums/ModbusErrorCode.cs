@@ -12,7 +12,7 @@
 
 using System.ComponentModel;
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 /// <summary>
 /// Modbus错误码

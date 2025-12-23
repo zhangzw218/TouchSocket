@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// 定义了一个ITcpSession接口，该接口继承自IClient, IResolverConfigObject, IOnlineClient, IClosableClient等多个接口。

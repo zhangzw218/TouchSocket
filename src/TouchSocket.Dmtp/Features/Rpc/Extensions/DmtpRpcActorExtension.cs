@@ -14,9 +14,9 @@
 using System.Diagnostics.CodeAnalysis;
 #endif
 
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Dmtp.Rpc;
+namespace TouchV4Socket.Dmtp.Rpc;
 
 /// <summary>
 /// 定义了用于简化DMTP RPC Actor操作的扩展方法。

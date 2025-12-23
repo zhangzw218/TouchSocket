@@ -12,7 +12,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace TouchSocket.Http;
+namespace TouchV4Socket.Http;
 
 static class TouchSocketHttpUtility
 {

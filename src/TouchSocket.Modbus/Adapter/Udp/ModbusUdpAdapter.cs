@@ -12,7 +12,7 @@
 
 using System.Net;
 
-namespace TouchSocket.Modbus;
+namespace TouchV4Socket.Modbus;
 
 internal class ModbusUdpAdapter : UdpDataHandlingAdapter
 {

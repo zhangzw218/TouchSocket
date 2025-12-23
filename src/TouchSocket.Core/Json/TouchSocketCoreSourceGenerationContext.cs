@@ -13,7 +13,7 @@
 #if NET6_0_OR_GREATER
 using System.Text.Json.Serialization;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// TouchSocketCoreSourceGenerationContext

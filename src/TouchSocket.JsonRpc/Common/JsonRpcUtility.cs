@@ -13,10 +13,10 @@
 //using Newtonsoft.Json;
 //using Newtonsoft.Json.Linq;
 //using System;
-//using TouchSocket.Core;
-//using TouchSocket.Rpc;
+//using TouchV4Socket.Core;
+//using TouchV4Socket.Rpc;
 
-//namespace TouchSocket.JsonRpc
+//namespace TouchV4Socket.JsonRpc
 //{
 //    /// <summary>
 //    /// JsonRpcUtility

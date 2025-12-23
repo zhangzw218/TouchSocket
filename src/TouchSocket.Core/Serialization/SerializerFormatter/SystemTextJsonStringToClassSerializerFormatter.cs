@@ -13,7 +13,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 使用System.Text.Json进行字符串与类之间序列化和反序列化的格式化器。

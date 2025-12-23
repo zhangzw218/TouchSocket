@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 /// <summary>
 /// WebSocket消息合并器。其作用是合并具有中继数据的消息

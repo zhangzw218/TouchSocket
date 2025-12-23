@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Buffers;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Dmtp.FileTransfer;
+namespace TouchV4Socket.Dmtp.FileTransfer;
 
 /// <summary>
 /// 能够基于Dmtp协议提供文件传输功能

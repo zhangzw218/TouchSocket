@@ -12,7 +12,7 @@
 
 using System.Net.WebSockets;
 
-namespace TouchSocket.Http.WebSockets;
+namespace TouchV4Socket.Http.WebSockets;
 
 public readonly struct WebSocketReceiveResult:IDisposable
 {

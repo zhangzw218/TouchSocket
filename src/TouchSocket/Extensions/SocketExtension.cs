@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using System.Net.Sockets;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.Sockets;
+namespace TouchV4Socket.Sockets;
 
 /// <summary>
 /// Socket的扩展方法类

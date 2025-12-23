@@ -14,7 +14,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TouchSocket.Rpc;
+namespace TouchV4Socket.Rpc;
 
 /// <summary>
 /// RpcDispatchProxy

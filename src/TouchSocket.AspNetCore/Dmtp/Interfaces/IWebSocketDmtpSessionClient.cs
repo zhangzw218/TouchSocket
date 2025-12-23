@@ -11,9 +11,9 @@
 //------------------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Http;
-using TouchSocket.Sockets;
+using TouchV4Socket.Sockets;
 
-namespace TouchSocket.Dmtp.AspNetCore;
+namespace TouchV4Socket.Dmtp.AspNetCore;
 
 /// <summary>
 /// 基于WebSocket协议的Dmtp服务器辅助客户端。

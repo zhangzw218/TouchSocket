@@ -12,7 +12,7 @@
 
 using System.Buffers;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// 表示一个字节写入器接口，用于提供高性能的字节缓冲区写入功能。

@@ -13,7 +13,7 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-namespace TouchSocket.Core;
+namespace TouchV4Socket.Core;
 
 /// <summary>
 /// IgnoreCaseNameValueCollection

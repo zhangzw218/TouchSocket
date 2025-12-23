@@ -12,9 +12,9 @@
 
 using System.IO.Ports;
 using System.Net.Sockets;
-using TouchSocket.Resources;
+using TouchV4Socket.Resources;
 
-namespace TouchSocket.SerialPorts;
+namespace TouchV4Socket.SerialPorts;
 
 internal sealed class SerialPortTransport : BaseTransport
 {
