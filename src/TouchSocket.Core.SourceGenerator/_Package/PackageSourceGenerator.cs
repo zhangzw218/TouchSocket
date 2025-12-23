@@ -108,7 +108,7 @@ namespace TouchV4Socket.Core
 
         // 检查是否包含GeneratorPackageAttribute
         var hasAttribute = classSymbol?.GetAttributes()
-            .Any(ad => ad.AttributeClass?.ToDisplayString() == "TouchSocket.Core.GeneratorPackageAttribute");
+            .Any(ad => ad.AttributeClass?.ToDisplayString() == "TouchV4Socket.Core.GeneratorPackageAttribute");
 
         return hasAttribute == true ? classSymbol : null;
     }

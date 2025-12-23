@@ -20,7 +20,7 @@ namespace TouchV4Socket;
 [Generator]
 public class MethodInvokeSourceGenerator : IIncrementalGenerator
 {
-    public const string DynamicMethod = "TouchSocket.Core.DynamicMethodAttribute";
+    public const string DynamicMethod = "TouchV4Socket.Core.DynamicMethodAttribute";
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // 1. 注册语法提供器来捕获类型声明

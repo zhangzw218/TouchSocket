@@ -102,7 +102,7 @@
 	</PropertyGroup>
 
 	<ItemGroup Condition="'!$(MSBuildProjectName.EndsWith(`SourceGenerator`))'">
-		<ProjectReference Include="..\TouchSocket.Core.SourceGenerator\TouchSocket.Core.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+		<ProjectReference Include="..\TouchSocket.Core.SourceGenerator\TouchV4Socket.Core.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
 	</ItemGroup>
 
 	<ItemGroup>

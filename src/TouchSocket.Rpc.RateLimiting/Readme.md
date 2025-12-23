@@ -1,7 +1,7 @@
-# TouchSocket.Rpc.RateLimiting
+# TouchV4Socket.Rpc.RateLimiting
 
 ## 项目概述
-TouchSocket.Rpc.RateLimiting 是一个扩展于 Rpc 管理平台的限流包。它为 Rpc 调用提供了限流功能，可有效控制 Rpc 请求的频率，避免系统因过载而出现性能问题。目前，该包支持开发 DmtpRpc、XmlRpc、JsonRpc、WebApi 等所有 Rpc 部分。
+TouchV4Socket.Rpc.RateLimiting 是一个扩展于 Rpc 管理平台的限流包。它为 Rpc 调用提供了限流功能，可有效控制 Rpc 请求的频率，避免系统因过载而出现性能问题。目前，该包支持开发 DmtpRpc、XmlRpc、JsonRpc、WebApi 等所有 Rpc 部分。
 
 ## 功能特性
 - **限流支持**：为各类 Rpc 调用提供限流机制，确保系统在高并发情况下的稳定性。

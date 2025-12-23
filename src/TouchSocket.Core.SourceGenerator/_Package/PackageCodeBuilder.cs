@@ -21,9 +21,9 @@ namespace TouchV4Socket;
 internal sealed class PackageCodeBuilder : CodeBuilder
 {
     private readonly SourceProductionContext m_context;
-    private readonly string m_packageBaseString = "TouchSocket.Core.PackageBase";
+    private readonly string m_packageBaseString = "TouchV4Socket.Core.PackageBase";
     private readonly INamedTypeSymbol m_packageClass;
-    private readonly string m_packageMemberAttributeString = "TouchSocket.Core.PackageMemberAttribute";
+    private readonly string m_packageMemberAttributeString = "TouchV4Socket.Core.PackageMemberAttribute";
 
     public PackageCodeBuilder(INamedTypeSymbol packageClass, SourceProductionContext context)
     {

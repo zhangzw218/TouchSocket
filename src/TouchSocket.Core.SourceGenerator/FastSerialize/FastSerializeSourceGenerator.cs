@@ -24,7 +24,7 @@ namespace TouchV4Socket;
 [Generator]
 public class FastSerializeGenerator : IIncrementalGenerator
 {
-    public const string FastSerializableAttributeString = "TouchSocket.Core.FastSerializableAttribute";
+    public const string FastSerializableAttributeString = "TouchV4Socket.Core.FastSerializableAttribute";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {

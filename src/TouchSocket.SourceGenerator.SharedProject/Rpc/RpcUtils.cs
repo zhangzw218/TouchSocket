@@ -19,11 +19,11 @@ namespace TouchV4Socket.Rpc;
 
 internal static class RpcUtils
 {
-    public const string GeneratorRpcProxyAttributeTypeName = "TouchSocket.Rpc.GeneratorRpcProxyAttribute";
-    public const string RpcAttributeTypeName = "TouchSocket.Rpc.RpcAttribute";
-    public const string FromServicesAttributeTypeName = "TouchSocket.Rpc.FromServicesAttribute";
-    public const string ICallContextTypeName = "TouchSocket.Rpc.ICallContext";
-    public const string FromServicesAttributeName = "TouchSocket.Rpc.FromServicesAttribute";
+    public const string GeneratorRpcProxyAttributeTypeName = "TouchV4Socket.Rpc.GeneratorRpcProxyAttribute";
+    public const string RpcAttributeTypeName = "TouchV4Socket.Rpc.RpcAttribute";
+    public const string FromServicesAttributeTypeName = "TouchV4Socket.Rpc.FromServicesAttribute";
+    public const string ICallContextTypeName = "TouchV4Socket.Rpc.ICallContext";
+    public const string FromServicesAttributeName = "TouchV4Socket.Rpc.FromServicesAttribute";
 
     public static StringBuilder CreateStringBuilder()
     {

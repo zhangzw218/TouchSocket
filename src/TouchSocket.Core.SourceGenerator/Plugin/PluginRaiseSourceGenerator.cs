@@ -22,9 +22,9 @@ namespace TouchV4Socket;
 [Generator]
 internal class PluginRaiseSourceGenerator : IIncrementalGenerator
 {
-    private const string IPluginString = "TouchSocket.Core.IPlugin";
+    private const string IPluginString = "TouchV4Socket.Core.IPlugin";
 
-    private const string PluginRaiseAttributeNameString = "TouchSocket.Core.PluginRaiseAttribute";
+    private const string PluginRaiseAttributeNameString = "TouchV4Socket.Core.PluginRaiseAttribute";
 
     private readonly string PluginRaiseAttributeString = @"
 using System;

@@ -84,8 +84,8 @@ namespace TouchV4Socket.Rpc
 }
 ";
 
-    private const string GeneratorRpcServerRegisterAttributeTypeName = "TouchSocket.Rpc.GeneratorRpcServerRegisterAttribute";
-    public const string IRpcServerTypeName = "TouchSocket.Rpc.IRpcServer";
+    private const string GeneratorRpcServerRegisterAttributeTypeName = "TouchV4Socket.Rpc.GeneratorRpcServerRegisterAttribute";
+    public const string IRpcServerTypeName = "TouchV4Socket.Rpc.IRpcServer";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -167,7 +167,7 @@ namespace TouchV4Socket.Rpc
 //[Generator]
 //public class RpcServerSourceGenerator : ISourceGenerator
 //{
-//    public const string GeneratorRpcServerRegisterAttributeTypeName = "TouchSocket.Rpc.GeneratorRpcServerRegisterAttribute";
+//    public const string GeneratorRpcServerRegisterAttributeTypeName = "TouchV4Socket.Rpc.GeneratorRpcServerRegisterAttribute";
 
 //    private readonly string m_generatorServerAttribute = @"
 

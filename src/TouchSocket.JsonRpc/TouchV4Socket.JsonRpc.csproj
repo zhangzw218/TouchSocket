@@ -24,6 +24,6 @@
 
 	<ItemGroup>
 		<None Include="..\TouchSocket.SourceGenerator.SharedProject\tools\*.ps1" PackagePath="tools" Pack="true" Visible="false" />
-		<None Include="..\TouchSocket.JsonRpc.SourceGenerator\bin\$(Configuration)\netstandard2.0\TouchSocket.JsonRpc.SourceGenerator.dll" PackagePath="analyzers\dotnet\cs" Pack="true" Visible="false" />
+		<None Include="..\TouchSocket.JsonRpc.SourceGenerator\bin\$(Configuration)\netstandard2.0\TouchV4Socket.JsonRpc.SourceGenerator.dll" PackagePath="analyzers\dotnet\cs" Pack="true" Visible="false" />
 	</ItemGroup>
 </Project>

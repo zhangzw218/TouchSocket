@@ -20,7 +20,7 @@ namespace TouchV4Socket.Core;
 /// </summary>
 public class Method
 {
-    private const string GeneratorTypeNamespace = "TouchSocket.Core.__Internals";
+    private const string GeneratorTypeNamespace = "TouchV4Socket.Core.__Internals";
     private readonly IDynamicMethodInfo m_dynamicMethodInfo;
     private readonly MethodInfo m_info;
 

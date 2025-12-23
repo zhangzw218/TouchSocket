@@ -23,7 +23,7 @@ internal class DiagnosticSuppressor : Microsoft.CodeAnalysis.Diagnostics.Diagnos
         "SAppMessage001",
         "CA1822",
         "AppMessage方法，所以抑制");
-    public const string AppMessageAttribute = "TouchSocket.Core.AppMessageAttribute";
+    public const string AppMessageAttribute = "TouchV4Socket.Core.AppMessageAttribute";
 
     public override void ReportSuppressions(SuppressionAnalysisContext context)
     {

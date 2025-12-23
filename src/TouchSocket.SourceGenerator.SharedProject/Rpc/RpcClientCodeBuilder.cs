@@ -506,7 +506,7 @@ internal abstract class RpcClientCodeBuilder : CodeBuilder
         }
         else
         {
-            return new string[] { "TouchSocket.Rpc.IRpcClient" };
+            return new string[] { "TouchV4Socket.Rpc.IRpcClient" };
         }
     }
 
@@ -586,7 +586,7 @@ internal abstract class RpcClientCodeBuilder : CodeBuilder
 
     protected virtual string GetNamespace()
     {
-        var defaultNamespace = $"TouchSocket.Rpc.{this.RpcAttributeName}.Generators";
+        var defaultNamespace = $"TouchV4Socket.Rpc.{this.RpcAttributeName}.Generators";
         if (!this.m_rpcApiNamedArguments.TryGetValue("Namespace", out var typedConstant))
         {
             return defaultNamespace;

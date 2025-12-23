@@ -28,5 +28,5 @@ internal abstract class MethodCodeBuilder : TypeCodeBuilder<INamedTypeSymbol>
     }
 
     public override string Id => this.TypeSymbol.ToDisplayString();
-    protected virtual string GeneratorTypeNamespace => "TouchSocket.Core.__Internals";
+    protected virtual string GeneratorTypeNamespace => "TouchV4Socket.Core.__Internals";
 }

@@ -139,7 +139,7 @@ public interface IDmtpFileTransferActor : IActor
     /// <para>注意：</para>
     /// <list type="number">
     /// <item>完成该操作后，必须在设定时间（60秒）内至少完成一次文件块访问，不然该信息将变得无效，</item>
-    /// <item>每次该操作，都必须对应一次<see cref="FinishedFileResourceInfoAsync(string,TouchSocket.Dmtp.FileTransfer.FileResourceInfo,TouchSocket.Core.ResultCode,TouchSocket.Core.Metadata,System.Threading.CancellationToken)"/></item>
+    /// <item>每次该操作，都必须对应一次<see cref="FinishedFileResourceInfoAsync(string,TouchV4Socket.Dmtp.FileTransfer.FileResourceInfo,TouchV4Socket.Core.ResultCode,TouchV4Socket.Core.Metadata,System.Threading.CancellationToken)"/></item>
     /// </list>
     /// </summary>
     /// <param name="targetId">目标客户端Id</param>
@@ -187,7 +187,7 @@ public interface IDmtpFileTransferActor : IActor
     /// <para>注意：</para>
     /// <list type="number">
     /// <item>完成该操作后，必须在设定时间（60秒）内至少完成一次文件块访问，不然该信息将变得无效，</item>
-    /// <item>每次该操作，都应该对应一次<see cref="FinishedFileResourceInfoAsync(string,TouchSocket.Dmtp.FileTransfer.FileResourceInfo,TouchSocket.Core.ResultCode,TouchSocket.Core.Metadata,System.Threading.CancellationToken)"/></item>
+    /// <item>每次该操作，都应该对应一次<see cref="FinishedFileResourceInfoAsync(string,TouchV4Socket.Dmtp.FileTransfer.FileResourceInfo,TouchV4Socket.Core.ResultCode,TouchV4Socket.Core.Metadata,System.Threading.CancellationToken)"/></item>
     /// </list>
     /// </summary>
     /// <param name="path">资源路径</param>
@@ -213,7 +213,7 @@ public interface IDmtpFileTransferActor : IActor
     /// <para>注意：</para>
     /// <list type="number">
     /// <item>完成该操作后，必须在设定时间（60秒）内至少完成一次文件块访问，不然该信息将变得无效，</item>
-    /// <item>每次该操作，都必须对应一次<see cref="FinishedFileResourceInfoAsync(string,TouchSocket.Dmtp.FileTransfer.FileResourceInfo,TouchSocket.Core.ResultCode,TouchSocket.Core.Metadata,System.Threading.CancellationToken)"/></item>
+    /// <item>每次该操作，都必须对应一次<see cref="FinishedFileResourceInfoAsync(string,TouchV4Socket.Dmtp.FileTransfer.FileResourceInfo,TouchV4Socket.Core.ResultCode,TouchV4Socket.Core.Metadata,System.Threading.CancellationToken)"/></item>
     /// </list>
     /// </summary>
     /// <param name="savePath">保存路径</param>

@@ -52,9 +52,9 @@ internal static class SourceProductionContextExtension
 
 internal static class Utils
 {
-    public const string DependencyPropertyBase = "TouchSocket.Core.DependencyPropertyBase";
-    public const string GeneratorPackageAttributeTypeName = "TouchSocket.Core.GeneratorPackageAttribute";
-    public const string IPackageTypeName = "TouchSocket.Core.IPackage";
+    public const string DependencyPropertyBase = "TouchV4Socket.Core.DependencyPropertyBase";
+    public const string GeneratorPackageAttributeTypeName = "TouchV4Socket.Core.GeneratorPackageAttribute";
+    public const string IPackageTypeName = "TouchV4Socket.Core.IPackage";
     public const string Task = "System.Threading.Tasks.Task";
     #region 获取程序集资源
 

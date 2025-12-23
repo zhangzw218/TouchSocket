@@ -24,7 +24,7 @@ namespace TouchV4Socket;
 [Generator]
 public class DependencyPropertyGenerator : IIncrementalGenerator
 {
-    public const string GeneratorPropertyAttributeString = "TouchSocket.Core.GeneratorPropertyAttribute";
+    public const string GeneratorPropertyAttributeString = "TouchV4Socket.Core.GeneratorPropertyAttribute";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
