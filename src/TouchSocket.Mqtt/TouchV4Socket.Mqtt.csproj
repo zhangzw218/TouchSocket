@@ -44,7 +44,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.Http\TouchSocket.Http.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Http\TouchV4Socket.Http.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -29,7 +29,7 @@
 	  <Compile Include="..\TouchSocket.Shared\Sockets\ThrowHelperSockets.cs" Link="Exceptions\ThrowHelperSockets.cs" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket\TouchSocket.csproj" />
+	  <ProjectReference Include="..\TouchSocket\TouchV4Socket.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Exceptions\" />

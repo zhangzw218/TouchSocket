@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket\TouchSocket.csproj" />
+	  <ProjectReference Include="..\TouchSocket\TouchV4Socket.csproj" />
 	</ItemGroup>
 
 	<!--全局命名空间-->

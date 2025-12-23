@@ -20,8 +20,8 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.Http\TouchSocket.Http.csproj" />
-	  <ProjectReference Include="..\TouchSocket.Rpc\TouchSocket.Rpc.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Http\TouchV4Socket.Http.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Rpc\TouchV4Socket.Rpc.csproj" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net481'">

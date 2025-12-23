@@ -13,6 +13,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TouchSocket.Rpc\TouchSocket.Rpc.csproj" />
+	  <ProjectReference Include="..\TouchSocket.Rpc\TouchV4Socket.Rpc.csproj" />
 	</ItemGroup>
 </Project>
