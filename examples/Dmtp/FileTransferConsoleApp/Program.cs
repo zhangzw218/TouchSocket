@@ -558,8 +558,8 @@ internal class Program
         ConsoleLogger.Default.Info("开始从客户端下载文件");
 
         /****此处的逻辑是在程序运行目录下创建一个空内容，但是有长度的文件，用于测试****/
-        var filePath = "ServicePullFileFromClient.Test";
-        var saveFilePath = "SaveServicePullFileFromClient.Test";
+        var filePath = "ServicePullFileFromClient.Test1";
+        var saveFilePath = "SaveServicePullFileFromClient.Test1";
         if (!File.Exists(filePath))//创建客户端的测试文件
         {
             using (var stream = File.OpenWrite(filePath))
@@ -567,6 +567,16 @@ internal class Program
                 stream.SetLength(FileLength);
             }
         }
+
+        var deleteToken = new CancellationTokenSource();
+        _ = Task.Run(async () =>
+        {
+            using (var file2 = File.OpenRead(filePath))
+            {
+                await Task.Delay(1000000, deleteToken.Token);
+            }
+        });
+
         /****此处的逻辑是在程序运行目录下创建一个空内容，但是有长度的文件，用于测试****/
 
         var metadata = new Metadata();//传递到客户端的元数据
@@ -604,6 +614,8 @@ internal class Program
         socketClient.Logger.Info(result.ToString());
 
         //删除测试文件。此逻辑在实际使用时不要有
+        deleteToken.Cancel();
+        await Task.Delay(2000);
         File.Delete(filePath);
         File.Delete(saveFilePath);
     }
