@@ -14,8 +14,7 @@ namespace TouchV4Socket.JsonRpc;
 
 internal class TcpJsonRpcCallContext : JsonRpcCallContextBase, ITcpJsonRpcCallContext
 {
-    public TcpJsonRpcCallContext(object caller)
+    public TcpJsonRpcCallContext(object caller, CancellationToken cancellationToken) : base(caller, cancellationToken)
     {
-        base.Caller = caller;
     }
 }

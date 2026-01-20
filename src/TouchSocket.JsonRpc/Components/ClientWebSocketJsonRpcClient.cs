@@ -10,22 +10,24 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Buffers;
+using System.Net.WebSockets;
+using TouchV4Socket.Http.WebSockets;
 using TouchV4Socket.Rpc;
-using TouchV4Socket.Sockets;
 
 namespace TouchV4Socket.JsonRpc;
 
 /// <summary>
-/// 表示一个TCP JsonRpc客户端。
+/// 基于WebSocket协议的JsonRpc客户端。
 /// </summary>
-public class TcpJsonRpcClient : TcpClientBase, ITcpJsonRpcClient
+public class ClientWebSocketJsonRpcClient : SetupClientWebSocket, IWebSocketJsonRpcClient
 {
     private readonly JsonRpcActor m_jsonRpcActor;
 
     /// <summary>
-    /// 初始化 <see cref="TcpJsonRpcClient"/> 类的新实例。
+    /// 初始化 <see cref="ClientWebSocketJsonRpcClient"/> 类的新实例。
     /// </summary>
-    public TcpJsonRpcClient()
+    public ClientWebSocketJsonRpcClient()
     {
         this.m_jsonRpcActor = new JsonRpcActor()
         {
@@ -33,28 +35,22 @@ public class TcpJsonRpcClient : TcpClientBase, ITcpJsonRpcClient
         };
     }
 
-    #region JsonRpcActor
-
-    private Task SendAction(ReadOnlyMemory<byte> memory, CancellationToken cancellationToken)
-    {
-        return base.ProtectedSendAsync(memory, cancellationToken);
-    }
-
-    #endregion JsonRpcActor
-
     /// <summary>
-    /// 获取JsonRpc的调用键。
+    /// JsonRpc的调用键。
     /// </summary>
     public ActionMap ActionMap => this.m_jsonRpcActor.ActionMap;
 
     /// <inheritdoc/>
     public TouchSocketSerializerConverter<string, JsonRpcActor> SerializerConverter => this.m_jsonRpcActor.SerializerConverter;
 
-    /// <inheritdoc/>
-    public Task ConnectAsync(CancellationToken cancellationToken)
+    #region JsonRpcActor
+
+    private Task SendAction(ReadOnlyMemory<byte> memory, CancellationToken cancellationToken)
     {
-        return this.TcpConnectAsync(cancellationToken);
+        return base.ProtectedSendAsync(memory, WebSocketMessageType.Text, true, cancellationToken);
     }
+
+    #endregion JsonRpcActor
 
     /// <inheritdoc/>
     public Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
@@ -63,19 +59,10 @@ public class TcpJsonRpcClient : TcpClientBase, ITcpJsonRpcClient
     }
 
     /// <inheritdoc/>
-    protected override void SafetyDispose(bool disposing)
-    {
-        if (disposing)
-        {
-            this.m_jsonRpcActor.SafeDispose();
-        }
-        base.SafetyDispose(disposing);
-    }
-
-    /// <inheritdoc/>
     protected override void LoadConfig(TouchSocketConfig config)
     {
         base.LoadConfig(config);
+
         this.m_jsonRpcActor.Logger = this.Logger;
         this.m_jsonRpcActor.Resolver = this.Resolver;
         var rpcServerProvider = this.Resolver.Resolve<IRpcServerProvider>();
@@ -90,29 +77,38 @@ public class TcpJsonRpcClient : TcpClientBase, ITcpJsonRpcClient
     }
 
     /// <inheritdoc/>
-    protected override async Task OnTcpReceived(ReceivedDataEventArgs e)
+    protected override async Task OnWebSocketReceived(WebSocketMessageType messageType, ReadOnlySequence<byte> sequence)
     {
-        var jsonRpcMemory = ReadOnlyMemory<byte>.Empty;
-        if (e.RequestInfo is IJsonRpcRequestInfo requestInfo)
+        if (messageType == WebSocketMessageType.Text)
         {
-            jsonRpcMemory = requestInfo.GetJsonRpcMemory();
-        }
-        else if (e.RequestInfo is JsonPackage jsonPackage)
-        {
-            jsonRpcMemory = jsonPackage.Data;
-        }
-        else if (!e.Memory.IsEmpty)
-        {
-            jsonRpcMemory = e.Memory;
-        }
+            using (var buffer = new ContiguousMemoryBuffer(sequence))
+            {
+                var jsonMemory = buffer.Memory;
 
-        if (jsonRpcMemory.IsEmpty)
-        {
-            return;
-        }
-        var callContext = new TcpJsonRpcCallContext(this,this.ClosedToken);
-        await this.m_jsonRpcActor.InputReceiveAsync(jsonRpcMemory, callContext).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                if (jsonMemory.IsEmpty)
+                {
+                    return;
+                }
 
-        await base.OnTcpReceived(e).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                var callContext = new WebSocketJsonRpcCallContext(this, this.ClosedToken);
+                await this.m_jsonRpcActor.InputReceiveAsync(jsonMemory, callContext).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+            }
+        }
+    }
+
+    /// <inheritdoc/>
+    protected override void SafetyDispose(bool disposing)
+    {
+        if (disposing)
+        {
+            this.m_jsonRpcActor.SafeDispose();
+        }
+        base.SafetyDispose(disposing);
+    }
+
+    /// <inheritdoc/>
+    public Task ConnectAsync(CancellationToken cancellationToken)
+    {
+        return base.WebSocketConnectAsync(cancellationToken);
     }
 }

@@ -12,6 +12,7 @@
 
 using TouchV4Socket.Http;
 using TouchV4Socket.Rpc;
+using TouchV4Socket.Sockets;
 
 namespace TouchV4Socket.WebApi;
 
@@ -128,4 +129,9 @@ public class WebApiClient : HttpClientBase, IWebApiClient
         }
     }
     #endregion Rpc调用
+
+    protected override Task OnTcpClosed(ClosedEventArgs e)
+    {
+        return base.OnTcpClosed(e);
+    }
 }
