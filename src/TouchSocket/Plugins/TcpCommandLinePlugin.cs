@@ -38,7 +38,7 @@ public abstract class TcpCommandLinePlugin : PluginBase, ITcpReceivedPlugin
         this.m_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         // 初始化数据转换器，用于处理命令的序列化和反序列化。
-        this.Converter = new StringSerializerConverter(new StringToPrimitiveSerializerFormatter<object>(), new JsonStringToClassSerializerFormatter<object>());
+        this.Converter = new StringSerializerConverter(new StringToPrimitiveSerializerFormatter<object>(), new SystemTextJsonStringToClassSerializerFormatter<object>());
 
         // 扫描当前类中所有公开实例方法，筛选出名称以"Command"结尾的方法。
         var ms = this.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance).Where(a => a.Name.EndsWith("Command"));
@@ -101,17 +101,17 @@ public abstract class TcpCommandLinePlugin : PluginBase, ITcpReceivedPlugin
 
                 try
                 {
-                    var result = await method.InvokeAsync(this, os).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                    var result = await method.InvokeAsync(this, os).ConfigureDefaultAwait();
                     if (method.HasReturn)
                     {
-                        await clientSender.SendAsync(this.Converter.Serialize(null, result)).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                        await clientSender.SendAsync(this.Converter.Serialize(null, result)).ConfigureDefaultAwait();
                     }
                 }
                 catch (Exception ex)
                 {
                     if (this.ReturnException)
                     {
-                        await clientSender.SendAsync(ex.Message).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+                        await clientSender.SendAsync(ex.Message).ConfigureDefaultAwait();
                     }
                 }
             }
@@ -121,6 +121,6 @@ public abstract class TcpCommandLinePlugin : PluginBase, ITcpReceivedPlugin
             this.m_logger.Log(LogLevel.Error, this, ex.Message, ex);
         }
 
-        await e.InvokeNext().ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+        await e.InvokeNext().ConfigureDefaultAwait();
     }
 }

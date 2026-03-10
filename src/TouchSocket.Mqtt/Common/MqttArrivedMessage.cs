@@ -10,6 +10,8 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Buffers;
+
 namespace TouchV4Socket.Mqtt;
 
 /// <summary>
@@ -17,16 +19,17 @@ namespace TouchV4Socket.Mqtt;
 /// </summary>
 public sealed class MqttArrivedMessage
 {
-    /// <summary>
-    /// 初始化 <see cref="MqttArrivedMessage"/> 类的新实例。
-    /// </summary>
-    /// <param name="message">Mqtt 发布消息。</param>
-    public MqttArrivedMessage(MqttPublishMessage message)
+    public MqttArrivedMessage(string topicName,QosLevel qosLevel, bool retain, ReadOnlySequence<byte> payload)
     {
-        this.QosLevel = message.QosLevel;
-        this.Retain = message.Retain;
-        this.TopicName = message.TopicName;
-        this.Payload = new ReadOnlyMemory<byte>(message.Payload.ToArray());
+        this.QosLevel = qosLevel;
+        this.Payload = payload;
+        this.Retain = retain;
+        this.TopicName = topicName;
+    }
+
+    public MqttArrivedMessage(string topicName, QosLevel qosLevel, bool retain, ReadOnlyMemory<byte> payload)
+        :this(topicName, qosLevel, retain, new ReadOnlySequence<byte>(payload))
+    {
     }
 
     /// <summary>
@@ -37,7 +40,7 @@ public sealed class MqttArrivedMessage
     /// <summary>
     /// 获取消息的有效负载。
     /// </summary>
-    public ReadOnlyMemory<byte> Payload { get; }
+    public ReadOnlySequence<byte> Payload { get; }
 
     /// <summary>
     /// 获取一个值，该值指示消息是否被保留。

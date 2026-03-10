@@ -10,7 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using Newtonsoft.Json;
+using System.Text.Json;
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
@@ -89,7 +89,7 @@ internal sealed class SwaggerPlugin : PluginBase, IServerStartedPlugin, IHttpPlu
                 this.m_swagger.Add(key, bytes);
             }
         }
-        await e.InvokeNext().ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+        await e.InvokeNext().ConfigureDefaultAwait();
 
         if (this.LaunchBrowser)
         {
@@ -252,15 +252,11 @@ internal sealed class SwaggerPlugin : PluginBase, IServerStartedPlugin, IHttpPlu
 
         openApiRoot.Components = this.GetComponents(schemaTypeList);
 
-        var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-        return JsonConvert.SerializeObject(openApiRoot, Formatting.Indented, jsonSetting).ToUtf8Bytes();
+        return JsonSerializer.Serialize(openApiRoot, SwaggerJsonSerializerContext.Default.OpenApiRoot).ToUtf8Bytes();
     }
 
     private void BuildHttpMethod(string url, HttpMethod httpMethod, RpcMethod rpcMethod, in List<Type> schemaTypeList, in Dictionary<string, OpenApiPath> paths)
     {
-        //解析post
-        var openApiPath = new OpenApiPath();
-
         var openApiPathValue = new OpenApiPathValue
         {
             Tags = this.GetTags(rpcMethod),
@@ -355,8 +351,14 @@ internal sealed class SwaggerPlugin : PluginBase, IServerStartedPlugin, IHttpPlu
 
         this.BuildResponse(rpcMethod, openApiPathValue, schemaTypeList);
 
+        //需要符合OpenAPI规范，其中一个路径可以包含多个HTTP方法操作。
+        //issue:https://github.com/RRQM/TouchSocket/issues/114
+        if (!paths.TryGetValue(url, out var openApiPath))
+        {
+            openApiPath = new OpenApiPath();
+            paths.Add(url, openApiPath);
+        }
         openApiPath.Add(httpMethod.ToString().ToLower(), openApiPathValue);
-        paths.Add(url, openApiPath);
     }
 
     private List<WebApiParameterInfo> GetWebApiParameter(RpcMethod rpcMethod)
@@ -740,10 +742,10 @@ internal sealed class SwaggerPlugin : PluginBase, IServerStartedPlugin, IHttpPlu
                 .SetStatusWithSuccess()
                 .SetContentTypeByExtension(Path.GetExtension(request.RelativeURL))
                 .SetContent(bytes);
-            await response.AnswerAsync().ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+            await response.AnswerAsync().ConfigureDefaultAwait();
             return;
         }
-        await e.InvokeNext().ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+        await e.InvokeNext().ConfigureDefaultAwait();
     }
 
 }

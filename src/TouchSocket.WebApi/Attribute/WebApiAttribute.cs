@@ -10,6 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Reflection;
 using TouchV4Socket.Rpc;
 
 namespace TouchV4Socket.WebApi;
@@ -422,5 +423,11 @@ public sealed class WebApiAttribute : RpcAttribute
             return routes.ToArray();
         }
         return default;
+    }
+
+    /// <inheritdoc/>
+    protected override PropertyInfo[] GetPublicProperties()
+    {
+        return typeof(WebApiAttribute).GetProperties(BindingFlags.Public | BindingFlags.Instance);
     }
 }

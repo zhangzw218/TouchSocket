@@ -66,7 +66,7 @@ public static partial class HttpExtensions
     public static async Task<string> GetBodyAsync(this HttpBase httpBase, Encoding encoding, CancellationToken cancellationToken = default)
     {
         // 异步获取 HTTP 响应的内容作为字节数组
-        var bytes = await httpBase.GetContentAsync(cancellationToken).ConfigureAwait(EasyTask.ContinueOnCapturedContext);
+        var bytes = await httpBase.GetContentAsync(cancellationToken).ConfigureDefaultAwait();
         // 如果字节数组为空，则返回 null，否则使用 UTF-8 编码将字节数组转换为字符串并返回
         return bytes.IsEmpty ? null : bytes.Span.ToString(encoding);
     }
@@ -273,7 +273,7 @@ public static partial class HttpExtensions
             if (CheckFormBody(contentType, out var encoding))
             {
                 return new InternalFormCollection(
-                    await request.GetContentAsync().ConfigureAwait(EasyTask.ContinueOnCapturedContext), encoding);
+                    await request.GetContentAsync().ConfigureDefaultAwait(), encoding);
             }
 
             return new InternalFormCollection();
@@ -287,7 +287,7 @@ public static partial class HttpExtensions
             try
             {
                 WriterExtension.WriteNormalString(ref valueByteBlock, boundaryString, Encoding.UTF8);
-                return new InternalFormCollection(await request.GetContentAsync().ConfigureAwait(EasyTask.ContinueOnCapturedContext), valueByteBlock.Span);
+                return new InternalFormCollection(await request.GetContentAsync().ConfigureDefaultAwait(), valueByteBlock.Span);
             }
             finally
             {
@@ -729,5 +729,30 @@ public static partial class HttpExtensions
         return response;
     }
 
+    /// <summary>
+    /// 将字符串消息以UTF-8编码写入HTTP响应的内容中。
+    /// </summary>
+    /// <param name="response">要写入消息的HTTP响应对象</param>
+    /// <param name="message">要写入响应的字符串消息</param>
+    /// <param name="cancellationToken">可取消令箭</param>
+    /// <typeparam name="TResponse">响应类型，必须继承自HttpResponse</typeparam>
+    public static async ValueTask WriteAsync<TResponse>(this TResponse response, string message, CancellationToken cancellationToken = default) where TResponse : HttpResponse
+    {
+        //PR:https://github.com/RRQM/TouchSocket/pull/121
+        //此处使用分段写入的方式，避免一次性将整个字符串转换为字节数组，减少内存占用和GC压力。
+        var writer = new SegmentedBytesWriter();
+        try
+        {
+            WriterExtension.WriteNormalString(ref writer, message, Encoding.UTF8);
+            foreach (var memory in writer.Sequence)
+            {
+                await response.WriteAsync(memory, cancellationToken);
+            }
+        }
+        finally
+        {
+            writer.Dispose();
+        }
+    }
     #endregion HttpResponse
 }

@@ -14,7 +14,7 @@ using TouchV4Socket.Http;
 
 namespace TouchV4Socket.WebApi;
 
-internal sealed class WebApiJsonSerializerFormatter : JsonStringToClassSerializerFormatter<HttpContext>
+internal sealed class WebApiJsonSerializerFormatter : SystemTextJsonStringToClassSerializerFormatter<HttpContext>
 {
     public override bool TrySerialize<TTarget>(HttpContext state, in TTarget target, out string source)
     {

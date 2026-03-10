@@ -23,7 +23,9 @@ namespace TouchV4Socket.Core;
 /// </remarks>
 public static partial class WriterExtension
 {
-    private const int ChunkSize = 4096;
+    private const int InitialChunkSize = 4096;
+    private const int MaxChunkSize = 512 * 1024;
+    private const int ChunkSizeDoubleInterval = 10;
 
     /// <summary>
     /// 将布尔值数组写入字节写入器。
@@ -72,16 +74,24 @@ public static partial class WriterExtension
             
             var remaining = byteBlock.Length;
             var offset = 0;
-            
+            var chunkSize = InitialChunkSize;
+            var iterationCount = 0;
+
             while (remaining > 0)
             {
-                var bytesToWrite = Math.Min(remaining, ChunkSize);
+                var bytesToWrite = Math.Min(remaining, chunkSize);
                 var span = writer.GetSpan(bytesToWrite);
                 byteBlock.Span.Slice(offset, bytesToWrite).CopyTo(span);
                 writer.Advance(bytesToWrite);
-                
+
                 offset += bytesToWrite;
                 remaining -= bytesToWrite;
+
+                iterationCount++;
+                if (chunkSize < MaxChunkSize && iterationCount % ChunkSizeDoubleInterval == 0)
+                {
+                    chunkSize = Math.Min(chunkSize << 1, MaxChunkSize);
+                }
             }
         }
     }
@@ -106,16 +116,24 @@ public static partial class WriterExtension
 
         var remaining = span.Length;
         var offset = 0;
-        
+        var chunkSize = InitialChunkSize;
+        var iterationCount = 0;
+
         while (remaining > 0)
         {
-            var bytesToWrite = Math.Min(remaining, ChunkSize);
+            var bytesToWrite = Math.Min(remaining, chunkSize);
             var writerSpan = writer.GetSpan(bytesToWrite);
             span.Slice(offset, bytesToWrite).CopyTo(writerSpan);
             writer.Advance(bytesToWrite);
-            
+
             offset += bytesToWrite;
             remaining -= bytesToWrite;
+
+            iterationCount++;
+            if (chunkSize < MaxChunkSize && iterationCount % ChunkSizeDoubleInterval == 0)
+            {
+                chunkSize = Math.Min(chunkSize << 1, MaxChunkSize);
+            }
         }
     }
 
@@ -230,6 +248,8 @@ public static partial class WriterExtension
     /// <exception cref="ArgumentNullException">当<paramref name="value"/>为 <see langword="null"/>时抛出。</exception>
     /// <remarks>
     /// 此方法直接将字符串按指定编码写入，不包含长度信息。
+    /// 写入块大小从4096字符起，每经过10次迭代翻倍，上限为512K字符，
+    /// 以梯度方式覆盖内存池各档位，兼顾小字符串效率与大字符串吞吐量。
     /// </remarks>
     public static void WriteNormalString<TWriter>(ref TWriter writer, string value, Encoding encoding)
         where TWriter : IBytesWriter
@@ -244,6 +264,8 @@ public static partial class WriterExtension
 
         var remaining = value.Length;
         var offset = 0;
+        var chunkSize = InitialChunkSize;
+        var iterationCount = 0;
 
         unsafe
         {
@@ -251,7 +273,7 @@ public static partial class WriterExtension
             {
                 while (remaining > 0)
                 {
-                    var charsToProcess = Math.Min(remaining, ChunkSize);
+                    var charsToProcess = Math.Min(remaining, chunkSize);
                     var maxByteCount = encoding.GetMaxByteCount(charsToProcess);
                     var span = writer.GetSpan(maxByteCount);
 
@@ -263,6 +285,12 @@ public static partial class WriterExtension
 
                     offset += charsToProcess;
                     remaining -= charsToProcess;
+
+                    iterationCount++;
+                    if (chunkSize < MaxChunkSize && iterationCount % ChunkSizeDoubleInterval == 0)
+                    {
+                        chunkSize = Math.Min(chunkSize << 1, MaxChunkSize);
+                    }
                 }
             }
         }
@@ -389,6 +417,8 @@ public static partial class WriterExtension
             var totalLen = 0;
             var remaining = chars.Length;
             var offset = 0;
+            var chunkSize = InitialChunkSize;
+            var iterationCount = 0;
 
             unsafe
             {
@@ -396,7 +426,7 @@ public static partial class WriterExtension
                 {
                     while (remaining > 0)
                     {
-                        var charsToProcess = Math.Min(remaining, ChunkSize);
+                        var charsToProcess = Math.Min(remaining, chunkSize);
                         var maxByteCount = Encoding.UTF8.GetMaxByteCount(charsToProcess);
                         var bodySpan = writer.GetSpan(maxByteCount);
 
@@ -409,6 +439,12 @@ public static partial class WriterExtension
 
                         offset += charsToProcess;
                         remaining -= charsToProcess;
+
+                        iterationCount++;
+                        if (chunkSize < MaxChunkSize && iterationCount % ChunkSizeDoubleInterval == 0)
+                        {
+                            chunkSize = Math.Min(chunkSize << 1, MaxChunkSize);
+                        }
                     }
                 }
             }
@@ -483,6 +519,68 @@ public static partial class WriterExtension
         var span = writer.GetSpan(size);
         TouchSocketBitConverter.GetBitConverter(endianType).WriteBytes(span, value);
         writer.Advance(size);
+    }
+
+    /// <summary>
+    /// 将可变长度编码的字符串写入字节写入器。
+    /// </summary>
+    /// <typeparam name="TWriter">实现<see cref="IBytesWriter"/>接口的写入器类型。</typeparam>
+    /// <param name="writer">字节写入器实例。</param>
+    /// <param name="value">要写入的字符串。</param>
+    /// <remarks>
+    /// 此方法使用<see cref="WriteVarUInt32{TWriter}(ref TWriter, uint)"/>写入UTF-8字节长度（长度+1），
+    /// 然后写入UTF-8编码的字符串内容。当<paramref name="value"/>为<see langword="null"/>时，长度字段写入0。
+    /// </remarks>
+    public static void WriteVarString<TWriter>(ref TWriter writer, string value)
+        where TWriter : IBytesWriter
+    {
+        if (value is null)
+        {
+            WriteVarUInt32(ref writer, 0);
+            return;
+        }
+
+        if (value.Length == 0)
+        {
+            WriteVarUInt32(ref writer, 1);
+            return;
+        }
+
+        var byteCount = Encoding.UTF8.GetByteCount(value);
+        WriteVarUInt32(ref writer, (uint)(byteCount + 1));
+
+        var remaining = value.Length;
+        var offset = 0;
+        var chunkSize = InitialChunkSize;
+        var iterationCount = 0;
+
+        unsafe
+        {
+            fixed (char* p = value)
+            {
+                while (remaining > 0)
+                {
+                    var charsToProcess = Math.Min(remaining, chunkSize);
+                    var maxByteCount = Encoding.UTF8.GetMaxByteCount(charsToProcess);
+                    var span = writer.GetSpan(maxByteCount);
+
+                    fixed (byte* p1 = &span[0])
+                    {
+                        var bytesWritten = Encoding.UTF8.GetBytes(p + offset, charsToProcess, p1, maxByteCount);
+                        writer.Advance(bytesWritten);
+                    }
+
+                    offset += charsToProcess;
+                    remaining -= charsToProcess;
+
+                    iterationCount++;
+                    if (chunkSize < MaxChunkSize && iterationCount % ChunkSizeDoubleInterval == 0)
+                    {
+                        chunkSize = Math.Min(chunkSize << 1, MaxChunkSize);
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>

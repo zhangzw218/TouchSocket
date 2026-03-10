@@ -45,6 +45,11 @@ public class SerialPortOption
     /// </summary>
     public string PortName { get; set; } = "COM1";
 
+    /// <summary>
+    /// 串口输入缓冲区的大小
+    /// </summary>
+    public int ReadBufferSize { get; set; } = 4096;
+
     ///<inheritdoc cref = "SerialPort.RtsEnable" />
     public bool RtsEnable { get; set; }
 
@@ -57,6 +62,11 @@ public class SerialPortOption
     /// 是否异步流模式。
     /// </summary>
     public bool StreamAsync { get; set; }
+
+    /// <summary>
+    /// 串口输出缓冲区的大小
+    /// </summary>
+    public int WriteBufferSize { get; set; } = 2048;
 
     /// <inheritdoc/>
     public override string ToString()
