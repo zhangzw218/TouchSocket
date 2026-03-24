@@ -31,7 +31,6 @@ internal class Program
         client = await GetTcpDmtpClient();
 
         consoleAction.Add("1", "直接调用Rpc", RunInvokeT);
-        consoleAction.Add("2", "客户端互相调用Rpc", RunInvokeT_2C);
 
         consoleAction.ShowAll();
 
@@ -41,14 +40,6 @@ internal class Program
     private static void ConsoleAction_OnException(Exception obj)
     {
         ConsoleLogger.Default.Exception(obj);
-    }
-
-    /// <summary>
-    /// 客户端互相调用Rpc
-    /// </summary>
-    private static async Task RunInvokeT_2C()
-    {
-        await client.GetDmtpRpcActor().InvokeTAsync<bool>("ClientC", "Notice", InvokeOption.WaitInvoke, "Hello");
     }
 
     /// <summary>
@@ -103,7 +94,7 @@ internal class Program
              .SetDmtpOption(options =>
              {
                  options.VerifyToken = "Dmtp";
-                 options.Id = "ClientA";
+                 options.Id = "ClientC";
              }));
         await client.ConnectAsync();
 
