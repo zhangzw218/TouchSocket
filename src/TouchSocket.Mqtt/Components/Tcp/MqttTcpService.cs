@@ -10,18 +10,23 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using TouchV4Socket.Sockets;
+using TouchV4Socket.Core;
 
 namespace TouchV4Socket.Mqtt;
-
-public class MqttTcpService : TcpServiceBase<MqttTcpSessionClient>, IMqttTcpService
+/// <summary>
+/// 基于 TCP 的 Mqtt 服务端。
+/// </summary>
+public class MqttTcpService : MqttTcpServiceBase
 {
     private readonly MqttBroker m_mqttBroker = new();
 
-    public MqttBroker MqttBroker => this.m_mqttBroker;
+    /// <inheritdoc/>
+    public override MqttBroker MqttBroker => this.m_mqttBroker;
 
-    protected override MqttTcpSessionClient NewClient()
+    /// <inheritdoc/>
+    protected override void LoadConfig(TouchSocketConfig config)
     {
-        return new MqttTcpSessionClient(this.m_mqttBroker);
+        base.LoadConfig(config);
+        this.m_mqttBroker.LoadConfig(config.GetValue(MqttConfigExtension.MqttBrokerOptionProperty) ?? new MqttBrokerOption());
     }
 }

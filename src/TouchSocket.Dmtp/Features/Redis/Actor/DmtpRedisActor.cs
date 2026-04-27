@@ -10,6 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using TouchV4Socket.Resources;
 
 namespace TouchV4Socket.Dmtp.Redis;
@@ -148,7 +149,7 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
     }
 
     /// <inheritdoc/>
-    public async Task<TValue> GetAsync<TValue>(string key, CancellationToken cancellationToken = default)
+    public async Task<TValue> GetAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] TValue>(string key, CancellationToken cancellationToken = default)
     {
         var cache = await this.GetCacheAsync(key, cancellationToken).ConfigureDefaultAwait();
 
@@ -418,7 +419,6 @@ internal sealed class DmtpRedisActor : DisposableObject, IDmtpRedisActor
     /// <summary>
     /// 设置处理协议标识的起始标识。
     /// </summary>
-    /// <param name="start"></param>
     public void SetProtocolFlags(ushort start)
     {
         this.m_redis_Request = start++;

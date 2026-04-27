@@ -11,7 +11,6 @@
 //------------------------------------------------------------------------------
 
 using System.Buffers;
-using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using TouchV4Socket.Sockets;
@@ -75,7 +74,7 @@ public abstract class HttpBase : IRequestInfo
         set
         {
             this.m_contentLength = value;
-            this.m_headers.Add(HttpHeaders.ContentLength, value.ToString());
+            this.m_headers[HttpHeaders.ContentLength] = value.ToString();
         }
     }
 
@@ -90,7 +89,7 @@ public abstract class HttpBase : IRequestInfo
     public TextValues ContentType
     {
         get => this.m_headers.Get(HttpHeaders.ContentType);
-        set => this.m_headers.Add(HttpHeaders.ContentType, value);
+        set => this.m_headers[HttpHeaders.ContentType] = value;
     }
 
     /// <summary>
@@ -109,7 +108,7 @@ public abstract class HttpBase : IRequestInfo
             this.m_isChunk = value;
             if (value)
             {
-                this.Headers.Add(HttpHeaders.TransferEncoding, "chunked");
+                this.m_headers[HttpHeaders.TransferEncoding] = "chunked";
             }
             else
             {
@@ -175,6 +174,9 @@ public abstract class HttpBase : IRequestInfo
         return true;
     }
 
+    /// <summary>
+    /// 重置 HTTP 请求状态。
+    /// </summary>
     protected internal virtual void Reset()
     {
         this.m_headers.Clear();
@@ -251,7 +253,7 @@ public abstract class HttpBase : IRequestInfo
                 this.m_contentLength = length;
             }
             var value = this.m_stringPool.Get(valueSpan);
-            this.m_headers.AddInternal(HttpHeaders.ContentLength, value);
+            this.m_headers[HttpHeaders.ContentLength] = value;
             return;
         }
 
@@ -259,7 +261,14 @@ public abstract class HttpBase : IRequestInfo
         {
             this.m_isChunk = TouchSocketHttpUtility.EqualsIgnoreCaseAscii(valueSpan, "chunked"u8);
             var value = this.m_stringPool.Get(valueSpan);
-            this.m_headers.AddInternal(HttpHeaders.TransferEncoding, value);
+            this.m_headers[HttpHeaders.TransferEncoding] = value;
+            return;
+        }
+
+        if (keySpan.Length == 12 && TouchSocketHttpUtility.EqualsIgnoreCaseAscii(keySpan, "Content-Type"u8))
+        {
+            var value = this.m_stringPool.Get(valueSpan);
+            this.m_headers[HttpHeaders.ContentType] = value;
             return;
         }
 
@@ -406,11 +415,12 @@ public abstract class HttpBase : IRequestInfo
     #region Read
 
     /// <summary>
-    /// 异步读取HTTP块段的内容。
+    /// 异步读取HTTP内容数据到指定缓冲区。
     /// </summary>
+    /// <param name="buffer">接收数据的缓冲区。</param>
     /// <param name="cancellationToken">用于取消异步操作的令牌。</param>
-    /// <returns>返回一个<see cref="IReadOnlyMemoryBlockResult"/>，表示异步读取操作的结果。</returns>
-    public abstract ValueTask<HttpReadOnlyMemoryBlockResult> ReadAsync(CancellationToken cancellationToken = default);
+    /// <returns>实际读取的字节数。返回 <see langword="0"/> 表示内容已读取完毕。</returns>
+    public abstract ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 异步读取并复制流数据
@@ -441,27 +451,24 @@ public abstract class HttpBase : IRequestInfo
         {
             flowOperator.SetLength(this.ContentLength);
 
+            using var bufferOwner = MemoryPool<byte>.Shared.Rent(81920);
+            var buffer = bufferOwner.Memory;
             while (true)
             {
-                using (var blockResult = await this.ReadAsync(cancellationToken).ConfigureDefaultAwait())
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        return flowOperator.SetResult(Result.Canceled);
-                    }
-
-                    var memory = blockResult.Memory;
-                    Debug.WriteLine($"读取块大小：{memory.Length}，时间：{DateTime.Now:HH:mm:ss ffff}");
-                    if (!memory.IsEmpty)
-                    {
-                        await stream.WriteAsync(memory, cancellationToken).ConfigureDefaultAwait();
-                        await flowOperator.AddFlowAsync(memory.Length).ConfigureDefaultAwait();
-                    }
-                    if (blockResult.IsCompleted)
-                    {
-                        break;
-                    }
+                    return flowOperator.SetResult(Result.Canceled);
                 }
+
+                var read = await this.ReadAsync(buffer, cancellationToken).ConfigureDefaultAwait();
+                if (read == 0)
+                {
+                    break;
+                }
+
+                var memory = buffer.Slice(0, read);
+                await stream.WriteAsync(memory, cancellationToken).ConfigureDefaultAwait();
+                await flowOperator.AddFlowAsync(read).ConfigureDefaultAwait();
             }
             return flowOperator.SetResult(Result.Success);
         }

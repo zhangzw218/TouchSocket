@@ -10,11 +10,15 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
+using System.Text.Json;
 using TouchV4Socket.Http.WebSockets;
 using TouchV4Socket.Rpc;
 
 namespace TouchV4Socket.JsonRpc;
 
+/// <summary>
+/// 基于 WebSocket 的 JsonRpc 客户端。
+/// </summary>
 public class WebSocketJsonRpcClient : WebSocketClientBase, IWebSocketJsonRpcClient
 {
     private readonly JsonRpcActor m_jsonRpcActor;
@@ -38,7 +42,7 @@ public class WebSocketJsonRpcClient : WebSocketClientBase, IWebSocketJsonRpcClie
     public ActionMap ActionMap => this.m_jsonRpcActor.ActionMap;
 
     /// <inheritdoc/>
-    public TouchSocketSerializerConverter<string, JsonRpcActor> SerializerConverter => this.m_jsonRpcActor.SerializerConverter;
+    public JsonSerializerOptions SerializerOptions { get => this.m_jsonRpcActor.SerializerOptions; set => this.m_jsonRpcActor.SerializerOptions = value; }
 
     #region JsonRpcActor
 
@@ -61,7 +65,7 @@ public class WebSocketJsonRpcClient : WebSocketClientBase, IWebSocketJsonRpcClie
             .ConfigureDefaultAwait(); ;
         try
         {
-            await base.ProtectedWebSocketConnectAsync(cancellationToken)
+            await base.ProtectedWebSocketConnectAsync(true,cancellationToken)
                 .ConfigureDefaultAwait(); ;
         }
         finally
@@ -91,7 +95,7 @@ public class WebSocketJsonRpcClient : WebSocketClientBase, IWebSocketJsonRpcClie
 
         var jsonRpcOption = config.GetValue(JsonRpcConfigExtension.JsonRpcOptionProperty) ?? new JsonRpcOption();
 
-        this.m_jsonRpcActor.SerializerConverter = jsonRpcOption.SerializerConverter;
+        this.m_jsonRpcActor.SerializerOptions = jsonRpcOption.SerializerOptions;
     }
 
     /// <inheritdoc/>

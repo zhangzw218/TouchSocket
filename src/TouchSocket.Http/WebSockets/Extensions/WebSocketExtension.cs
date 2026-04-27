@@ -20,6 +20,13 @@ namespace TouchV4Socket.Http.WebSockets;
 public static class WebSocketExtension
 {
     #region WebSocket
+    /// <summary>
+    /// 安全关闭 WebSocket 客户端连接。
+    /// </summary>
+    /// <param name="webSocket">WebSocket 实例。</param>
+    /// <param name="msg">关闭原因。</param>
+    /// <param name="cancellationToken">取消令牌。</param>
+    /// <returns>返回操作结果。</returns>
     public static async Task<Result> SafeCloseClientAsync(this WebSocket webSocket, string msg, CancellationToken cancellationToken)
     {
         if (webSocket is null)
@@ -59,10 +66,6 @@ public static class WebSocketExtension
     /// <returns>返回一个任务，该任务在完成后将包含读取到的字符串</returns>
     public static async Task ReadStringAsync(this IWebSocket webSocket, ByteBlock byteBlock, CancellationToken cancellationToken = default)
     {
-        if (!webSocket.AllowAsyncRead)
-        {
-            ThrowHelper.ThrowInvalidOperationException($"必须启用{nameof(webSocket.AllowAsyncRead)}");
-        }
         while (true)
         {
             using (var receiveResult = await webSocket.ReadAsync(cancellationToken))
@@ -151,10 +154,6 @@ public static class WebSocketExtension
     /// <returns>返回一个Task对象，表示异步读取操作。</returns>
     public static async Task ReadBinaryAsync(this IWebSocket webSocket, ByteBlock byteBlock, CancellationToken cancellationToken = default)
     {
-        if (!webSocket.AllowAsyncRead)
-        {
-            ThrowHelper.ThrowInvalidOperationException($"必须启用{nameof(webSocket.AllowAsyncRead)}");
-        }
         while (true)
         {
             using (var receiveResult = await webSocket.ReadAsync(cancellationToken))
@@ -219,10 +218,6 @@ public static class WebSocketExtension
     /// <returns>返回一个<see cref="Task"/>对象，表示异步读取操作。</returns>
     public static async Task ReadBinaryAsync(this IWebSocket webSocket, Stream stream, CancellationToken cancellationToken = default)
     {
-        if (!webSocket.AllowAsyncRead)
-        {
-            ThrowHelper.ThrowInvalidOperationException($"必须启用{nameof(webSocket.AllowAsyncRead)}");
-        }
         while (true)
         {
             using (var receiveResult = await webSocket.ReadAsync(cancellationToken))

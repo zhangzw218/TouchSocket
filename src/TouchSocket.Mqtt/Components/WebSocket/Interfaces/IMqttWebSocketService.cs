@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 
 namespace TouchV4Socket.Mqtt;
 
+/// <summary>
+/// 基于 WebSocket 的 Mqtt 服务端接口。
+/// </summary>
 public interface IMqttWebSocketService:IMqttService
 {
 }

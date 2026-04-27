@@ -14,6 +14,9 @@ namespace TouchV4Socket.Mqtt;
 
 public partial class MqttSubAckMessage
 {
+    /// <summary>
+    /// 获取或设置原因符串。
+    /// </summary>
     public string ReasonString { get; set; }
 
     /// <inheritdoc/>
@@ -22,7 +25,7 @@ public partial class MqttSubAckMessage
         WriterExtension.WriteValue<TWriter, ushort>(ref writer, this.MessageId, EndianType.Big);
 
         var variableByteIntegerRecorder = new VariableByteIntegerRecorder();
-        var byteBlockWriter = this.CreateVariableWriter(ref writer);
+        var byteBlockWriter = this.CreatePropertiesWriter(ref writer);
         variableByteIntegerRecorder.CheckOut(ref byteBlockWriter);
         MqttExtension.WriteReasonString(ref byteBlockWriter, this.ReasonString);
         MqttExtension.WriteUserProperties(ref byteBlockWriter, this.UserProperties);

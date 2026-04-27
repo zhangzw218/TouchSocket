@@ -10,6 +10,8 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using TouchV4Socket.Rpc;
 
@@ -20,20 +22,19 @@ namespace TouchV4Socket.JsonRpc;
 /// </summary>
 public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
 {
-    private readonly JsonRpcRequestConverter m_jsonRpcRequestConverter = new JsonRpcRequestConverter();
-    private readonly JsonRpcWaitResultConverter m_jsonRpcWaitResultConverter = new JsonRpcWaitResultConverter();
+    private readonly JsonRpcConverter m_jsonRpcConverter = new JsonRpcConverter();
     private readonly WaitHandlePool<JsonRpcWaitResult> m_waitHandle = new();
     private IRpcServerProvider m_rpcServerProvider;
+
+    /// <summary>
+    /// 获取或设置用于参数与返回值序列化的 <see cref="JsonSerializerOptions"/>。
+    /// </summary>
+    public JsonSerializerOptions SerializerOptions { get; set; } = new JsonSerializerOptions();
 
     /// <summary>
     /// 获取或设置动作映射。
     /// </summary>
     public ActionMap ActionMap { get; private set; } = new ActionMap(true);
-
-    /// <summary>
-    /// 获取或设置编码。
-    /// </summary>
-    public Encoding Encoding { get; set; } = Encoding.UTF8;
 
     /// <summary>
     /// 获取或设置日志记录器。
@@ -89,9 +90,9 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
     {
         try
         {
-            var str = memory.Span.ToString(this.Encoding);
+            var span = memory.Span;
 
-            if (callContext != null && this.TryParseRequest(str, out var jsonRpcRequest))
+            if (callContext != null && this.m_jsonRpcConverter.TryReadRequest(span, out var jsonRpcRequest))
             {
                 callContext.SetJsonRpcRequest(jsonRpcRequest);
                 var rpcMethod = callContext.RpcMethod;
@@ -108,7 +109,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
 
                 await this.RpcDispatcher.Dispatcher(this, callContext, this.ThisInvokeAsync).ConfigureDefaultAwait();
             }
-            else if (this.TryParseResponse(str, out var internalJsonRpcWaitResult))
+            else if (this.m_jsonRpcConverter.TryReadResponse(span, out var internalJsonRpcWaitResult))
             {
                 internalJsonRpcWaitResult.Status = 1;
                 this.m_waitHandle.Set(internalJsonRpcWaitResult);
@@ -133,6 +134,9 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
     /// <param name="invokeOption">调用选项。</param>
     /// <param name="parameters">参数。</param>
     /// <returns>任务对象。</returns>
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "JsonRpc基础设施相信动态代码是有效的")]
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "JsonRpc基础设施相信动态代码是有效的")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "JsonRpc基础设施相信动态代码是有效的")]
     public async Task<object> InvokeAsync(string invokeKey, Type returnType, InvokeOption invokeOption, params object[] parameters)
     {
         var waitData = this.m_waitHandle.GetWaitDataAsync(out var sign);
@@ -148,26 +152,14 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
             cancellationToken = cts.Token;
         }
 
-        var strs = new string[parameters.Length];
-        for (var i = 0; i < parameters.Length; i++)
-        {
-            strs[i] = this.SerializerConverter.Serialize(this, parameters[i]);
-        }
-
-        var jsonRpcRequest = new InternalJsonRpcRequest
-        {
-            Method = invokeKey,
-            ParamsStrings = strs,
-            Id = invokeOption.FeedbackType == FeedbackType.WaitInvoke ? sign : 0
-        };
+        var id = invokeOption.FeedbackType == FeedbackType.WaitInvoke ? sign : (int?)0;
 
         try
         {
             var byteBlock = new ByteBlock(1024 * 64);
             try
             {
-                var str = this.BuildJsonRpcRequest(jsonRpcRequest);
-                WriterExtension.WriteNormalString(ref byteBlock, str, this.Encoding);
+                this.m_jsonRpcConverter.WriteRequest(byteBlock, invokeKey, id, parameters, this.SerializerOptions);
                 await this.SendAction(byteBlock.Memory, cancellationToken).ConfigureDefaultAwait();
             }
             finally
@@ -247,6 +239,16 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
         this.ActionMap = actionMap;
     }
 
+    /// <inheritdoc/>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            this.RpcDispatcher.SafeDispose();
+        }
+        base.Dispose(disposing);
+    }
+
     /// <summary>
     /// 获取JsonRpc错误。
     /// </summary>
@@ -281,22 +283,13 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
     }
 
     /// <summary>
-    /// 构建JsonRpc请求。
-    /// </summary>
-    /// <param name="jsonRpcRequest">JsonRpc请求。</param>
-    /// <returns>Json字符串。</returns>
-    private string BuildJsonRpcRequest(InternalJsonRpcRequest jsonRpcRequest)
-    {
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(this.m_jsonRpcRequestConverter);
-        return JsonSerializer.Serialize(jsonRpcRequest, options);
-    }
-
-    /// <summary>
     /// 构建请求上下文。
     /// </summary>
     /// <param name="callContext">调用上下文。</param>
     /// <param name="jsonRpcRequest">JsonRpc请求。</param>
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "JsonRpc基础设施相信动态代码是有效的")]
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "JsonRpc基础设施相信动态代码是有效的")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "JsonRpc基础设施相信动态代码是有效的")]
     private void BuildRequestContext(JsonRpcCallContextBase callContext, InternalJsonRpcRequest jsonRpcRequest)
     {
         if (this.ActionMap.TryGetRpcMethod(jsonRpcRequest.Method, out var rpcMethod))
@@ -344,7 +337,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
                         }
                         else if (element.TryGetProperty(parameter.Name, out var property))
                         {
-                            ps[i] = property.Deserialize(parameter.Type);
+                            ps[i] = property.Deserialize(parameter.Type, this.SerializerOptions);
                         }
                         else if (parameter.ParameterInfo.HasDefaultValue)
                         {
@@ -373,7 +366,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
                         }
                         else if (index < arrayLength)
                         {
-                            ps[i] = element[index++].Deserialize(parameter.Type);
+                            ps[i] = element[index++].Deserialize(parameter.Type, this.SerializerOptions);
                         }
                         else if (parameter.ParameterInfo.HasDefaultValue)
                         {
@@ -406,21 +399,10 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
     {
         try
         {
-            var response = new JsonRpcWaitResult()
-            {
-                ErrorCode = error.Code,
-                ErrorMessage = error.Message,
-                Id = callContext.JsonRpcId,
-                Result = this.SerializerConverter.Serialize(this, result)
-            };
-
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(this.m_jsonRpcWaitResultConverter);
-            var str = JsonSerializer.Serialize(response, options);
             var byteBlock = new ByteBlock(1024 * 64);
             try
             {
-                WriterExtension.WriteNormalString(ref byteBlock, str, this.Encoding);
+                this.m_jsonRpcConverter.WriteResponse(byteBlock, callContext.JsonRpcId, result, error.Code, error.Message, this.SerializerOptions);
                 await this.SendAction(byteBlock.Memory, CancellationToken.None).ConfigureDefaultAwait();
             }
             finally
@@ -440,6 +422,8 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
     /// <param name="result">结果。</param>
     /// <param name="returnType">返回类型。</param>
     /// <returns>解析后的对象。</returns>
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "JsonRpc基础设施相信动态代码是有效的")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "JsonRpc基础设施相信动态代码是有效的")]
     private object ResultParseToType(string result, Type returnType)
     {
         if (returnType == default)
@@ -452,7 +436,7 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
         //    return result.ParseToType(returnType);
         //}
 
-        return this.SerializerConverter.Deserialize(this, result, returnType);
+        return JsonSerializer.Deserialize(result, returnType, this.SerializerOptions);
     }
 
     /// <summary>
@@ -503,55 +487,4 @@ public sealed class JsonRpcActor : DisposableObject, IJsonRpcClient
 
     #endregion Class
 
-    /// <inheritdoc/>
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            this.RpcDispatcher.SafeDispose();
-        }
-        base.Dispose(disposing);
-    }
-
-    /// <summary>
-    /// 尝试解析请求。
-    /// </summary>
-    /// <param name="str">字符串。</param>
-    /// <param name="request">请求。</param>
-    /// <returns>是否成功。</returns>
-    private bool TryParseRequest(string str, out InternalJsonRpcRequest request)
-    {
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(this.m_jsonRpcRequestConverter);
-        var jsonRpcRequest = JsonSerializer.Deserialize<InternalJsonRpcRequest>(str, options);
-
-        if (jsonRpcRequest == null)
-        {
-            request = default;
-            return false;
-        }
-        request = jsonRpcRequest;
-        return true;
-    }
-
-    /// <summary>
-    /// 尝试解析响应。
-    /// </summary>
-    /// <param name="str">字符串。</param>
-    /// <param name="response">响应。</param>
-    /// <returns>是否成功。</returns>
-    private bool TryParseResponse(string str, out JsonRpcWaitResult response)
-    {
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(this.m_jsonRpcWaitResultConverter);
-        var rpcWaitResult = JsonSerializer.Deserialize<JsonRpcWaitResult>(str, options);
-
-        if (rpcWaitResult == null)
-        {
-            response = default;
-            return false;
-        }
-        response = rpcWaitResult;
-        return true;
-    }
 }

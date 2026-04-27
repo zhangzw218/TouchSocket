@@ -14,8 +14,14 @@ namespace TouchV4Socket.Mqtt;
 
 public partial class MqttPubCompMessage
 {
+    /// <summary>
+    /// 获取或设置操作原因码。
+    /// </summary>
     public MqttReasonCode ReasonCode { get; set; }
 
+    /// <summary>
+    /// 获取或设置原因符串。
+    /// </summary>
     public string ReasonString { get; set; }
 
     /// <inheritdoc/>
@@ -27,7 +33,7 @@ public partial class MqttPubCompMessage
             WriterExtension.WriteValue<TWriter, byte>(ref writer, (byte)this.ReasonCode);
 
             var variableByteIntegerRecorder = new VariableByteIntegerRecorder();
-            var byteBlockWriter = this.CreateVariableWriter(ref writer);
+            var byteBlockWriter = this.CreatePropertiesWriter(ref writer);
             variableByteIntegerRecorder.CheckOut(ref byteBlockWriter);
             MqttExtension.WriteReasonString(ref byteBlockWriter, this.ReasonString);
             MqttExtension.WriteUserProperties(ref byteBlockWriter, this.UserProperties);

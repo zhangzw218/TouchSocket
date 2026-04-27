@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 //  此代码版权（除特别声明或在XREF结尾的命名空间的代码）归作者本人若汝棋茗所有
 //  源代码使用协议遵循本仓库的开源协议及附加协议，若本仓库没有设置，则按MIT开源协议授权
 //  CSDN博客：https://blog.csdn.net/qq_40374647
@@ -184,14 +184,18 @@ public abstract class UdpSessionBase : ServiceBase, IUdpSessionBase
     {
         try
         {
+            // 必须先置为 Stopped，再 Dispose Socket。
+            // 否则 Socket.Dispose() 会触发 ReceiveFromAsync 以 SocketError 失败返回，
+            // 而此时 m_serverState 仍为 Running，RunReceive 无法感知停止状态，
+            // 将继续下一次循环访问已被置 null 的 m_monitor，导致 NullReferenceException。
+            this.m_serverState = ServerState.Stopped;
             this.m_monitor?.Socket.Dispose();
             this.m_monitor = null;
-            this.m_serverState = ServerState.Stopped;
             await Task.WhenAll(this.m_receiveTasks.ToArray()).ConfigureDefaultAwait();
             this.m_receiveTasks.Clear();
 
             this.m_receiver?.Complete(default);
-            await this.PluginManager.RaiseAsync(typeof(IServerStartedPlugin), this.Resolver, this, new ServiceStateEventArgs(this.m_serverState, default)).ConfigureDefaultAwait();
+            await this.PluginManager.RaiseIServerStartedPluginAsync(this.Resolver, this, new ServiceStateEventArgs(this.m_serverState, default)).ConfigureDefaultAwait();
 
             return Result.Success;
         }
@@ -225,7 +229,7 @@ public abstract class UdpSessionBase : ServiceBase, IUdpSessionBase
     protected virtual async Task OnUdpReceived(UdpReceivedDataEventArgs e)
     {
         // 触发所有实现了IUdpReceivedPlugin接口的插件的处理方法，并传递接收到的数据事件参数。
-        await this.PluginManager.RaiseAsync(typeof(IUdpReceivedPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIUdpReceivedPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
@@ -239,7 +243,7 @@ public abstract class UdpSessionBase : ServiceBase, IUdpSessionBase
     {
         // 提升插件管理器以异步方式提升IUdpSendingPlugin接口的事件
         // 使用UdpSendingEventArgs包装待发送的数据和目标端点
-        return this.PluginManager.RaiseAsync(typeof(IUdpSendingPlugin), this.Resolver, this, new UdpSendingEventArgs(memory, endPoint));
+        return this.PluginManager.RaiseIUdpSendingPluginAsync(this.Resolver, this, new UdpSendingEventArgs(memory, endPoint));
     }
 
     /// <summary>
@@ -367,19 +371,35 @@ public abstract class UdpSessionBase : ServiceBase, IUdpSessionBase
                     }
                     else if (result.SocketError != SocketError.Success)
                     {
+                        // 服务器已停止，Socket 被 Dispose，属于正常退出
+                        if (this.m_serverState != ServerState.Running)
+                        {
+                            return;
+                        }
+                        // 非致命的 Socket 错误（如 Windows ICMP 端口不可达导致的 ConnectionReset），
+                        // 仅记录日志后继续循环，不能退出接收任务
                         this.Logger?.Debug(this, result.SocketError.ToString());
-                        return;
                     }
                     else
                     {
+                        // 0 字节且无错误，属于偶发情况，继续循环即可
                         this.Logger?.Debug(this, TouchSocketCoreResource.UnknownError);
-                        return;
                     }
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Socket 已被释放，为 StopAsync 时的正常流程，直接退出
+                    return;
                 }
                 catch (Exception ex)
                 {
+                    // 服务器已停止，退出接收循环
+                    if (this.m_serverState != ServerState.Running)
+                    {
+                        return;
+                    }
+                    // 记录非致命异常后继续循环，避免因瞬时错误导致接收任务永久退出
                     this.Logger?.Exception(this, ex);
-                    return;
                 }
             }
         }
@@ -427,7 +447,7 @@ public abstract class UdpSessionBase : ServiceBase, IUdpSessionBase
     /// </returns>
     protected virtual ValueTask<bool> OnUdpReceiving(UdpReceiveingEventArgs e)
     {
-        return this.PluginManager.RaiseAsync(typeof(IUdpReceivingPlugin), this.Resolver, this, e);
+        return this.PluginManager.RaiseIUdpReceivingPluginAsync(this.Resolver, this, e);
     }
 
     private async Task PrivateHandleReceivedData(EndPoint remoteEndPoint, ReadOnlyMemory<byte> memory, IRequestInfo requestInfo)
@@ -568,7 +588,7 @@ public abstract class UdpSessionBase : ServiceBase, IUdpSessionBase
     /// </summary>
     /// <param name="endPoint">要发送数据到的端点。</param>
     /// <param name="memory">待发送的数据，以只读内存块的形式。</param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">取消令牌。</param>
     /// <remarks>
     /// <para>在执行实际的数据发送之前，方法会：</para>
     /// <list type="bullet">

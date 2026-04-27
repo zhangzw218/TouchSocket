@@ -103,15 +103,10 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
             {
                 return Result.Success;
             }
-            await this.OnDmtpClosing(new ClosingEventArgs(msg)).ConfigureDefaultAwait();
 
             var dmtpActor = this.m_dmtpActor;
             if (dmtpActor != null)
             {
-                // 向IDmtpActor对象发送关闭消息
-                await dmtpActor.SendCloseAsync(msg).ConfigureDefaultAwait();
-
-                // 关闭IDmtpActor对象
                 await dmtpActor.CloseAsync(msg, cancellationToken).ConfigureDefaultAwait();
             }
 
@@ -180,6 +175,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
             OutputSendAsync = this.OnDmtpActorSendAsync,
             Client = this,
             Closing = this.OnDmtpActorClose,
+            Closed = this.OnDmtpActorClosed,
             Routing = this.OnDmtpActorRouting,
             Connected = this.OnDmtpActorConnected,
             Connecting = this.OnDmtpActorConnecting,
@@ -196,6 +192,10 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
         this.m_client = client;
         this.m_httpContext = context;
         await this.ReceiveLoopAsync(client, cancellationToken).ConfigureDefaultAwait();
+
+        var closedArgs = this.m_closedEventArgs ?? new ClosedEventArgs(TouchSocketResource.RemoteDisconnects);
+        await this.m_dmtpActor.FinalizeAsync(closedArgs.Message, closedArgs.Exception).ConfigureDefaultAwait();
+
         this.m_service.TryRemove(this.m_id, out _);
     }
 
@@ -216,7 +216,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
                 if (this.PluginManager.Enable)
                 {
                     var e = new IdChangedEventArgs(sourceId, targetId);
-                    await this.PluginManager.RaiseAsync(typeof(IIdChangedPlugin), this.Resolver, sessionClient, e).ConfigureDefaultAwait();
+                    await this.PluginManager.RaiseIIdChangedPluginAsync(this.Resolver, sessionClient, e).ConfigureDefaultAwait();
                 }
                 return;
             }
@@ -267,7 +267,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
                 var message = DmtpMessage.CreateFrom(buffer.Memory);
                 if (!await this.m_dmtpActor.InputReceivedData(message).ConfigureDefaultAwait())
                 {
-                    await this.PluginManager.RaiseAsync(typeof(IDmtpReceivedPlugin), this.Resolver, this, new DmtpMessageEventArgs(message)).ConfigureDefaultAwait();
+                    await this.PluginManager.RaiseIDmtpReceivedPluginAsync(this.Resolver, this, new DmtpMessageEventArgs(message)).ConfigureDefaultAwait();
                 }
             }
         }
@@ -282,7 +282,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
         var message = (DmtpMessage)requestInfo;
         if (!await this.m_dmtpActor.InputReceivedData(message).ConfigureDefaultAwait())
         {
-            await this.PluginManager.RaiseAsync(typeof(IDmtpReceivedPlugin), this.Resolver, this, new DmtpMessageEventArgs(message)).ConfigureDefaultAwait();
+            await this.PluginManager.RaiseIDmtpReceivedPluginAsync(this.Resolver, this, new DmtpMessageEventArgs(message)).ConfigureDefaultAwait();
         }
     }
 
@@ -338,20 +338,25 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
                     break;
                 }
             }
-            this.m_closedEventArgs ??= new ClosedEventArgs(false, TouchSocketResource.RemoteDisconnects);
+            this.m_closedEventArgs ??= new ClosedEventArgs(TouchSocketResource.RemoteDisconnects);
         }
         catch (Exception ex)
         {
-            this.m_closedEventArgs = new ClosedEventArgs(false, ex.Message);
+            this.m_closedEventArgs = new ClosedEventArgs(ex.Message, ex);
             this.Logger?.Debug(this, ex);
         }
     }
 
     #region 内部委托绑定
 
-    private async Task OnDmtpActorClose(DmtpActor actor, string msg)
+    private Task OnDmtpActorClose(DmtpActor actor, string msg)
     {
-        await this.CloseAsync(msg, CancellationToken.None);
+        return this.OnDmtpClosing(new ClosingEventArgs(msg));
+    }
+
+    private Task OnDmtpActorClosed(DmtpActor actor, ClosedEventArgs e)
+    {
+        return this.OnDmtpClosed(e);
     }
 
     private Task OnDmtpActorCreateChannel(DmtpActor actor, CreateChannelEventArgs e)
@@ -403,7 +408,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
             return;
         }
 
-        await this.PluginManager.RaiseAsync(typeof(IDmtpCreatedChannelPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIDmtpCreatedChannelPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
@@ -416,7 +421,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
         {
             return;
         }
-        await this.PluginManager.RaiseAsync(typeof(IDmtpConnectedPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIDmtpConnectedPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
@@ -429,7 +434,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
         {
             return;
         }
-        await this.PluginManager.RaiseAsync(typeof(IDmtpConnectingPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIDmtpConnectingPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
@@ -442,7 +447,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
         {
             return;
         }
-        await this.PluginManager.RaiseAsync(typeof(IDmtpRoutingPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIDmtpRoutingPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
@@ -465,7 +470,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
             return;
         }
         // 通知插件管理器，触发IDmtpClosingPlugin接口的事件处理程序，并传递相关参数。
-        await this.PluginManager.RaiseAsync(typeof(IDmtpClosingPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIDmtpClosingPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
@@ -480,7 +485,7 @@ public class WebSocketDmtpSessionClient : ResolverConfigObject, IWebSocketDmtpSe
             return;
         }
         // 异步触发插件管理器中的 IDmtpClosedPlugin 接口的事件，并传递相关参数
-        await this.PluginManager.RaiseAsync(typeof(IDmtpClosedPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseIDmtpClosedPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
     #endregion 事件
 

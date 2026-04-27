@@ -47,7 +47,6 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// <summary>
     /// 收到数据的切入点，该方法由框架自动调用。
     /// </summary>
-    /// <param name="reader"></param>
     public async Task ReceivedInputAsync<TReader>(TReader reader)
         where TReader : class, IBytesReader
     {
@@ -96,8 +95,6 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
 
     /// <summary>
     /// 发送输入数据到指定的写入器。
-    /// 如果 <paramref name="requestInfo"/> 实现了 <see cref="IRequestInfoBuilder"/>，则调用其 Build 方法写入数据。
-    /// 否则抛出异常。
     /// </summary>
     /// <typeparam name="TWriter">实现了 <see cref="IBytesWriter"/> 接口的写入器类型。</typeparam>
     /// <param name="writer">写入器的引用。</param>
@@ -105,11 +102,7 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     public virtual void SendInput<TWriter>(ref TWriter writer, IRequestInfo requestInfo)
         where TWriter : IBytesWriter
     {
-        if (requestInfo is not IRequestInfoBuilder requestInfoBuilder)
-        {
-            throw new Exception();
-        }
-        requestInfoBuilder.Build(ref writer);
+        throw new NotImplementedException();
     }
 
     #endregion SendInput
@@ -127,7 +120,6 @@ public abstract class SingleStreamDataHandlingAdapter : DataHandlingAdapter
     /// <summary>
     /// 当接收到数据后预先处理数据,然后调用<see cref="GoReceivedAsync(ReadOnlyMemory{byte}, IRequestInfo)"/>处理数据
     /// </summary>
-    /// <param name="reader"></param>
     protected abstract Task PreviewReceivedAsync<TReader>(TReader reader)
         where TReader : class, IBytesReader;
 

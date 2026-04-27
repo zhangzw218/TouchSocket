@@ -14,8 +14,14 @@ namespace TouchV4Socket.Mqtt;
 
 public partial class MqttPubAckMessage
 {
+    /// <summary>
+    /// 获取或设置操作原因码。
+    /// </summary>
     public MqttReasonCode ReasonCode { get; set; }
 
+    /// <summary>
+    /// 获取或设置原因符串。
+    /// </summary>
     public string ReasonString { get; set; }
 
     /// <inheritdoc/>
@@ -24,20 +30,17 @@ public partial class MqttPubAckMessage
         WriterExtension.WriteValue<TWriter, ushort>(ref writer, this.MessageId, EndianType.Big);
         if (this.ReasonCode != MqttReasonCode.Success || this.ReasonString.HasValue() || this.UserProperties.Count > 0)
         {
-            return;
+            WriterExtension.WriteValue<TWriter, byte>(ref writer, (byte)this.ReasonCode);
+
+            var variableByteIntegerRecorder = new VariableByteIntegerRecorder();
+            var byteBlockWriter = this.CreatePropertiesWriter(ref writer);
+            variableByteIntegerRecorder.CheckOut(ref byteBlockWriter);
+            MqttExtension.WriteReasonString(ref byteBlockWriter, this.ReasonString);
+            MqttExtension.WriteUserProperties(ref byteBlockWriter, this.UserProperties);
+            variableByteIntegerRecorder.CheckIn(ref byteBlockWriter);
+
+            writer.Advance(byteBlockWriter.Position);
         }
-
-
-        WriterExtension.WriteValue<TWriter, byte>(ref writer, (byte)this.ReasonCode);
-
-        var variableByteIntegerRecorder = new VariableByteIntegerRecorder();
-        var byteBlockWriter = this.CreateVariableWriter(ref writer);
-        variableByteIntegerRecorder.CheckOut(ref byteBlockWriter);
-        MqttExtension.WriteReasonString(ref byteBlockWriter, this.ReasonString);
-        MqttExtension.WriteUserProperties(ref byteBlockWriter, this.UserProperties);
-        variableByteIntegerRecorder.CheckIn(ref byteBlockWriter);
-
-        writer.Advance(byteBlockWriter.Position);
 
         //this.ReasonString = propertiesReader.ReasonString;
         //this.UserProperties = propertiesReader.UserProperties;

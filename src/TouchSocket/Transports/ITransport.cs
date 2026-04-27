@@ -12,6 +12,9 @@
 
 namespace TouchV4Socket.Sockets;
 
+/// <summary>
+/// 传输层接口。
+/// </summary>
 public interface ITransport : ITransportReader, ITransportWriter, IClosableClient
 {
     /// <summary>

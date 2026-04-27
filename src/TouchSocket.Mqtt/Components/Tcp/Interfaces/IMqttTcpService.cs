@@ -14,6 +14,9 @@ using TouchV4Socket.Sockets;
 
 namespace TouchV4Socket.Mqtt;
 
+/// <summary>
+/// 基于 TCP 的 Mqtt 服务端接口。
+/// </summary>
 public interface IMqttTcpService : ITcpServiceBase<MqttTcpSessionClient>, IMqttService
 {
 }

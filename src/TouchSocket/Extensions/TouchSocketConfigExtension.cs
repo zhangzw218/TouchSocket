@@ -12,10 +12,8 @@
 
 namespace TouchV4Socket.Sockets;
 
-
-
 /// <summary>
-/// 触摸套接字配置扩展类
+/// 配置扩展类
 /// </summary>
 public static class TouchSocketConfigExtension
 {
@@ -27,12 +25,19 @@ public static class TouchSocketConfigExtension
     [GeneratorProperty(TargetType = typeof(TouchSocketConfig), ActionMode = true)]
     public static readonly DependencyProperty<TransportOption> TransportOptionProperty = new("TransportOption", new TransportOption());
 
+    /// <summary>
+    /// 流式数据处理适配器，适用于 TCP、串口、命名管道等流式传输场景。
+    /// 所需类型<see cref="Func{TResult}"/>
+    /// </summary>
+    /// issue:https://github.com/RRQM/TouchSocket/issues/131
+    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    public static readonly DependencyProperty<Func<SingleStreamDataHandlingAdapter>> SingleStreamDataHandlingAdapterProperty = new("SingleStreamDataHandlingAdapter", null);
 
     /// <summary>
     /// 数据处理适配器
     /// 所需类型<see cref="Func{TResult}"/>
     /// </summary>
-    [GeneratorProperty(TargetType = typeof(TouchSocketConfig))]
+    [Obsolete("请使用DataHandlingAdapterProperty或SetDataHandlingAdapter代替。", false)]
     public static readonly DependencyProperty<Func<SingleStreamDataHandlingAdapter>> TcpDataHandlingAdapterProperty = new("TcpDataHandlingAdapter", null);
 
     /// <summary>
@@ -158,8 +163,6 @@ public static class TouchSocketConfigExtension
     /// <summary>
     /// 当udp作为客户端时，开始接收数据。起作用相当于<see cref="BindIPHostProperty"/>0端口。
     /// </summary>
-    /// <param name="config"></param>
-    /// <returns></returns>
     public static TouchSocketConfig UseUdpReceive(this TouchSocketConfig config)
     {
         return config.SetBindIPHost(0);
@@ -176,14 +179,35 @@ public static class TouchSocketConfigExtension
 
     #endregion UDP
 
+    #region 过时
+
+    /// <inheritdoc cref="SingleStreamDataHandlingAdapterProperty"/>
+    [Obsolete("请使用SetSingleStreamDataHandlingAdapter代替。", false)]
+    public static TDependencyObject SetTcpDataHandlingAdapter<TDependencyObject>(this TDependencyObject dependencyObject, Func<SingleStreamDataHandlingAdapter> value)
+        where TDependencyObject : TouchSocketConfig
+    {
+        dependencyObject.SetValue(SingleStreamDataHandlingAdapterProperty, value);
+        return dependencyObject;
+    }
+
+    /// <inheritdoc cref="SingleStreamDataHandlingAdapterProperty"/>
+    [Obsolete("请使用GetDataHandlingAdapter代替。", false)]
+    public static Func<SingleStreamDataHandlingAdapter> GetTcpDataHandlingAdapter<TDependencyObject>(this TDependencyObject dependencyObject)
+        where TDependencyObject : TouchSocketConfig
+    {
+        return dependencyObject.GetValue(SingleStreamDataHandlingAdapterProperty);
+    }
+
+    #endregion 过时
+
     #region 创建
 
     /// <summary>
     /// 构建可配置，可连接类客户端，并连接
     /// </summary>
     /// <typeparam name="TClient"></typeparam>
-    /// <param name="config"></param>
-    /// <returns></returns>
+    /// <param name="config">配置对象。</param>
+    /// <param name="cancellationToken">取消令牌。</param>
     public static async Task<TClient> BuildClientAsync<TClient>(this TouchSocketConfig config, CancellationToken cancellationToken = default) where TClient : ISetupConfigObject, IConnectableClient, new()
     {
         var client = new TClient();
@@ -196,8 +220,8 @@ public static class TouchSocketConfigExtension
     /// 构建Tcp类服务器，并启动。
     /// </summary>
     /// <typeparam name="TService"></typeparam>
-    /// <param name="config"></param>
-    /// <returns></returns>
+    /// <param name="config">配置对象。</param>
+    /// <param name="cancellationToken">取消令牌。</param>
     public static async Task<TService> BuildServiceAsync<TService>(this TouchSocketConfig config, CancellationToken cancellationToken = default) where TService : IServiceBase, new()
     {
         var service = new TService();

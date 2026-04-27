@@ -22,4 +22,12 @@ public class TouchSocketEventArgs : EventArgs
     /// 是否已处理
     /// </summary>
     public bool Handled { get; set; }
+
+    /// <summary>
+    /// 重置事件参数到初始状态。
+    /// </summary>
+    protected virtual void Reset()
+    {
+        this.Handled = false;
+    }
 }

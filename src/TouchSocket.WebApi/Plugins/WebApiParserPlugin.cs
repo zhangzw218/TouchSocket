@@ -10,6 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using TouchV4Socket.Http;
 using TouchV4Socket.Rpc;
 using TouchV4Socket.Sockets;
@@ -65,7 +66,7 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
 
             case RouteMatchStatus.Options:
                 // OPTIONS请求,返回允许的方法列表
-                await this.ResponseOptionsAsync(client, e.Context, matchResult.AllowedMethods).ConfigureDefaultAwait();
+                await ResponseOptionsAsync(client, e.Context, matchResult.AllowedMethods).ConfigureDefaultAwait();
                 return;
 
             case RouteMatchStatus.MethodNotAllowed:
@@ -108,11 +109,6 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
         }
 
         return default;
-    }
-
-    private void CloseClient(IHttpSessionClient client)
-    {
-        _ = client.CloseAsync("No keepalive close.");
     }
 
     private async Task ExecuteRpcMethodAsync(IHttpSessionClient client, HttpContextEventArgs e, RpcMethod rpcMethod)
@@ -179,6 +175,8 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
         return this.GetParameterInfo(parameter);
     }
 
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "WebApi基础设施相信动态代码是有效的")]
+    [UnconditionalSuppressMessage("Trimming", "IL2067", Justification = "WebApi基础设施相信动态代码是有效的")]
     private async Task<object> ParseParameterAsync(RpcParameter parameter, WebApiCallContext callContext)
     {
         var request = callContext.HttpContext.Request;
@@ -299,7 +297,10 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
                 break;
         }
 
-        httpResponse.ContentType = contentType;
+        if (httpResponse.ContentType.IsEmpty)
+        {
+            httpResponse.ContentType = contentType;
+        }
 
         switch (invokeResult.Status)
         {
@@ -330,11 +331,6 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
         }
 
         await httpResponse.AnswerAsync().ConfigureDefaultAwait();
-
-        if (!httpContext.Request.KeepAlive)
-        {
-            this.CloseClient(client);
-        }
     }
 
     private async Task ResponseMethodNotAllowedAsync(IHttpSessionClient client, HttpContext httpContext, IEnumerable<HttpMethod> allowedMethods)
@@ -359,14 +355,9 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
             .SetStatus(405, "Method Not Allowed")
             .AnswerAsync()
             .ConfigureDefaultAwait();
-
-        if (!httpContext.Request.KeepAlive)
-        {
-            this.CloseClient(client);
-        }
     }
 
-    private async Task ResponseOptionsAsync(IHttpSessionClient client, HttpContext httpContext, IEnumerable<HttpMethod> allowedMethods)
+    private static async Task ResponseOptionsAsync(IHttpSessionClient client, HttpContext httpContext, IEnumerable<HttpMethod> allowedMethods)
     {
         var httpResponse = httpContext.Response;
 
@@ -381,10 +372,5 @@ public sealed class WebApiParserPlugin : PluginBase, IHttpPlugin
             .SetStatus(204, "No Content")
             .AnswerAsync()
             .ConfigureDefaultAwait();
-
-        if (!httpContext.Request.KeepAlive)
-        {
-            this.CloseClient(client);
-        }
     }
 }

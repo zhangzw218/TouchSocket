@@ -14,6 +14,9 @@ namespace TouchV4Socket.Mqtt;
 
 public partial class MqttSubscribeMessage
 {
+    /// <summary>
+    /// 获取或设置订阅标识符。
+    /// </summary>
     public uint SubscriptionIdentifier { get; set; }
 
     /// <inheritdoc/>
@@ -22,7 +25,7 @@ public partial class MqttSubscribeMessage
         WriterExtension.WriteValue<TWriter, ushort>(ref writer, this.MessageId, EndianType.Big);
 
         var variableByteIntegerRecorder = new VariableByteIntegerRecorder();
-        var byteBlockWriter = this.CreateVariableWriter(ref writer);
+        var byteBlockWriter = this.CreatePropertiesWriter(ref writer);
         variableByteIntegerRecorder.CheckOut(ref byteBlockWriter);
         if (this.SubscriptionIdentifier > 0)
         {

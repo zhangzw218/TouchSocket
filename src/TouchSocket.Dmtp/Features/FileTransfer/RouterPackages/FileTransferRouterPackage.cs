@@ -15,7 +15,7 @@ namespace TouchV4Socket.Dmtp.FileTransfer;
 /// <summary>
 /// 文件传输请求包
 /// </summary>
-public class FileTransferRouterPackage : WaitRouterPackage
+class FileTransferRouterPackage : WaitRouterPackage
 {
     /// <summary>
     /// 续传索引
@@ -33,11 +33,6 @@ public class FileTransferRouterPackage : WaitRouterPackage
     public int FileSectionSize { get; set; }
 
     /// <summary>
-    /// 元数据
-    /// </summary>
-    public Metadata Metadata { get; set; }
-
-    /// <summary>
     /// 路径
     /// </summary>
     public string Path { get; set; }
@@ -46,9 +41,6 @@ public class FileTransferRouterPackage : WaitRouterPackage
     /// 资源句柄
     /// </summary>
     public int ResourceHandle { get; set; }
-
-    /// <inheritdoc/>
-    protected override bool IncludedRouter => true;
 
     /// <inheritdoc/>
     public override void PackageBody<TWriter>(ref TWriter writer)
@@ -68,15 +60,6 @@ public class FileTransferRouterPackage : WaitRouterPackage
             this.FileInfo.Package(ref writer);
         }
 
-        if (this.Metadata is null)
-        {
-            WriterExtension.WriteNull(ref writer);
-        }
-        else
-        {
-            WriterExtension.WriteNotNull(ref writer);
-            this.Metadata.Package(ref writer);
-        }
     }
 
     /// <inheritdoc/>
@@ -96,16 +79,6 @@ public class FileTransferRouterPackage : WaitRouterPackage
         {
             this.FileInfo = new RemoteFileInfo();
             this.FileInfo.Unpackage(ref reader);
-        }
-
-        if (ReaderExtension.ReadIsNull(ref reader))
-        {
-            this.Metadata = null;
-        }
-        else
-        {
-            this.Metadata = new Metadata();
-            this.Metadata.Unpackage(ref reader);
         }
     }
 }

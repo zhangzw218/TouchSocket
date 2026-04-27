@@ -14,8 +14,11 @@ using System.Text.Json.Serialization;
 
 namespace TouchV4Socket.WebApi.Swagger;
 
+/// <summary>
+/// 表示 OpenAPI 规范中支持的数据类型。
+/// </summary>
 [JsonConverter(typeof(OpenApiStringEnumConverter))]
-internal enum OpenApiDataTypes
+public enum OpenApiDataTypes
 {
     /// <summary>
     /// 字符串

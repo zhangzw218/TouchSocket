@@ -18,6 +18,7 @@ namespace TouchV4Socket.Dmtp;
 [JsonSerializable(typeof(Metadata))]
 [JsonSerializable(typeof(WaitSetId))]
 [JsonSerializable(typeof(WaitPing))]
+[JsonSerializable(typeof(WaitClose))]
 internal partial class TouchSocketDmtpSourceGenerationContext : JsonSerializerContext
 {
 

@@ -10,7 +10,6 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using System.Net.WebSockets;
 using TouchV4Socket.Http;
 
 namespace TouchV4Socket.Mqtt;
@@ -18,7 +17,7 @@ namespace TouchV4Socket.Mqtt;
 /// <summary>
 /// Mqtt WebSocket功能插件
 /// </summary>
-internal sealed class MqttWebSocketFeature : PluginBase, IHttpPlugin
+internal sealed class MqttWebSocketFeature : PluginBase, IHttpPlugin, ILoadedConfigPlugin
 {
     private readonly MqttBroker m_mqttBroker;
     private readonly MqttWebSocketFeatureOption m_options;
@@ -45,25 +44,24 @@ internal sealed class MqttWebSocketFeature : PluginBase, IHttpPlugin
             return;
         }
         e.Context.Response.Headers.Add("Sec-WebSocket-Protocol", "mqtt");
-        var result = await client.SwitchProtocolToWebSocketAsync(e.Context).ConfigureDefaultAwait();
+        var result = await client.SwitchProtocolToWebSocketAsync(false).ConfigureDefaultAwait();
 
         if (!result.IsSuccess)
         {
             return;
         }
 
-        _ = Task.Run(async () =>
+        _ = EasyTask.SafeNewRun(async () =>
         {
             var session = new MqttWebSocketSessionClient(client, this.m_mqttBroker);
-            try
-            {
-                await session.Start(client.ClosedToken);
-            }
-            finally
-            {
-                
-            }
-            
+            await session.Start(client.ClosedToken);
         });
+    }
+
+    /// <inheritdoc/>
+    public async Task OnLoadedConfig(IConfigObject sender, ConfigEventArgs e)
+    {
+        this.m_mqttBroker.LoadConfig(e.Config.GetValue(MqttConfigExtension.MqttBrokerOptionProperty) ?? new MqttBrokerOption());
+        await e.InvokeNext().ConfigureDefaultAwait();
     }
 }

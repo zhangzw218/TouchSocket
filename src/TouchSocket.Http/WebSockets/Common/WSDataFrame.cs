@@ -15,13 +15,17 @@ namespace TouchV4Socket.Http.WebSockets;
 /// <summary>
 /// WebSocket数据帧
 /// </summary>
-public sealed class WSDataFrame : IRequestInfo, IRequestInfoBuilder, IBigUnfixedHeaderRequestInfo
+public sealed class WSDataFrame : IRequestInfo, IBytesBuilder, IBigUnfixedHeaderRequestInfo
 {
     private readonly ReadOnlyMemory<byte> m_payloadData;
     private int m_headerLength;
     private ByteBlock m_payloadDataBlock;
     private int m_payloadLength;
 
+    /// <summary>
+    /// 初始化 <see cref="WSDataFrame"/> 类的新实例。
+    /// </summary>
+    /// <param name="payloadData">有效载荷数据。</param>
     public WSDataFrame(ReadOnlyMemory<byte> payloadData)
     {
         this.m_payloadData = payloadData;
@@ -181,6 +185,10 @@ public sealed class WSDataFrame : IRequestInfo, IRequestInfoBuilder, IBigUnfixed
         writer.Advance((int)rawWriter.WrittenCount);
     }
 
+    /// <summary>
+    /// 设置渔码。
+    /// </summary>
+    /// <param name="mask">长度为4字节的渔码值。</param>
     public void SetMask(ReadOnlyMemory<byte> mask)
     {
         if (mask.Length != 4)
@@ -194,8 +202,6 @@ public sealed class WSDataFrame : IRequestInfo, IRequestInfoBuilder, IBigUnfixed
     /// <summary>
     /// 设置Mask。
     /// </summary>
-    /// <param name="mask"></param>
-    /// <returns></returns>
     public void SetMaskString(string mask)
     {
         var masks = Encoding.ASCII.GetBytes(mask);

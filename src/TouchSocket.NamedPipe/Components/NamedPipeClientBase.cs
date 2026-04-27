@@ -21,6 +21,7 @@ namespace TouchV4Socket.NamedPipe;
 /// 命名管道客户端客户端基类
 /// </summary>
 [CodeInject.RegionInject(FileName = "TcpClientBase.cs", RegionName = "ReceiveLoopAsync", Placeholders = new[] { "OnTcpReceiving", "OnNamedPipeReceiving" })]
+[CodeInject.RegionInject(FileName = "TcpClientBase.cs", RegionName = "内置常规数据发送", Placeholders = new[] { "OnTcpSending", "OnNamedPipeSending" })]
 public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPipeSession
 {
     /// <summary>
@@ -33,8 +34,9 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
 
     #region 变量
 
-    private readonly SemaphoreSlim m_semaphoreSlimForConnect = new SemaphoreSlim(1, 1);
-    private SingleStreamDataHandlingAdapter m_dataHandlingAdapter;
+    private readonly SemaphoreSlim m_semaphoreForConnectAndClose = new SemaphoreSlim(1, 1);
+    private int m_closeFlag;
+    private volatile SingleStreamDataHandlingAdapter m_dataHandlingAdapter;
     private volatile bool m_online;
     private InternalReceiver m_receiver;
     private Task m_runTask;
@@ -44,58 +46,42 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
 
     #region 事件
 
+    private readonly BytesReaderEventArgs m_bytesReaderEventArgs = new BytesReaderEventArgs();
+
+    private readonly ReceivedDataEventArgs m_receivedDataEventArgs = new ReceivedDataEventArgs();
+
+    private readonly SendingEventArgs m_sendingEventArgs = new SendingEventArgs();
+
     /// <summary>
     /// 断开连接。在客户端未设置连接状态时，不会触发
     /// </summary>
-    /// <param name="e"></param>
     protected virtual async Task OnNamedPipeClosed(ClosedEventArgs e)
     {
-        await this.PluginManager.RaiseAsync(typeof(INamedPipeClosedPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseINamedPipeClosedPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
     /// 即将断开连接(仅主动断开时有效)。
     /// </summary>
-    /// <param name="e"></param>
     protected virtual async Task OnNamedPipeClosing(ClosingEventArgs e)
     {
-        await this.PluginManager.RaiseAsync(typeof(INamedPipeClosingPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseINamedPipeClosingPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
     /// 已经建立管道连接
     /// </summary>
-    /// <param name="e"></param>
     protected virtual async Task OnNamedPipeConnected(ConnectedEventArgs e)
     {
-        await this.PluginManager.RaiseAsync(typeof(INamedPipeConnectedPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseINamedPipeConnectedPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
     /// 准备连接的时候
     /// </summary>
-    /// <param name="e"></param>
     protected virtual async Task OnNamedPipeConnecting(ConnectingEventArgs e)
     {
-        await this.PluginManager.RaiseAsync(typeof(INamedPipeConnectingPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
-    }
-
-    private async Task PrivateConnected(NamedPipeTransport transport)
-    {
-        var e_connected = new ConnectedEventArgs();
-        await this.OnNamedPipeConnected(e_connected).SafeWaitAsync().ConfigureDefaultAwait();
-        var receiveTask = EasyTask.SafeRun(this.ReceiveLoopAsync, transport);
-        await receiveTask.SafeWaitAsync().ConfigureDefaultAwait();
-
-        transport.SafeDispose();
-
-        var e_closed = transport.ClosedEventArgs;
-        this.m_online = false;
-        var adapter = this.m_dataHandlingAdapter;
-        this.m_dataHandlingAdapter = default;
-        adapter.SafeDispose();
-
-        await this.OnNamedPipeClosed(e_closed).SafeWaitAsync().ConfigureDefaultAwait();
+        await this.PluginManager.RaiseINamedPipeConnectingPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     private async Task PrivateOnNamedPipeClosing(ClosingEventArgs e)
@@ -108,11 +94,35 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
         await this.OnNamedPipeConnecting(e).ConfigureDefaultAwait();
         if (this.m_dataHandlingAdapter == null)
         {
-            var adapter = this.Config.GetValue(NamedPipeConfigExtension.NamedPipeDataHandlingAdapterProperty)?.Invoke();
+            var adapter = this.Config.GetValue(TouchSocketConfigExtension.SingleStreamDataHandlingAdapterProperty)?.Invoke();
             if (adapter != null)
             {
                 this.SetAdapter(adapter);
             }
+        }
+    }
+
+    private async Task RunSessionAsync(NamedPipeTransport transport)
+    {
+        try
+        {
+            await this.OnNamedPipeConnected(new ConnectedEventArgs()).SafeWaitAsync().ConfigureDefaultAwait();
+            await this.ReceiveLoopAsync(transport).ConfigureDefaultAwait();
+        }
+        catch (Exception ex)
+        {
+            this.Logger?.Debug(this, ex);
+        }
+        finally
+        {
+            transport.SafeDispose();
+
+            this.m_online = false;
+            var adapter = this.m_dataHandlingAdapter;
+            this.m_dataHandlingAdapter = default;
+            adapter.SafeDispose();
+
+            await this.OnNamedPipeClosed(transport.ClosedEventArgs).SafeWaitAsync().ConfigureDefaultAwait();
         }
     }
 
@@ -141,6 +151,11 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     /// <inheritdoc/>
     public Protocol Protocol { get; protected set; }
 
+    /// <summary>
+    /// 获取命名管道的底层传输层对象。
+    /// </summary>
+    protected ITransport Transport => this.m_transport;
+
     #endregion 属性
 
     #region 断开操作
@@ -148,20 +163,52 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     /// <inheritdoc/>
     public virtual async Task<Result> CloseAsync(string msg, CancellationToken cancellationToken = default)
     {
+        NamedPipeTransport transport = null;
+        Task runTask;
+
+        await this.m_semaphoreForConnectAndClose.WaitAsync(cancellationToken).ConfigureDefaultAwait();
         try
         {
             if (!this.m_online)
             {
-                return Result.Success;
+                runTask = this.m_runTask;
+                if (runTask == null)
+                {
+                    return Result.Success;
+                }
             }
+            else if (Interlocked.CompareExchange(ref this.m_closeFlag, 1, 0) != 0)
+            {
+                runTask = this.m_runTask;
+            }
+            else
+            {
+                await this.PrivateOnNamedPipeClosing(new ClosingEventArgs(msg)).ConfigureDefaultAwait();
+                transport = this.m_transport;
+                runTask = this.m_runTask;
+            }
+        }
+        catch (Exception ex)
+        {
+            return Result.FromException(ex);
+        }
+        finally
+        {
+            this.m_semaphoreForConnectAndClose.Release();
+        }
 
-            await this.PrivateOnNamedPipeClosing(new ClosingEventArgs(msg)).ConfigureDefaultAwait();
-            var transport = this.m_transport;
+        try
+        {
             if (transport != null)
             {
                 await transport.CloseAsync(msg, cancellationToken).ConfigureDefaultAwait();
             }
-            await this.WaitClearConnect().ConfigureDefaultAwait();
+
+            if (runTask != null)
+            {
+                await runTask.WithCancellation(cancellationToken).ConfigureDefaultAwait();
+            }
+
             return Result.Success;
         }
         catch (Exception ex)
@@ -175,7 +222,11 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     {
         if (disposing)
         {
-            _ = EasyTask.SafeRun(async () => await this.CloseAsync(TouchSocketResource.DisposeClose).ConfigureDefaultAwait());
+            _ = EasyTask.SafeRun(async () =>
+            {
+                await this.CloseAsync(TouchSocketResource.DisposeClose).ConfigureDefaultAwait();
+                this.m_semaphoreForConnectAndClose.SafeDispose();
+            });
         }
         base.SafetyDispose(disposing);
     }
@@ -188,21 +239,18 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     /// 建立管道的连接。
     /// </summary>
     /// <param name="cancellationToken">可取消令箭</param>
-    /// <exception cref="ObjectDisposedException"></exception>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="Exception"></exception>
-    /// <exception cref="TimeoutException"></exception>
-    protected async Task PipeConnectAsync(CancellationToken cancellationToken)
+    protected virtual async Task NamedPipeConnectAsync(CancellationToken cancellationToken)
     {
-        await this.m_semaphoreSlimForConnect.WaitAsync(cancellationToken).ConfigureDefaultAwait();
+        this.ThrowIfDisposed();
+        this.ThrowIfConfigIsNull();
+
+        await this.m_semaphoreForConnectAndClose.WaitAsync(cancellationToken).ConfigureDefaultAwait();
         try
         {
             if (this.m_online)
             {
                 return;
             }
-            this.ThrowIfDisposed();
-            this.ThrowIfConfigIsNull();
 
             await this.WaitClearConnect().ConfigureDefaultAwait();
 
@@ -210,26 +258,55 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
             ThrowHelper.ThrowIfNull(pipeName, nameof(pipeName));
 
             var serverName = this.Config.GetValue(NamedPipeConfigExtension.PipeServerNameProperty);
+            NamedPipeClientStream namedPipe = null;
+            NamedPipeTransport transport = null;
 
-            var namedPipe = CreatePipeClient(serverName, pipeName);
-            await this.PrivateOnNamedPipeConnecting(new ConnectingEventArgs()).ConfigureDefaultAwait();
-
-            await namedPipe.ConnectAsync(cancellationToken).ConfigureDefaultAwait();
-
-            if (!namedPipe.IsConnected)
+            try
             {
-                ThrowHelper.ThrowException(TouchSocketCoreResource.UnknownError);
-            }
+                namedPipe = CreatePipeClient(serverName, pipeName);
+                await this.PrivateOnNamedPipeConnecting(new ConnectingEventArgs()).ConfigureDefaultAwait();
 
-            this.m_transport = new NamedPipeTransport(namedPipe, this.Config.GetValue(TouchSocketConfigExtension.TransportOptionProperty));
-            this.m_online = true;
-            // 启动新任务，处理连接后的操作
-            this.m_runTask = EasyTask.SafeRun(this.PrivateConnected, this.m_transport);
+                await namedPipe.ConnectAsync(cancellationToken).ConfigureDefaultAwait();
+
+                if (!namedPipe.IsConnected)
+                {
+                    ThrowHelper.ThrowException(TouchSocketCoreResource.UnknownError);
+                }
+
+                transport = new NamedPipeTransport(namedPipe, this.Config.GetValue(TouchSocketConfigExtension.TransportOptionProperty));
+                this.m_transport = transport;
+                this.m_online = true;
+                // 启动新任务，处理连接后的操作
+                Interlocked.Exchange(ref this.m_closeFlag, 0);
+                this.m_runTask = this.RunSessionAsync(transport);
+            }
+            catch
+            {
+                transport.SafeDispose();
+                if (transport == null)
+                {
+                    namedPipe.SafeDispose();
+                }
+
+                this.m_transport = default;
+                this.m_online = false;
+                throw;
+            }
         }
         finally
         {
-            this.m_semaphoreSlimForConnect.Release();
+            this.m_semaphoreForConnectAndClose.Release();
         }
+    }
+
+    /// <summary>
+    /// 兼容旧命名的连接入口，内部转发到 <see cref="NamedPipeConnectAsync(CancellationToken)"/>。
+    /// </summary>
+    /// <param name="cancellationToken">取消令牌。</param>
+    // Compatibility entry point for the old connect method name.
+    protected Task PipeConnectAsync(CancellationToken cancellationToken)
+    {
+        return this.NamedPipeConnectAsync(cancellationToken);
     }
 
     private async Task WaitClearConnect()
@@ -264,21 +341,20 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     /// 处理已接收到的数据。
     /// <para>根据不同的数据处理适配器，会传递不同的数据</para>
     /// </summary>
-    /// <param name="e"></param>
     /// <returns>如果返回<see langword="true"/>则表示数据已被处理，且不会再向下传递。</returns>
     protected virtual async Task OnNamedPipeReceived(ReceivedDataEventArgs e)
     {
-        await this.PluginManager.RaiseAsync(typeof(INamedPipeReceivedPlugin), this.Resolver, this, e).ConfigureDefaultAwait();
+        await this.PluginManager.RaiseINamedPipeReceivedPluginAsync(this.Resolver, this, e).ConfigureDefaultAwait();
     }
 
     /// <summary>
     /// 当收到原始数据
     /// </summary>
-    /// <param name="reader"></param>
     /// <returns>如果返回<see langword="true"/>则表示数据已被处理，且不会再向下传递。</returns>
     protected virtual ValueTask<bool> OnNamedPipeReceiving(IBytesReader reader)
     {
-        return this.PluginManager.RaiseAsync(typeof(INamedPipeReceivingPlugin), this.Resolver, this, new BytesReaderEventArgs(reader));
+        // 将原始数据传递给所有相关的预处理插件，以进行初步的数据处理
+        return this.PluginManager.RaiseINamedPipeReceivingPluginAsync(this.Resolver, this, m_bytesReaderEventArgs.Reset(reader));
     }
 
     /// <summary>
@@ -289,7 +365,7 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
     protected virtual ValueTask<bool> OnNamedPipeSending(ReadOnlyMemory<byte> memory)
     {
         // 将发送任务委托给插件管理器，以便在所有相关的插件中引发命名管道发送事件
-        return this.PluginManager.RaiseAsync(typeof(INamedPipeSendingPlugin), this.Resolver, this, new SendingEventArgs(memory));
+        return this.PluginManager.RaiseINamedPipeSendingPluginAsync(this.Resolver, this, m_sendingEventArgs.Reset(memory));
     }
 
     /// <summary>
@@ -331,106 +407,6 @@ public abstract partial class NamedPipeClientBase : SetupConfigObject, INamedPip
             await receiver.InputReceiveAsync(memory, requestInfo, CancellationToken.None).ConfigureDefaultAwait();
             return;
         }
-        await this.OnNamedPipeReceived(new ReceivedDataEventArgs(memory, requestInfo)).ConfigureDefaultAwait();
+        await this.OnNamedPipeReceived(m_receivedDataEventArgs.Reset(memory, requestInfo)).ConfigureDefaultAwait();
     }
-
-    #region Throw
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void ThrowIfCannotSendRequestInfo()
-    {
-        if (this.m_dataHandlingAdapter == null || !this.m_dataHandlingAdapter.CanSendRequestInfo)
-        {
-            throw new NotSupportedException($"当前适配器为空或者不支持对象发送。");
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void ThrowIfClientNotConnected()
-    {
-        if (this.m_online)
-        {
-            return;
-        }
-
-        ThrowHelper.ThrowClientNotConnectedException();
-    }
-
-    #endregion Throw
-
-    #region 发送
-
-    /// <summary>
-    /// 异步发送数据，通过适配器模式灵活处理数据发送。
-    /// </summary>
-    /// <param name="memory">待发送的只读字节内存块。</param>
-    /// <param name="cancellationToken">可取消令箭</param>
-    /// <returns>一个异步任务，表示发送操作。</returns>
-    protected async Task ProtectedSendAsync(ReadOnlyMemory<byte> memory, CancellationToken cancellationToken)
-    {
-        this.ThrowIfDisposed();
-        this.ThrowIfClientNotConnected();
-
-        await this.OnNamedPipeSending(memory).ConfigureDefaultAwait();
-
-        var transport = this.m_transport;
-        var adapter = this.m_dataHandlingAdapter;
-        var locker = transport.WriteLocker;
-
-        await locker.WaitAsync(cancellationToken).ConfigureDefaultAwait();
-        try
-        {
-            // 如果数据处理适配器未设置，则使用默认发送方式。
-            if (adapter == null)
-            {
-                await transport.Writer.WriteAsync(memory, cancellationToken).ConfigureDefaultAwait();
-            }
-            else
-            {
-                var writer = new PipeBytesWriter(transport.Writer);
-                adapter.SendInput(ref writer, in memory);
-                await writer.FlushAsync(cancellationToken).ConfigureDefaultAwait();
-            }
-        }
-        finally
-        {
-            locker.Release();
-        }
-    }
-
-    /// <summary>
-    /// 异步发送请求信息的受保护方法。
-    ///
-    /// 此方法首先检查当前对象是否能够发送请求信息，如果不能，则抛出异常。
-    /// 如果可以发送，它将使用数据处理适配器来异步发送输入请求。
-    /// </summary>
-    /// <param name="requestInfo">要发送的请求信息。</param>
-    /// <param name="cancellationToken">可取消令箭</param>
-    /// <returns>返回一个任务，该任务代表异步操作的结果。</returns>
-    protected async Task ProtectedSendAsync(IRequestInfo requestInfo, CancellationToken cancellationToken)
-    {
-        // 检查是否具备发送请求的条件，如果不具备则抛出异常
-        this.ThrowIfCannotSendRequestInfo();
-
-        this.ThrowIfDisposed();
-        this.ThrowIfClientNotConnected();
-
-        var transport = this.m_transport;
-        var adapter = this.m_dataHandlingAdapter;
-        var locker = transport.WriteLocker;
-
-        await locker.WaitAsync(cancellationToken).ConfigureDefaultAwait();
-        try
-        {
-            var writer = new PipeBytesWriter(transport.Writer);
-            adapter.SendInput(ref writer, requestInfo);
-            await writer.FlushAsync(cancellationToken).ConfigureDefaultAwait();
-        }
-        finally
-        {
-            locker.Release();
-        }
-    }
-
-    #endregion 发送
 }

@@ -10,7 +10,6 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace TouchV4Socket.Rpc;
@@ -80,8 +79,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取注释信息
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <returns></returns>
     public virtual string GetDescription(RpcMethod rpcMethod)
     {
         var description = rpcMethod.GetDescription();
@@ -91,8 +88,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取扩展的代理代码
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <returns></returns>
     public virtual string GetExtensionsMethodProxyCode(RpcMethod rpcMethod)
     {
         var codeString = new StringBuilder();
@@ -162,7 +157,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取生成的函数泛型限定名称。默认<see cref="IRpcClient"/>
     /// </summary>
-    /// <returns></returns>
     public virtual Type[] GetGenericConstraintTypes()
     {
         return this.GenericConstraintTypes;
@@ -171,8 +165,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取生成实体类时的代码块
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <returns></returns>
     public virtual string GetInstanceProxyCode(RpcMethod rpcMethod)
     {
         var codeString = new StringBuilder();
@@ -227,8 +219,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取接口的代理代码
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <returns></returns>
     public virtual string GetInterfaceProxyCode(RpcMethod rpcMethod)
     {
         var codeString = new StringBuilder();
@@ -272,8 +262,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取调用键
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <returns></returns>
     public virtual string GetInvokeKey(RpcMethod rpcMethod)
     {
         return this.MethodInvoke
@@ -284,7 +272,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取调用配置
     /// </summary>
-    /// <returns></returns>
     public virtual string GetInvokeOption()
     {
         return "InvokeOption invokeOption = default";
@@ -293,9 +280,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 获取生成的函数名称
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <param name="isAsync"></param>
-    /// <returns></returns>
     public virtual string GetMethodName(RpcMethod rpcMethod, bool isAsync)
     {
         var name = this.MethodName;
@@ -400,11 +384,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 生成扩展函数的内容
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <param name="parametersStr"></param>
-    /// <param name="parameters"></param>
-    /// <param name="isAsync"></param>
-    /// <returns></returns>
     protected virtual string GetExtensionInstanceMethod(RpcMethod rpcMethod, List<string> parametersStr, RpcParameter[] parameters, bool isAsync)
     {
         var codeString = new StringBuilder();
@@ -515,11 +494,6 @@ public abstract class RpcAttribute : Attribute
     /// <summary>
     /// 生成实现函数的内容
     /// </summary>
-    /// <param name="rpcMethod"></param>
-    /// <param name="parametersStr"></param>
-    /// <param name="parameters"></param>
-    /// <param name="isAsync"></param>
-    /// <returns></returns>
     protected virtual string GetInstanceMethod(RpcMethod rpcMethod, List<string> parametersStr, RpcParameter[] parameters, bool isAsync)
     {
         var codeString = new StringBuilder();
@@ -632,6 +606,10 @@ public abstract class RpcAttribute : Attribute
         return codeString.ToString();
     }
 
+    /// <summary>
+    /// 获取公共属性集合。
+    /// </summary>
+    /// <returns>属性信息数组。</returns>
     protected abstract PropertyInfo[] GetPublicProperties();
 
 

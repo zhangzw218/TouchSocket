@@ -12,6 +12,9 @@
 
 namespace TouchV4Socket.Dmtp;
 
+/// <summary>
+/// Dmtp功能配置选项基类。
+/// </summary>
 public class DmtpFeatureOption
 {
     /// <summary>
