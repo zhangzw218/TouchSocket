@@ -50,7 +50,7 @@ public static class ReconnectionOptionsExtension
             throw new ArgumentOutOfRangeException(nameof(pingInterval), "Ping间隔必须大于零");
         }
 
-        DateTimeOffset lastPingTime = DateTimeOffset.MinValue;
+        var lastPingTime = DateTimeOffset.MinValue;
 
         reconnectionOption.CheckAction = async (client) =>
         {
@@ -64,6 +64,11 @@ public static class ReconnectionOptionsExtension
 
             if (timeSinceLastPing >= interval)
             {
+                if (timeSinceLastActivity < span)
+                {
+                    return ConnectionCheckResult.Skip;
+                }
+
                 try
                 {
                     using var pingCts = new CancellationTokenSource(pingOperationTimeout);

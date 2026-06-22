@@ -10,69 +10,64 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using System;
-using System.Linq;
-using System.Text;
+namespace TouchV4Socket.SocketIo;
 
-namespace TouchV4Socket.SocketIo
+internal class EngineIo4 : IEngineIo
 {
-    internal class EngineIo4 : IEngineIo
+    public EngineIo4(EngineIoTransportType engineIOTransportType)
     {
-        public EngineIo4(EngineIoTransportType engineIOTransportType)
-        {
-            this.EngineIoTransportType = engineIOTransportType;
-        }
-
-        public EngineIoTransportType EngineIoTransportType { get; private set; }
-
-        #region Encode
-
-        public void EncodeToBinary(EngineIoMessage message, ByteBlock byteBlock)
-        {
-            WriterExtension.WriteValue<TWriter,byte>(ref writer,(byte)message.MessageType);
-            byteBlock.Write(message.GetRawData());
-        }
-
-        public string EncodeToString(EngineIoMessage message)
-        {
-            var builder = new StringBuilder();
-            builder.Append(message.IsText ? ((int)message.MessageType).ToString() : "b");
-            builder.Append(message.IsText ? message.GetText() : Convert.ToBase64String(message.GetRawData()));
-
-            return builder.ToString();
-        }
-
-        #endregion Encode
-
-        #region Decode
-
-        public const string Seperator = "\u001e";
-
-        public EngineIoMessage Decode(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException($"“{nameof(value)}”不能为 null 或空。", nameof(value));
-            }
-
-            var message = value.Length > 1
-                ? new EngineIoMessage((EngineIoMessageType)value[0] - '0', value.Substring(1))
-                : new EngineIoMessage((EngineIoMessageType)value[0] - '0');
-            return message;
-        }
-
-        public EngineIoMessage Decode(byte[] rawData)
-        {
-            if (rawData is null)
-            {
-                throw new ArgumentNullException(nameof(rawData));
-            }
-
-            var message = new EngineIoMessage((EngineIoMessageType)rawData[0], rawData.Skip(1).ToArray());
-
-            return message;
-        }
-
-        #endregion Decode
+        this.EngineIoTransportType = engineIOTransportType;
     }
+
+    public EngineIoTransportType EngineIoTransportType { get; private set; }
+
+    #region Encode
+
+    public void EncodeToBinary<TWriter>(EngineIoMessage message, ref TWriter writer)
+        where TWriter : IBytesWriter
+    {
+        var typeSpan = writer.GetSpan(1);
+        typeSpan[0] = (byte)message.MessageType;
+        writer.Advance(1);
+        writer.Write(message.RawData.Span);
+    }
+
+    public void EncodeToText<TWriter>(EngineIoMessage message, ref TWriter writer)
+        where TWriter : IBytesWriter
+    {
+        if (message.IsText)
+        {
+            var span = writer.GetSpan(1);
+            span[0] = (byte)('0' + (int)message.MessageType);
+            writer.Advance(1);
+            writer.Write(message.RawData.Span);
+        }
+        else
+        {
+            WriterExtension.WriteNormalString(ref writer, "b", Encoding.UTF8);
+            WriterExtension.WriteBase64(ref writer, message.RawData.Span);
+        }
+    }
+
+    #endregion Encode
+
+    #region Decode
+
+    public const string Seperator = "\u001e";
+
+    public EngineIoMessage Decode(ReadOnlyMemory<byte> data)
+    {
+        if (data.IsEmpty)
+        {
+            ThrowHelper.ThrowArgumentNullException(nameof(data));
+        }
+
+        var firstByte = data.Span[0];
+        var type = (EngineIoMessageType)(firstByte - '0');
+        var rest = data.Slice(1);
+        return rest.IsEmpty
+            ? new EngineIoMessage(type, true, ReadOnlyMemory<byte>.Empty)
+            : new EngineIoMessage(type, true, rest);
+    }
+    #endregion Decode
 }

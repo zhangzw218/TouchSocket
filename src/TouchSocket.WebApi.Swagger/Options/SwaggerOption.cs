@@ -10,33 +10,25 @@
 // 感谢您的下载和使用
 // ------------------------------------------------------------------------------
 
-using TouchV4Socket.Rpc;
-
 namespace TouchV4Socket.WebApi.Swagger;
 
 /// <summary>
-/// Swagger 配置选项。
+/// Swagger 配置选项，继承自 <see cref="OpenApiOption"/> 并附加 Swagger UI 相关配置。
 /// </summary>
-public class SwaggerOption
+public class SwaggerOption : OpenApiOption
 {
+    /// <summary>
+    /// 初始化 <see cref="SwaggerOption"/> 的新实例，默认前缀为 "swagger"。
+    /// </summary>
+    public SwaggerOption()
+    {
+        this.Prefix = "swagger";
+    }
 
     /// <summary>
     /// 是否在浏览器打开Swagger页面
     /// </summary>
     public bool LaunchBrowser { get; set; }
-
-    /// <summary>
-    /// 访问Swagger的前缀，默认“swagger”
-    /// </summary>
-    public string Prefix { get; set; } = "swagger";
-
-    /// <summary>
-    /// 设置访问Swagger的前缀，默认“swagger”
-    /// </summary>
-    public void SetPrefix(string value)
-    {
-        this.Prefix = value;
-    }
 
     /// <summary>
     /// 在浏览器打开Swagger页面
@@ -45,11 +37,4 @@ public class SwaggerOption
     {
         this.LaunchBrowser = true;
     }
-
-    /// <summary>
-    /// OpenAPI 操作元数据构建完成后的回调委托。
-    /// 每个 WebApi 方法对应的 <see cref="OpenApiPathValue"/> 生成完毕后会调用此委托，
-    /// 可在此修改响应类型、标签、描述等元数据，使 OpenAPI 文档与运行时行为保持一致。
-    /// </summary>
-    public Action<RpcMethod, OpenApiPathValue> ConfigureOperation { get; set; }
 }

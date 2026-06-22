@@ -11,7 +11,6 @@
 //------------------------------------------------------------------------------
 
 using System.Buffers;
-using System.Net.WebSockets;
 
 namespace TouchV4Socket.Http.WebSockets;
 

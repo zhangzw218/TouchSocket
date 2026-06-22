@@ -11,7 +11,6 @@
 //------------------------------------------------------------------------------
 
 using Microsoft.CodeAnalysis;
-using System.Reflection;
 
 namespace TouchV4Socket;
 
@@ -116,10 +115,5 @@ namespace TouchV4Socket.Rpc
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        context.RegisterPostInitializationOutput(a =>
-        {
-            var sourceCode = this.m_generatorRpcProxyAttribute.Replace("/*GeneratedCode*/", $"[global::System.CodeDom.Compiler.GeneratedCode(\"TouchSocket.SourceGenerator\",\"{Assembly.GetExecutingAssembly().GetName().Version.ToString()}\")]");
-            a.AddSource(nameof(this.m_generatorRpcProxyAttribute) + ".g.cs", sourceCode);
-        });
     }
 }

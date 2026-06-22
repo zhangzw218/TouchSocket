@@ -17,6 +17,7 @@
     <Project Path="Adapter/MultipacketAdapterConsoleApp/MultipacketAdapterConsoleApp.csproj" />
     <Project Path="Adapter/PackageAdapterConsoleApp/PackageAdapterConsoleApp.csproj" />
     <Project Path="Adapter/RawAdapterConsoleApp/RawAdapterConsoleApp.csproj" />
+    <Project Path="Adapter/UseAdapterConsoleApp/UseAdapterConsoleApp.csproj" Id="c457e249-923e-44a5-8141-ce3dffe92d7f" />
   </Folder>
   <Folder Name="/BlogsDemos/">
     <Project Path="BlogsDemos/AccessRestrictionsConsoleApp/AccessRestrictionsConsoleApp.csproj" />
@@ -148,16 +149,26 @@
   <Folder Name="/JsonRpc/反向Rpc/">
     <Project Path="JsonRpc/ReverseJsonRpcConsoleApp/ReverseJsonRpcConsoleApp.csproj" />
   </Folder>
+  <Folder Name="/Mcp/">
+    <Project Path="Mcp/McpServerConsoleApp/McpServerConsoleApp.csproj" Id="77e59ae3-cc15-445c-a6a1-3c4afe3ca12b" />
+  </Folder>
   <Folder Name="/Modbus/">
     <Project Path="Modbus/ModbusMasterConsoleApp/ModbusMasterConsoleApp.csproj" />
     <Project Path="Modbus/ModbusObjectConsoleApp/ModbusObjectConsoleApp.csproj" />
     <Project Path="Modbus/ModbusSlaveConsoleApp/ModbusSlaveConsoleApp.csproj" />
+  </Folder>
+  <Folder Name="/Semi/">
+    <Project Path="Semi/SemiServiceConsoleApp/SemiServiceConsoleApp.csproj" />
+    <Project Path="Semi/SemiClientConsoleApp/SemiClientConsoleApp.csproj" />
   </Folder>
   <Folder Name="/Mqtt/">
     <Project Path="Mqtt/MqttConsoleApp/MqttConsoleApp.csproj" />
     <Project Path="Mqtt/MqttPerformanceTestingConsoleApp/MqttPerformanceTestingConsoleApp.csproj" />
     <Project Path="Mqtt/MqttTopicHandlerConsoleApp/MqttTopicHandlerConsoleApp.csproj" />
     <Project Path="Mqtt/MqttWebSocketConsoleApp/MqttWebSocketConsoleApp.csproj" />
+  </Folder>
+  <Folder Name="/MqttRpc/">
+    <Project Path="MqttRpc/MqttRpcConsoleApp/MqttRpcConsoleApp.csproj" Id="3d9e2a2e-93bb-4ae5-948d-4bad9611d744" />
   </Folder>
   <Folder Name="/NamedPipe/">
     <Project Path="NamedPipe/NamedPipeClientConsoleApp/NamedPipeClientConsoleApp.csproj" />

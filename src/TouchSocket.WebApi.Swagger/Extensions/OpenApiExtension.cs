@@ -10,6 +10,8 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using TouchV4Socket.WebApi.OpenApi;
+
 namespace TouchV4Socket.WebApi.Swagger;
 
 internal static class OpenApiExtension

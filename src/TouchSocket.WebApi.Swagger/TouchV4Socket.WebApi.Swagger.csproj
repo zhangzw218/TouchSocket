@@ -18,11 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\TouchSocket.Shared\WebApi\WebApiParameterInfo.cs" Link="Common\WebApiParameterInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TouchSocket.WebApi\TouchV4Socket.WebApi.csproj" />
+	  <ProjectReference Include="..\TouchSocket.WebApi\TouchV4Socket.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
