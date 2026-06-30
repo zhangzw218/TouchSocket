@@ -13,6 +13,7 @@
 using JsonRpcProxy;
 using System.Text;
 using TouchSocket.Core;
+using TouchSocket.Http.WebSockets;
 using TouchSocket.JsonRpc;
 using TouchSocket.Rpc;
 using TouchSocket.Sockets;
@@ -26,86 +27,22 @@ internal class Program
         ConsoleLogger.Default.Exception(obj);
     }
 
-    private static async Task<IJsonRpcClient> CreateHttpJsonRpcClient()
-    {
-        #region 创建HttpJsonRpc客户端
-        var jsonRpcClient = new HttpJsonRpcClient();
-        await jsonRpcClient.SetupAsync(new TouchSocketConfig()
-             .SetRemoteIPHost("http://127.0.0.1:7706/jsonrpc"));
-        await jsonRpcClient.ConnectAsync();
-        return jsonRpcClient;
-        #endregion
-
-    }
-
-    private static async Task<IJsonRpcClient> CreateTcpJsonRpcClient()
-    {
-        #region 创建TcpJsonRpc客户端
-        var jsonRpcClient = new TcpJsonRpcClient();
-        await jsonRpcClient.SetupAsync(new TouchSocketConfig()
-             .SetRemoteIPHost("127.0.0.1:7705")
-             .SetSingleStreamDataHandlingAdapter(() => new JsonPackageAdapter(Encoding.UTF8)));
-        await jsonRpcClient.ConnectAsync();
-
-        return jsonRpcClient;
-        #endregion
-
-    }
-
-    static async Task JsonRpcInvoke(IJsonRpcClient client)
-    {
-        #region Invoke直接调用
-        var str = await client.InvokeTAsync<string>("TestJsonRpc", InvokeOption.WaitInvoke, "123");
-        #endregion
-    }
-
-    static async Task RpcTestJsonRpc(IJsonRpcClient client)
-    {
-        #region JsonRpcProxy调用
-        var result = await client.TestJsonRpcAsync("RRQM");
-        #endregion
-
-        Console.WriteLine($"Tcp返回结果:{result}");
-    }
-
     private static async Task<IJsonRpcClient> CreateWebSocketJsonRpcClient()
     {
         #region 创建WebSocketJsonRpc客户端
         var jsonRpcClient = new WebSocketJsonRpcClient();
         await jsonRpcClient.SetupAsync(new TouchSocketConfig()
+            .ConfigurePlugins(plug =>
+            {
+                plug.Add<AAWebSocketConnectedPlugin>();
+            })
              .SetRemoteIPHost("ws://127.0.0.1:7707/ws"));//此url就是能连接到websocket的路径。
-        await jsonRpcClient.ConnectAsync();
-
+        var result = await jsonRpcClient.TryConnectAsync();
+        ConsoleLogger.Default.Info($"JsonRpc连接结果 {result.Message}");
         return jsonRpcClient;
         #endregion
     }
 
-    private static async Task JsonRpcClientInvokeByHttp()
-    {
-        var jsonRpcClient = await CreateHttpJsonRpcClient();
-
-        Console.WriteLine("连接成功");
-        var result = await jsonRpcClient.TestJsonRpcAsync("RRQM");
-        Console.WriteLine($"Http返回结果:{result}");
-
-        result = await jsonRpcClient.TestGetContextAsync("RRQM");
-        Console.WriteLine($"Http返回结果:{result}");
-    }
-
-    private static async Task JsonRpcClientInvokeByTcp()
-    {
-        var jsonRpcClient = await CreateTcpJsonRpcClient();
-
-        Console.WriteLine("连接成功");
-        var result = await jsonRpcClient.TestJsonRpcAsync("RRQM");
-        Console.WriteLine($"Tcp返回结果:{result}");
-
-        result = await jsonRpcClient.TestJsonRpcAsync("RRQM");
-        Console.WriteLine($"Tcp返回结果:{result}");
-
-        result = await jsonRpcClient.TestGetContextAsync("RRQM");
-        Console.WriteLine($"Tcp返回结果:{result}");
-    }
 
     private static async Task JsonRpcClientInvokeByWebSocket()
     {
@@ -126,8 +63,6 @@ internal class Program
     {
         var consoleAction = new ConsoleAction();
         consoleAction.OnException += ConsoleAction_OnException;
-        consoleAction.Add("1", "Tcp调用", JsonRpcClientInvokeByTcp);
-        consoleAction.Add("2", "Http调用", JsonRpcClientInvokeByHttp);
         consoleAction.Add("3", "WebSocket调用", JsonRpcClientInvokeByWebSocket);
 
         consoleAction.ShowAll();
