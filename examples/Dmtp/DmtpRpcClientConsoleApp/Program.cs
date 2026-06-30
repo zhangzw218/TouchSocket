@@ -243,6 +243,7 @@ internal class Program
         #endregion
              .ConfigurePlugins(a =>
              {
+                 a.Add<AADmtpConnectedPlugin>();
                  a.UseDmtpRpc(options =>
                  {
                      options.SetCreateDmtpRpcActor((actor, serverprovider, dispatcher) => new MyDmtpRpcActor(actor, serverprovider, dispatcher));
@@ -253,12 +254,12 @@ internal class Program
              {
                  options.VerifyToken = "Dmtp";
              }));
-        await client.ConnectAsync();
+        var result = await client.TryConnectAsync();
 
         var rpcClient1 = client.GetDmtpRpcActor<IRpcClient1>();
         var rpcClient2 = client.GetDmtpRpcActor<IRpcClient2>();
 
-        client.Logger.Info($"连接成功，Id={client.Id}");
+        client.Logger.Info($"连接成功，Id={client.Id} result {result.Message}");
         return client;
     }
 }

@@ -11,17 +11,16 @@
 // ------------------------------------------------------------------------------
 
 using TouchSocket.Core;
-using TouchSocket.Http;
-using TouchSocket.Http.WebSockets;
+using TouchSocket.Dmtp;
 
-namespace JsonRpcClientConsoleApp;
+namespace ClientConsoleApp;
 
-internal class AAWebSocketConnectedPlugin : PluginBase, IWebSocketConnectedPlugin
+internal class AADmtpConnectedPlugin : PluginBase, IDmtpConnectedPlugin
 {
-    public async Task OnWebSocketConnected(IWebSocket webSocket, HttpContextEventArgs e)
+    public async Task OnDmtpConnected(IDmtpActorObject client, DmtpVerifyEventArgs e)
     {
-        ConsoleLogger.Default.Info("WebSocketConnectedPlugin 触发 等待3秒");
+        ConsoleLogger.Default.Info("IDmtpConnectedPlugin 触发 等待3秒");
         await Task.Delay(3000);
-        ConsoleLogger.Default.Info("WebSocketConnectedPlugin 触发 完成");
+        ConsoleLogger.Default.Info("IDmtpConnectedPlugin 触发 完成");
     }
 }
