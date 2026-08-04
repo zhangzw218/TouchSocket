@@ -10,19 +10,21 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchV4Socket.Modbus;
+namespace TouchV4Socket.Core;
 
-internal class ModbusUdpRtuAdapter : ModbusUdpCustomDataHandlingAdapter<ModbusRtuResponse>
+internal class UriFastBinaryConverter : FastBinaryConverter<Uri>
 {
-    private readonly ModbusFunctionHandlerRegistry m_registry;
-
-    internal ModbusUdpRtuAdapter(ModbusFunctionHandlerRegistry registry)
+    protected override Uri Read<TReader>(ref TReader reader, Type type)
     {
-        this.m_registry = registry;
+        var uriString = ReaderExtension.ReadString(ref reader);
+        var uriKind = ReaderExtension.ReadValue<TReader, UriKind>(ref reader);
+
+        return new Uri(uriString, uriKind);
     }
 
-    protected override FilterResult Filter<TReader>(ref TReader reader, ref ModbusRtuResponse request)
+    protected override void Write<TWriter>(ref TWriter writer, in Uri obj)
     {
-        return ModbusRtuResponseParser.Filter(ref reader, ref request, this.m_registry);
+        WriterExtension.WriteString(ref writer, obj.OriginalString);
+        WriterExtension.WriteValue<TWriter, UriKind>(ref writer, obj.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
     }
 }

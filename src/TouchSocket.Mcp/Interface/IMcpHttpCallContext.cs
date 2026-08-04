@@ -10,30 +10,27 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
+using TouchSocket.Http;
 
-namespace TouchV4Socket.Sockets;
+namespace TouchSocket.Mcp;
 
 /// <summary>
-/// 服务器Ssl设置
+/// 基于 HTTP 传输的 MCP 调用上下文接口。
 /// </summary>
-public class ServiceSslOption : SslOption
+/// <remarks>
+/// 此接口定义了在基于 HTTP 的 MCP 调用中所需的上下文信息，包括 HTTP 上下文和 HTTP 会话客户端。
+/// 实现这个接口的类应该提供对这些属性的访问，以便在 MCP 调用过程中使用。
+/// issue:https://github.com/RRQM/TouchSocket/issues/137
+/// </remarks>
+public interface IMcpHttpCallContext : IMcpCallContext
 {
     /// <summary>
-    /// 证书
+    /// 获取当前 HTTP 上下文，包含 <see cref="HttpContext.Request"/> 和 <see cref="HttpContext.Response"/>。
     /// </summary>
-    public X509Certificate Certificate { get; set; }
-
-#if NET6_0_OR_GREATER
-    /// <summary>
-    /// 服务器证书选择回调，可根据客户端提供的SNI主机名选择证书。
-    /// </summary>
-    public ServerCertificateSelectionCallback ServerCertificateSelectionCallback { get; set; }
-#endif
+    HttpContext HttpContext { get; }
 
     /// <summary>
-    /// 该值指定是否向客户端请求证书用于进行身份验证。 请注意，这只是一个请求 - 如果没有提供任何证书，服务器仍然可接受连接请求
+    /// 获取 HTTP 会话客户端。
     /// </summary>
-    public bool ClientCertificateRequired { get; set; }
+    IHttpSessionClient HttpSessionClient { get; }
 }

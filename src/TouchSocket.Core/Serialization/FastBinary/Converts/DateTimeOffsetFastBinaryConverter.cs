@@ -10,19 +10,21 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchV4Socket.Modbus;
+namespace TouchV4Socket.Core;
 
-internal class ModbusUdpRtuAdapter : ModbusUdpCustomDataHandlingAdapter<ModbusRtuResponse>
+internal class DateTimeOffsetFastBinaryConverter : FastBinaryConverter<DateTimeOffset>
 {
-    private readonly ModbusFunctionHandlerRegistry m_registry;
-
-    internal ModbusUdpRtuAdapter(ModbusFunctionHandlerRegistry registry)
+    protected override DateTimeOffset Read<TReader>(ref TReader reader, Type type)
     {
-        this.m_registry = registry;
+        var ticks = ReaderExtension.ReadValue<TReader, long>(ref reader);
+        var offsetTicks = ReaderExtension.ReadValue<TReader, long>(ref reader);
+
+        return new DateTimeOffset(ticks, new TimeSpan(offsetTicks));
     }
 
-    protected override FilterResult Filter<TReader>(ref TReader reader, ref ModbusRtuResponse request)
+    protected override void Write<TWriter>(ref TWriter writer, in DateTimeOffset obj)
     {
-        return ModbusRtuResponseParser.Filter(ref reader, ref request, this.m_registry);
+        WriterExtension.WriteValue<TWriter, long>(ref writer, obj.Ticks);
+        WriterExtension.WriteValue<TWriter, long>(ref writer, obj.Offset.Ticks);
     }
 }

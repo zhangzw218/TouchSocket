@@ -17,15 +17,24 @@ namespace TouchSocket.Mcp;
 /// <summary>
 /// 基于 HTTP 传输的 MCP 调用上下文。
 /// </summary>
-public sealed class McpHttpCallContext : McpCallContextBase
+public sealed class McpHttpCallContext : McpCallContextBase, IMcpHttpCallContext
 {
     /// <summary>
     /// 初始化 <see cref="McpHttpCallContext"/>。
     /// </summary>
     /// <param name="client">HTTP 会话客户端。</param>
+    /// <param name="httpContext">当前 HTTP 上下文。</param>
     /// <param name="cancellationToken">取消令牌。</param>
-    public McpHttpCallContext(IHttpSessionClient client, CancellationToken cancellationToken)
+    public McpHttpCallContext(IHttpSessionClient client, HttpContext httpContext, CancellationToken cancellationToken)
         : base(client, cancellationToken)
     {
+        this.HttpContext = httpContext;
+        this.HttpSessionClient = client;
     }
+
+    /// <inheritdoc/>
+    public HttpContext HttpContext { get; }
+
+    /// <inheritdoc/>
+    public IHttpSessionClient HttpSessionClient { get; }
 }

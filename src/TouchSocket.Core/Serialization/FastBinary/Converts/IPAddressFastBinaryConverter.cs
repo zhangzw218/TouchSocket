@@ -10,19 +10,25 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
-namespace TouchV4Socket.Modbus;
+using System.Net;
 
-internal class ModbusUdpRtuAdapter : ModbusUdpCustomDataHandlingAdapter<ModbusRtuResponse>
+namespace TouchV4Socket.Core;
+
+internal class IPAddressFastBinaryConverter : FastBinaryConverter<IPAddress>
 {
-    private readonly ModbusFunctionHandlerRegistry m_registry;
-
-    internal ModbusUdpRtuAdapter(ModbusFunctionHandlerRegistry registry)
+    protected override IPAddress Read<TReader>(ref TReader reader, Type type)
     {
-        this.m_registry = registry;
+        var bytes = ReaderExtension.ReadByteSpan(ref reader).ToArray();
+        var scopeId = ReaderExtension.ReadValue<TReader, long>(ref reader);
+
+        return bytes.Length == 16 ? new IPAddress(bytes, scopeId) : new IPAddress(bytes);
     }
 
-    protected override FilterResult Filter<TReader>(ref TReader reader, ref ModbusRtuResponse request)
+    protected override void Write<TWriter>(ref TWriter writer, in IPAddress obj)
     {
-        return ModbusRtuResponseParser.Filter(ref reader, ref request, this.m_registry);
+        var bytes = obj.GetAddressBytes();
+
+        WriterExtension.WriteByteSpan(ref writer, bytes);
+        WriterExtension.WriteValue<TWriter, long>(ref writer, bytes.Length == 16 ? obj.ScopeId : 0);
     }
 }
