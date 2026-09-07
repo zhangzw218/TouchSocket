@@ -232,9 +232,11 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
     private async Task CanceledInvokeAsync(string targetId,long sign)
     {
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(this.DmtpActor.ClosedToken);
+        cts.CancelAfter(5000);
         try
         {
-            await this.DmtpActor.SendAsync(this.m_cancelInvoke,new CanceledPackage {SourceId = this.DmtpActor.Id,TargetId=targetId,Sign=sign }, this.DmtpActor.ClosedToken).ConfigureDefaultAwait();
+            await this.DmtpActor.SendAsync(this.m_cancelInvoke,new CanceledPackage {SourceId = this.DmtpActor.Id,TargetId=targetId,Sign=sign }, cts.Token).ConfigureDefaultAwait();
         }
         catch
         {
@@ -375,7 +377,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
 
         try
         {
-            await this.DmtpActor.SendAsync(this.m_invoke_Request, rpcPackage).ConfigureDefaultAwait();
+            await this.DmtpActor.SendAsync(this.m_invoke_Request, rpcPackage, cancellationToken).ConfigureDefaultAwait();
 
             switch (invokeOption.FeedbackType)
             {
@@ -454,7 +456,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
             {
                 rpcPackage.Package(ref byteBlock);
 
-                await this.DmtpActor.SendAsync(this.m_invoke_Request, byteBlock.Memory).ConfigureDefaultAwait();
+                await this.DmtpActor.SendAsync(this.m_invoke_Request, byteBlock.Memory, cancellationToken).ConfigureDefaultAwait();
             }
             finally
             {
