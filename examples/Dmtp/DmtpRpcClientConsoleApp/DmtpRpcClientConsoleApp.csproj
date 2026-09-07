@@ -12,7 +12,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="TouchSocket.Dmtp" />
 		<PackageReference Include="MemoryPack" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Src\TouchSocket.Dmtp\TouchSocket.Dmtp.csproj" />
 	</ItemGroup>
 </Project>

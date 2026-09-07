@@ -39,6 +39,14 @@ Task<System.Int32> RpcPushChannelAsync(System.Int32 channelID,InvokeOption invok
 Task<System.Int32> TestCancellationTokenAsync(InvokeOption invokeOption = default);
 
 ///<summary>
+///阻塞当前Dmtp接收循环，用于复现超时后的取消通知发送阻塞
+///</summary>
+/// <exception cref="System.TimeoutException">调用超时</exception>
+/// <exception cref="TouchSocket.Rpc.RpcInvokeException">Rpc调用异常</exception>
+/// <exception cref="System.Exception">其他异常</exception>
+Task<System.Int32> BlockReceiveAsync(System.Int32 delaySeconds,InvokeOption invokeOption = default);
+
+///<summary>
 ///测试从CallContextAccessor中获取当前关联的CallContext
 ///</summary>
 /// <exception cref="System.TimeoutException">调用超时</exception>
@@ -112,6 +120,20 @@ return (System.Int32) await this.Client.InvokeAsync("consoleapp2.myrpcserver.tes
 }
 
 ///<summary>
+///阻塞当前Dmtp接收循环，用于复现超时后的取消通知发送阻塞
+///</summary>
+public async Task<System.Int32> BlockReceiveAsync(System.Int32 delaySeconds,InvokeOption invokeOption = default)
+{
+if(this.Client==null)
+{
+throw new RpcException("IRpcClient为空，请先初始化或者进行赋值");
+}
+object[] parameters = new object[]{delaySeconds};
+return (System.Int32) await this.Client.InvokeAsync("BlockReceive",typeof(System.Int32),invokeOption, parameters);
+
+}
+
+///<summary>
 ///测试从CallContextAccessor中获取当前关联的CallContext
 ///</summary>
 public Task TestGetCallContextFromCallContextAccessorAsync(InvokeOption invokeOption = default)
@@ -180,6 +202,16 @@ return (System.Int32) await client.InvokeAsync("consoleapp2.myrpcserver.rpcpushc
 public static async Task<System.Int32> TestCancellationTokenAsync<TClient>(this TClient client,InvokeOption invokeOption = default) where TClient:
 TouchSocket.Dmtp.Rpc.IDmtpRpcActor{
 return (System.Int32) await client.InvokeAsync("consoleapp2.myrpcserver.testcancellationtoken",typeof(System.Int32),invokeOption, null);
+
+}
+
+///<summary>
+///阻塞当前Dmtp接收循环，用于复现超时后的取消通知发送阻塞
+///</summary>
+public static async Task<System.Int32> BlockReceiveAsync<TClient>(this TClient client,System.Int32 delaySeconds,InvokeOption invokeOption = default) where TClient:
+TouchSocket.Dmtp.Rpc.IDmtpRpcActor{
+object[] parameters = new object[]{delaySeconds};
+return (System.Int32) await client.InvokeAsync("BlockReceive",typeof(System.Int32),invokeOption, parameters);
 
 }
 

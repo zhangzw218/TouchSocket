@@ -10,6 +10,7 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Diagnostics;
 using MemoryPack;
 using RpcProxy;
 using TouchSocket.Core;
@@ -33,6 +34,7 @@ internal class Program
         consoleAction.Add("4", "测试客户端推送大量流数据", RunRpcPushChannel);
         consoleAction.Add("5", "测试取消调用", RunInvokeCancellationToken);
         consoleAction.Add("6", "测试从CallContextAccessor中获取当前关联的CallContext", RunInvokeGetCallContextFromCallContextAccessor);
+        consoleAction.Add("7", "复现超时后取消通知发送阻塞", RunReproduceCanceledInvokeSendBlocking);
 
         consoleAction.ShowAll();
 
@@ -85,6 +87,103 @@ internal class Program
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+    }
+
+    /// <summary>
+    /// 复现RPC等待超时后，发送取消通知被前面的发送操作阻塞的问题。
+    /// </summary>
+    private static async Task RunReproduceCanceledInvokeSendBlocking()
+    {
+        using var client = await GetTcpDmtpClient();
+        var rpcActor = client.GetDmtpRpcActor();
+
+        // 先创建通道，确保后续发送通道数据时不需要再等待服务端处理创建请求。
+        using var channel = await client.CreateChannelAsync();
+
+        Console.WriteLine("开始请求服务端阻塞接收循环，服务端将阻塞30秒。");
+        var blockTask = rpcActor.InvokeTAsync<int>(
+            "BlockReceive",
+            DmtpInvokeOption.WaitInvoke,
+            30);
+
+        // 等待服务端收到BlockReceive，避免后续测试数据先于阻塞请求到达。
+        await Task.Delay(500);
+
+        using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+        var invokeOption = new DmtpInvokeOption
+        {
+            FeedbackType = FeedbackType.WaitInvoke,
+            SerializationType = SerializationType.FastBinary,
+            Token = timeoutCts.Token
+        };
+
+        Console.WriteLine("发起超时时间为3秒的Add调用。");
+        var stopwatch = Stopwatch.StartNew();
+        var probeTask = rpcActor.InvokeTAsync<int>("Add", invokeOption, 1, 2);
+
+        // 给Add请求留出发送时间，然后用同一个DmtpActor持续发送数据。
+        // 服务端接收循环已被BlockReceive占用，发送管道很快会产生背压。
+        await Task.Delay(200);
+        using var floodCts = new CancellationTokenSource(TimeSpan.FromSeconds(90));
+        var floodTask = FloodChannelAsync(channel, floodCts.Token);
+
+        try
+        {
+            var result = await probeTask;
+            Console.WriteLine($"异常：Add调用提前返回，结果={result}，耗时={stopwatch.ElapsedMilliseconds}毫秒。");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Add调用结束，异常类型={ex.GetType().Name}，耗时={stopwatch.ElapsedMilliseconds}毫秒。");
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            // 等待服务端解除接收阻塞后再停止洪水发送，保留发送锁竞争现场。
+            try
+            {
+                await blockTask;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"BlockReceive调用异常：{ex.Message}");
+            }
+
+            floodCts.Cancel();
+            try
+            {
+                await floodTask;
+            }
+            catch (OperationCanceledException)
+            {
+                // 测试结束时主动取消发送，属于预期情况。
+            }
+        }
+    }
+
+    private static async Task FloodChannelAsync(IDmtpChannel channel, CancellationToken cancellationToken)
+    {
+        var payload = new byte[64 * 1024];
+        var count = 0;
+
+        try
+        {
+            while (true)
+            {
+                await channel.WriteAsync(payload, cancellationToken);
+                count++;
+
+                if (count % 100 == 0)
+                {
+                    Console.WriteLine($"通道已发送{count}个数据包。");
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine($"通道发送结束，发送数量={count}。");
+            throw;
         }
     }
 

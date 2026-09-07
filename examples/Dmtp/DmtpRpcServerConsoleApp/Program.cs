@@ -17,7 +17,6 @@ using TouchSocket.Dmtp.Rpc;
 using TouchSocket.Rpc;
 using TouchSocket.Sockets;
 
-[assembly: GeneratorRpcServerRegister]//生成注册
 
 namespace ConsoleApp2;
 
@@ -46,6 +45,8 @@ internal class Program
                })
                .ConfigurePlugins(a =>
                {
+                   // 复现测试需要先阻塞Dmtp接收插件，再交给DmtpRpc处理。
+                   a.Add<ReproduceDmtpReceiveBlockPlugin>();
                    a.UseDmtpRpc();
 
                    a.Add<MyRpcPlugin>();
@@ -210,6 +211,18 @@ public partial class MyRpcServer : SingletonRpcServer
         return -1;
     }
 
+    /// <summary>
+    /// 阻塞当前Dmtp接收循环，用于复现客户端取消通知发送阻塞问题。
+    /// </summary>
+    [Description("阻塞当前Dmtp接收循环，用于复现超时后的取消通知发送阻塞")]
+    [DmtpRpc(MethodInvoke = true)]
+    public async Task<int> BlockReceive(int delaySeconds)
+    {
+        this.m_logger.Info($"BlockReceive已进入，接收循环阻塞已解除，参数={delaySeconds}。");
+        await Task.CompletedTask;
+        return delaySeconds;
+    }
+
     [Description("测试从CallContextAccessor中获取当前关联的CallContext")]
     [DmtpRpc]
     public async Task TestGetCallContextFromCallContextAccessor()
@@ -218,6 +231,27 @@ public partial class MyRpcServer : SingletonRpcServer
         //此处即使m_rpcCallContextAccessor与当前SingletonRpcServer均为单例，也能获取到正确的CallContext
         var callContext = this.m_rpcCallContextAccessor.CallContext;
         await Task.CompletedTask;
+    }
+}
+
+/// <summary>
+/// 仅用于复现取消通知发送阻塞：阻塞第一个RPC请求所在的Dmtp接收循环。
+/// </summary>
+internal class ReproduceDmtpReceiveBlockPlugin : PluginBase, IDmtpReceivedPlugin
+{
+    private static int s_blocked;
+
+    public async Task OnDmtpReceived(IDmtpActorObject client, DmtpMessageEventArgs e)
+    {
+        // DmtpRpcOption默认从20开始，20是RPC请求协议；通道数据由DmtpActor直接处理，不会进入这里。
+        if (e.DmtpMessage.ProtocolFlags == 20 && Interlocked.Exchange(ref s_blocked, 1) == 0)
+        {
+            Console.WriteLine("复现插件已拦截第一个RPC请求，暂停Dmtp接收循环30秒。");
+            await Task.Delay(TimeSpan.FromSeconds(30));
+            Console.WriteLine("复现插件结束暂停，恢复Dmtp接收循环。");
+        }
+
+        await e.InvokeNext();
     }
 }
 
