@@ -233,7 +233,7 @@ public class DmtpRpcActor : DisposableObject, IDmtpRpcActor
     private async Task CanceledInvokeAsync(string targetId,long sign)
     {
         using var cts = CancellationTokenSource.CreateLinkedTokenSource(this.DmtpActor.ClosedToken);
-        cts.CancelAfter(5000);
+        cts.CancelAfter(1000);
         try
         {
             await this.DmtpActor.SendAsync(this.m_cancelInvoke,new CanceledPackage {SourceId = this.DmtpActor.Id,TargetId=targetId,Sign=sign }, cts.Token).ConfigureDefaultAwait();
